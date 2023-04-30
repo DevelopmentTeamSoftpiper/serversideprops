@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import MobileMenuOverlay from './MobileMenuOverlay';
 import MobileMenuContainer from './MobileMenuContainer';
+import AuthModal from '../auth/AuthModal';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -84,14 +87,14 @@ const Header = () => {
             <span className="sr-only">Toggle mobile menu</span>
             <i className="icon-bars" />
           </button>
-          <a href="index.html" className="logo">
-            <img
-              src="assets/images/demos/demo-26/logo.png"
+          <Link href="/" className="logo">
+            <Image
+              src="/assets/images/demos/demo-26/logo.png"
               alt="Molla Logo"
               width={105}
               height={25}
             />
-          </a>
+          </Link>
         </div>
         {/* End .header-left */}
         <div className="header-center">
@@ -1128,6 +1131,7 @@ const Header = () => {
   </header>
   <MobileMenuOverlay showMenu ={showMenu} menuCloseHandler = {menuCloseHandler} />
   <MobileMenuContainer showMenu ={showMenu}  menuCloseHandler = {menuCloseHandler} />
+  <AuthModal/>
   </>
   )
 }

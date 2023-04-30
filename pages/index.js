@@ -15,12 +15,12 @@ export default function Home({ products, siteinfo }) {
   return (
     <>
       <div className="page-wrapper">
-        <Header />
+        {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
           <BestDeal products={products} />
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
       {/* <MobileMenuOverlay  />
       <MobileMenuContainer /> */}

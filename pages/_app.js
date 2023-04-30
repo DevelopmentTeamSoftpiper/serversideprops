@@ -11,16 +11,21 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store/store";
 import { fetchDataFromApi } from '@/utils/api'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 export default function App({ Component, pageProps, siteinfo }) {
   console.log(siteinfo);
   return(
     <>
+        <Header />
+
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Component {...pageProps} />
         </PersistGate>
       </Provider>
+      <Footer/>
   <Script src="assets/js/jquery.min.js"></Script>
     <Script src="assets/js/bootstrap.bundle.min.js"></Script>
     <Script src="assets/js/jquery.hoverIntent.min.js"></Script>
