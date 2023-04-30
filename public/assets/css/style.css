@@ -1814,9 +1814,9 @@ blockquote {
   .menu-vertical ul,
   .menu-vertical .megamenu {
     display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
+    position: relative;
+    
+    
     z-index: 1002;
     margin-top: 0;
     background-color: #fff;
@@ -1832,7 +1832,7 @@ blockquote {
       width: 694px; }
     @media screen and (min-width: 1200px) {
       .menu-vertical .megamenu:not(.megamenu-sm):not(.megamenu-md) {
-        width: 893px;
+        width: 250px;
         min-height: 100%; } }
     .menu-vertical .megamenu > ul,
     .menu-vertical .megamenu div > ul {
