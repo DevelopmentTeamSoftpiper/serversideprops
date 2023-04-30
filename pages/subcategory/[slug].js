@@ -7,22 +7,22 @@ import ProductCard from "@/components/product/ProductCard";
 
 const maxResult = 3;
 
-const CategoryProduct = ({ category, products, slug }) => {
-  console.log(category);
-  const [pageIndex, setPageIndex] = useState(1);
-  const { query } = useRouter();
-
-  useEffect(() => {
-    setPageIndex(1);
-  }, [query]);
-
-  const { data, error, isLoading } = useSWR(
-    `/api/products?populate=*&[filters][category][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
-    fetchDataFromApi,
-    {
-      fallbackData: products,
-    }
-  );
+const SubCategoryProduct = ({ category, products, slug }) => {
+    console.log(products);
+    const [pageIndex, setPageIndex] = useState(1);
+    const { query } = useRouter();
+  
+    useEffect(() => {
+      setPageIndex(1);
+    }, [query]);
+  
+    const { data, error, isLoading } = useSWR(
+      `/api/products?populate=*&[filters][sub_category][slug][$eq]=${slug}&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
+      fetchDataFromApi,
+      {
+        fallbackData: products,
+      }
+    );
   return (
     <main className="main">
     <div
@@ -31,7 +31,7 @@ const CategoryProduct = ({ category, products, slug }) => {
     >
       <div className="container">
         <h1 className="page-title">
-          {category?.data?.[0]?.attributes?.name}<span>Shop</span>
+        {category?.data?.[0]?.attributes?.name}<span>Shop</span>
         </h1>
       </div>
       {/* End .container */}
@@ -261,36 +261,37 @@ const CategoryProduct = ({ category, products, slug }) => {
   )
 }
 
-export default CategoryProduct
+export default SubCategoryProduct
 
 export async function getStaticPaths() {
-  const category = await fetchDataFromApi("/api/categories?populate=*");
-  const paths = category?.data?.map((c) => ({
-    params: {
-      slug: c.attributes.slug,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-// `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params: { slug } }) {
-  const category = await fetchDataFromApi(
-    `/api/categories?filters[slug][$eq]=${slug}`
-  );
-  const products = await fetchDataFromApi(
-    `/api/products?populate=*&[filters][category][slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=${maxResult}`
-  );
-
-  return {
-    props: {
-      category,
-      products,
-      slug,
-    },
-  };
-}
+    const category = await fetchDataFromApi("/api/sub-categories?populate=*");
+    const paths = category?.data?.map((c) => ({
+      params: {
+        slug: c.attributes.slug,
+      },
+    }));
+  
+    return {
+      paths,
+      fallback: false,
+    };
+  }
+  
+  // `getStaticPaths` requires using `getStaticProps`
+  export async function getStaticProps({ params: { slug } }) {
+    const category = await fetchDataFromApi(
+      `/api/sub-categories?filters[slug][$eq]=${slug}`
+    );
+    const products = await fetchDataFromApi(
+      `/api/products?populate=*&[filters][sub_category][slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=${maxResult}`
+    );
+  
+    return {
+      props: {
+        category,
+        products,
+        slug,
+      },
+    };
+  }
+  
