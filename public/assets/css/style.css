@@ -1992,9 +1992,9 @@ blockquote {
   font-size: 1.2rem;
   line-height: 1.5;
   transition: all 0.4s ease; }
-  .mmenu-active .mobile-menu-container {
+  /* .mmenu-active .mobile-menu-container {
     visibility: visible;
-    transform: translateX(280px); }
+    transform: translateX(280px); } */
   .mobile-menu-container .social-icons {
     justify-content: center;
     margin-bottom: 0; }
@@ -3967,7 +3967,7 @@ p {
       display: none; } }
 .header-26 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  z-index: 1039; }
+  z-index: 1001; }
   .header-26 .header-top {
     border-bottom: .1rem solid #f1f1f1;
     color: #999; }

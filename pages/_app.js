@@ -6,23 +6,21 @@ import "../public/assets/css/plugins/magnific-popup/magnific-popup.css"
 import "../public/assets/css/style.css"
 import "../public/assets/css/skins/skin-demo-26.css"
 import "../public/assets/css/demos/demo-26.css"
-import Header from '@/components/layout/Header'
-import { Provider } from "react-redux";
 
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store/store";
+import { fetchDataFromApi } from '@/utils/api'
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, siteinfo }) {
+  console.log(siteinfo);
   return(
     <>
-  <div className='page-wrapper'>
-    <Header/>
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Component {...pageProps} />
         </PersistGate>
       </Provider>
-  </div>
   <Script src="assets/js/jquery.min.js"></Script>
     <Script src="assets/js/bootstrap.bundle.min.js"></Script>
     <Script src="assets/js/jquery.hoverIntent.min.js"></Script>
@@ -35,4 +33,18 @@ export default function App({ Component, pageProps }) {
   </>
   )
   
+}
+
+export async function getStaticProps() {
+  const siteinfo = await fetchDataFromApi(
+    `/api/siteinfos?populate=*`
+  );
+
+
+  return {
+    props: {
+      siteinfo,
+
+    },
+  };
 }

@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import MobileMenuOverlay from './MobileMenuOverlay';
+import MobileMenuContainer from './MobileMenuContainer';
 
 const Header = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const showMenuHandler = ()=>{
+    setShowMenu(!showMenu);
+  }
+  const menuCloseHandler = (data)=>{
+    setShowMenu(data.closeMenu);
+  }
   return (
+    <>
     <header className="header header-intro-clearance header-26">
     <div className="header-top">
       <div className="container">
@@ -70,7 +80,7 @@ const Header = () => {
     <div className="header-middle">
       <div className="container">
         <div className="header-left">
-          <button className="mobile-menu-toggler">
+          <button className="mobile-menu-toggler" onClick={showMenuHandler}>
             <span className="sr-only">Toggle mobile menu</span>
             <i className="icon-bars" />
           </button>
@@ -185,6 +195,7 @@ const Header = () => {
                         </a>
                       </h4>
                       <span className="cart-product-info">
+   
                         <span className="cart-product-qty">1</span>x $84.00
                       </span>
                     </div>
@@ -1115,6 +1126,9 @@ const Header = () => {
     </div>
     {/* End .header-bottom */}
   </header>
+  <MobileMenuOverlay showMenu ={showMenu} menuCloseHandler = {menuCloseHandler} />
+  <MobileMenuContainer showMenu ={showMenu}  menuCloseHandler = {menuCloseHandler} />
+  </>
   )
 }
 
