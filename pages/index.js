@@ -18,7 +18,7 @@ export default function Home({ products, siteinfo }) {
         {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
-          <BestDeal products={products} />
+          <BestDeal title="Hot Deals" products={products} />
         </main>
         {/* <Footer /> */}
       </div>

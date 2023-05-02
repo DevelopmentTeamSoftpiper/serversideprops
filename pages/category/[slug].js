@@ -4,6 +4,8 @@ import { fetchDataFromApi } from "@/utils/api";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import ProductCard from "@/components/product/ProductCard";
+import Link from "next/link";
+import BestDeal from "@/components/home/BestDeal";
 
 const maxResult = 3;
 
@@ -23,6 +25,15 @@ const CategoryProduct = ({ category, products, slug }) => {
       fallbackData: products,
     }
   );
+
+    const [categories, setCategories] = useState(null);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  const fetchCategories = async () => {
+    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    setCategories(data);
+  };
   return (
     <main className="main">
     <div
@@ -44,11 +55,10 @@ const CategoryProduct = ({ category, products, slug }) => {
             <a href="index.html">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href="#">Shop</a>
+            <a href="#">{category?.data?.[0]?.attributes?.name}
+</a>
           </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Grid 4 Columns
-          </li>
+     
         </ol>
       </div>
       {/* End .container */}
@@ -79,173 +89,58 @@ const CategoryProduct = ({ category, products, slug }) => {
             <div className="sidebar sidebar-shop">
         
   
-              <div className="widget widget-collapsible">
-                <h3 className="widget-title">
-                  <a
-                    data-toggle="collapse"
-                    href="#widget-1"
-                    role="button"
-                    aria-expanded="true"
-                    aria-controls="widget-1"
-                  >
-                    Category
-                  </a>
-                </h3>
-                {/* End .widget-title */}
-                <div className="collapse show" id="widget-1">
-                  <div className="widget-body">
-                    <div className="filter-items filter-items-count">
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-1"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-1"
-                          >
-                            Dresses
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">3</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-2"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-2"
-                          >
-                            T-shirts
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">0</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-3"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-3"
-                          >
-                            Bags
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">4</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-4"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-4"
-                          >
-                            Jackets
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">2</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-5"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-5"
-                          >
-                            Shoes
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">2</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-6"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-6"
-                          >
-                            Jumpers
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">1</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-7"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-7"
-                          >
-                            Jeans
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">1</span>
-                      </div>
-                      {/* End .filter-item */}
-                      <div className="filter-item">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="cat-8"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor="cat-8"
-                          >
-                            Sportwear
-                          </label>
-                        </div>
-                        {/* End .custom-checkbox */}
-                        <span className="item-count">0</span>
-                      </div>
-                      {/* End .filter-item */}
-                    </div>
-                    {/* End .filter-items */}
-                  </div>
-                  {/* End .widget-body */}
-                </div>
-                {/* End .collapse */}
+            <div className="col-lg-5cols d-none d-lg-block">
+            <nav className="side-nav">
+              <div className="sidenav-title letter-spacing-normal font-size-normal d-flex justify-content-xl-between align-items-center bg-primary justify-content-center text-truncate">
+                Browse Categories
+                <i className="icon-bars float-right h5 text-white m-0 d-none d-xl-block" />
               </div>
+              {/* End .sidenav-title   font-size-normal */}
+              <ul
+                className="menu-vertical sf-arrows sf-js-enabled"
+                style={{ touchAction: "pan-y" }}
+              >
+                {categories?.map((c) => (
+                  <li key={c.id} className="megamenu-container">
+                    <Link
+                      className={
+                        c?.attributes?.sub_categories?.data?.length > 0
+                          ? "sf-with-ul text-dark"
+                          : "text-dark"
+                      }
+                      href={`/category/${c?.attributes?.slug}`}
+                    >
+                      <i className="icon-couch" />
+                      {c?.attributes?.name}
+                    </Link>
+                    {c?.attributes?.sub_categories?.data?.length > 0 && (
+                      <div className="megamenu">
+                       
+                            <div className="menu-col">
+                              
+                                  <ul>
+                                    {c?.attributes?.sub_categories?.data?.map(
+                                      (sub) => (
+                                        <li key={sub?.id}>
+                                          <Link
+                                            href={`/subcategory/${sub?.attributes?.slug}`}
+                                          >
+                                            {sub?.attributes?.name}
+                                          </Link>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                           
+                            </div>
+                
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
 
             </div>
             {/* End .sidebar sidebar-shop */}
@@ -255,6 +150,8 @@ const CategoryProduct = ({ category, products, slug }) => {
         {/* End .row */}
       </div>
       {/* End .container */}
+      <BestDeal title="Related Products" products={products}/>
+
     </div>
     {/* End .page-content */}
   </main>

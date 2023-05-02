@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import BestDeal from "@/components/home/BestDeal";
 
 const ProductDetails = ({ product, products }) => {
   // console.log(product);
@@ -172,6 +173,10 @@ const ProductDetails = ({ product, products }) => {
           </div>
         </div>
       </div>
+
+      <BestDeal products={products}/>
+
+
     </main>
   );
 };

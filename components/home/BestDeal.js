@@ -9,12 +9,12 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
 import { fetchDataFromApi } from '@/utils/api';
 
-const BestDeal = ({products}) => {
+const BestDeal = ({title,products}) => {
     console.log(products);
   return (
     <div className="container deal-section">
     <h3 className="title text-center mt-5 font-weight-bold">
-      Today's Best Deal
+      {title}
     </h3>
     <Swiper
                       breakpoints={{
