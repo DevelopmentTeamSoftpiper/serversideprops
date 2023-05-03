@@ -172,9 +172,9 @@ const ProductDetails = ({ product, products }) => {
             </div>
           </div>
         </div>
+      <BestDeal products={products}/>
       </div>
 
-      <BestDeal products={products}/>
 
 
     </main>

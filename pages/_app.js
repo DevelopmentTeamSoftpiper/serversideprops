@@ -18,14 +18,14 @@ export default function App({ Component, pageProps, siteinfo }) {
   console.log(siteinfo);
   return(
     <>
-        <Header />
 
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+        <Header />
           <Component {...pageProps} />
+      <Footer/>
         </PersistGate>
       </Provider>
-      <Footer/>
   <Script src="/assets/js/jquery.min.js"></Script>
     <Script src="/assets/js/bootstrap.bundle.min.js"></Script>
     <Script src="/assets/js/jquery.hoverIntent.min.js"></Script>
