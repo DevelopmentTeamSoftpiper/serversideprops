@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const cart = () => {
   const cartProducts = useSelector((state) => state.cart.cartItems);
+ 
   const subTotal = useMemo(()=>{
     return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
   },[cartProducts])
