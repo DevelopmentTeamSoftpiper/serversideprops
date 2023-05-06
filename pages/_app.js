@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }) {
       <Footer/>
         </PersistGate>
       </Provider>
-  <Script src="/assets/js/jquery.min.js"></Script>
+   <Script src="/assets/js/jquery.min.js"></Script>
     <Script src="/assets/js/bootstrap.bundle.min.js"></Script>
     <Script src="/assets/js/jquery.hoverIntent.min.js"></Script>
     <Script src="/assets/js/jquery.waypoints.min.js"></Script>
@@ -47,6 +47,7 @@ export default function App({ Component, pageProps }) {
     <Script src="/assets/js/jquery.plugin.min.js"></Script>
     <Script src="/assets/js/jquery.countdown.min.js"></Script>
     <Script src="/assets/js/jquery.magnific-popup.min.js"></Script>
+    <Script src="assets/js/owl.carousel.min.js"></Script>
   </>
   )
   

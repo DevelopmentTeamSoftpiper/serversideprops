@@ -26,7 +26,7 @@ const Hero = () => {
               {/* End .sidenav-title   font-size-normal */}
               <ul
                 className="menu-vertical sf-arrows sf-js-enabled"
-                style={{ touchAction: "pan-y" }}
+                style={{ touchAction: "pan-y", height:"350px" }}
               >
                 {categories?.map((c) => (
                   <li key={c.id} className="megamenu-container">
