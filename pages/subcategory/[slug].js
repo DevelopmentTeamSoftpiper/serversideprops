@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import ProductCard from "@/components/product/ProductCard";
 import Link from "next/link";
-import BestDeal from "@/components/home/BestDeal";
+import BestDeal from "@/components/home/ProductCarousel";
 
 const maxResult = 3;
 

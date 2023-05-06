@@ -11,7 +11,7 @@ const ProductCard = ({data}) => {
     <div className="product d-flex flex-column overflow-hidden">
     <figure className="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
       <span className="product-label label-sale">SALE</span>
-      <Link href={`/product/${p.slug}`} className="w-100">
+      <Link href={`/product/${p?.slug}`} className="w-100">
         <Image
           src={p?.thumbnail?.data?.attributes?.url}
           alt="Product image"
@@ -23,17 +23,18 @@ const ProductCard = ({data}) => {
       </Link>
 
     </figure>
+    
 
     <div className="product-body pb-3">
       <div className="text-left product-cat font-weight-normal text-light mb-0">
-        <a href="#">  {p.category.data.attributes.name}</a>
+        <a href="#">  {p?.category?.data?.attributes?.name}</a>
       </div>
       {/* End .product-cat  */}
       <h3 className="product-title letter-spacing-normal font-size-normal text-left mb-0">
       <Link href={`/product/${p.slug}`}>
         {
-           p.title.length > 20 ? <span> {p.title.substring(0,20)}... </span>
-            : <span> {p.title} </span>
+           p.title.length > 20 ? <span> {p?.title?.substring(0,20)}... </span>
+            : <span> {p?.title} </span>
             }
       </Link>
 
@@ -56,6 +57,7 @@ const ProductCard = ({data}) => {
             ...data,
             oneQuantityPrice: p?.price
           }));
+
         }}
       >
         <span className="text-dark shadow-none">add to cart</span>
