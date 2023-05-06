@@ -13,15 +13,27 @@ import { persistor, store } from "@/store/store";
 import { fetchDataFromApi } from '@/utils/api'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { useEffect, useState } from 'react'
 
-export default function App({ Component, pageProps, siteinfo }) {
-  console.log(siteinfo);
+export default function App({ Component, pageProps }) {
+  const [siteInfo, setSiteInfo] = useState(null);
+  const getSiteInfo = async()=>{
+    const siteinfo = await fetchDataFromApi(
+      `/api/siteinfo?populate=*`
+    );
+    setSiteInfo(siteinfo);
+    
+  }
+  useEffect(()=>{
+    getSiteInfo();
+  },[])
+  console.log(siteInfo);
   return(
     <>
 
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <Header />
+        <Header siteInfo ={siteInfo}/>
           <Component {...pageProps} />
       <Footer/>
         </PersistGate>
@@ -38,18 +50,4 @@ export default function App({ Component, pageProps, siteinfo }) {
   </>
   )
   
-}
-
-export async function getStaticProps() {
-  const siteinfo = await fetchDataFromApi(
-    `/api/siteinfos?populate=*`
-  );
-
-
-  return {
-    props: {
-      siteinfo,
-
-    },
-  };
 }

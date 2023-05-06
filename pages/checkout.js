@@ -1,4 +1,7 @@
 import CartProduct from '@/components/checkout/CartProduct';
+import { postDataToApi } from '@/utils/api';
+import { STRAPI_API_TOKEN } from '@/utils/urls';
+import axios from 'axios';
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -7,6 +10,22 @@ const checkout = () => {
     const subTotal = useMemo(()=>{
         return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
       },[cartProducts])
+    
+      const order = async () => {
+        try {
+          const response = await postDataToApi("api/orders", cartProducts);
+         
+         
+          console.log(response);
+       
+        } catch (error) {
+          console.log(error.response);
+         
+        }
+      };
+  const orderSubmitHandler =() =>{
+    order();
+  }
 
   return (
     <div className='page-wrapper p-5'>
@@ -44,7 +63,7 @@ const checkout = () => {
       <div className="checkout">
         <div className="container">
           <div className="checkout-discount">
-            <form action="#">
+            <form >
               <input
                 type="text"
                 className="form-control"
@@ -60,7 +79,7 @@ const checkout = () => {
             </form>
           </div>
           {/* End .checkout-discount */}
-          <form action="#">
+        
             <div className="row">
               <div className="col-lg-9">
                 <h2 className="checkout-title">Billing Details</h2>
@@ -369,8 +388,9 @@ const checkout = () => {
                   </div>
                   {/* End .accordion */}
                   <button
-                    type="submit"
+                    
                     className="btn btn-outline-primary-2 btn-order btn-block"
+                    onClick={orderSubmitHandler}
                   >
                     <span className="btn-text">Place Order</span>
                     <span className="btn-hover-text">Proceed to Checkout</span>
@@ -381,7 +401,7 @@ const checkout = () => {
               {/* End .col-lg-3 */}
             </div>
             {/* End .row */}
-          </form>
+       
         </div>
         {/* End .container */}
       </div>

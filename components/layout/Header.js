@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Cart from './Cart';
 
-const Header = () => {
+const Header = ({siteInfo}) => {
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = ()=>{
     setShowMenu(!showMenu);
@@ -22,7 +22,7 @@ const Header = () => {
         <div className="header-left">
           <a href="tel:#" className="font-weight-normal">
             <i className="icon-phone h6 second-primary-color" />
-            Call: +0123 456 789
+            Call: {siteInfo?.data?.attributes?.phone}
           </a>
         </div>
         {/* End .header-left */}
@@ -31,35 +31,20 @@ const Header = () => {
             <li>
               <a href="#">Links</a>
               <ul>
+     
                 <li>
                   <div className="header-dropdown">
-                    <a href="#">USD</a>
+                    <a href="#">Account</a>
                     <div className="header-menu">
                       <ul>
                         <li>
-                          <a href="#">Eur</a>
+                          <a href="#">Account Details</a>
                         </li>
                         <li>
-                          <a href="#">Usd</a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* End .header-menu */}
-                  </div>
-                </li>
-                <li>
-                  <div className="header-dropdown">
-                    <a href="#">English</a>
-                    <div className="header-menu">
-                      <ul>
-                        <li>
-                          <a href="#">English</a>
+                          <a href="#">Orders</a>
                         </li>
                         <li>
-                          <a href="#">French</a>
-                        </li>
-                        <li>
-                          <a href="#">Spanish</a>
+                          <a href="#">Logout</a>
                         </li>
                       </ul>
                     </div>
@@ -147,34 +132,9 @@ const Header = () => {
         </div>
         <div className="header-right">
           <div className="header-dropdown-link">
-            <div className="dropdown compare-dropdown">
-              <a
-                href="#"
-                className="dropdown-toggle"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                data-display="static"
-              >
-                <div className="icon">
-                  <i className="icon-random" />
-                </div>
-                <p>Compare</p>
-              </a>
-            </div>
-            <div className="wishlist">
-              <a href="wishlist.html" title="Wishlist">
-                <div className="icon">
-                  <i className="icon-heart-o" />
-                  <span className="wishlist-count badge">3</span>
-                </div>
-                <p>Wishlist</p>
-              </a>
-            </div>
-            {/* End .compare-dropdown */}
+
         <Cart/>
-            {/* End .cart-dropdown */}
+  
           </div>
         </div>
         {/* End .header-right */}
@@ -188,459 +148,10 @@ const Header = () => {
           <nav className="main-nav">
             <ul className="menu sf-arrows">
               <li className="megamenu-container active">
-                <a href="index.html" className="sf-with-ul">
+                <Link href="/">
                   Home
-                </a>
-                <div className="megamenu demo">
-                  <div className="menu-col">
-                    <div className="menu-title">Choose your demo</div>
-                    {/* End .menu-title */}
-                    <div className="demo-list">
-                      <div className="demo-item">
-                        <a href="index-1.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/1.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            01 - furniture store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-2.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/2.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            02 - furniture store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-3.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/3.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            03 - electronic store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-4.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/4.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            04 - electronic store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-5.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/5.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">05 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-6.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/6.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">06 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-7.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/7.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">07 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-8.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/8.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">08 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-9.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/9.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">09 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item">
-                        <a href="index-10.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/10.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">10 - shoes store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-11.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/11.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            11 - furniture simple store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-12.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/12.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            12 - fashion simple store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-13.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/13.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">13 - market</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-14.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/14.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            14 - market fullwidth
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-15.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/15.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">15 - lookbook 1</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-16.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/16.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">16 - lookbook 2</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-17.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/17.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">17 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-18.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/18.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            18 - fashion store (with sidebar)
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-19.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/19.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">19 - games store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-20.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/20.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">20 - book store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-21.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/21.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">21 - sport store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-22.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/22.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">22 - tools store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-23.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/23.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            23 - fashion left navigation store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-24.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/24.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            24 - extreme sport store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-25.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/25.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">25 - jewelry store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-26.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/26.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">26 - market store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-27.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/27.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">27 - fashion store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-28.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/28.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            28 - food market store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-29.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/29.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            29 - t-shirts store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-30.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/30.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">
-                            30 - headphones store
-                          </span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                      <div className="demo-item hidden">
-                        <a href="index-31.html">
-                          <span
-                            className="demo-bg"
-                            style={{
-                              backgroundImage:
-                                "url(assets/images/menu/demos/31.jpg)"
-                            }}
-                          />
-                          <span className="demo-title">31 - yoga store</span>
-                        </a>
-                      </div>
-                      {/* End .demo-item */}
-                    </div>
-                    {/* End .demo-list */}
-                    <div className="megamenu-action text-center">
-                      <a
-                        href="#"
-                        className="btn btn-outline-primary-2 view-all-demos"
-                      >
-                        <span>View All Demos</span>
-                        <i className="icon-long-arrow-right" />
-                      </a>
-                    </div>
-                    {/* End .text-center */}
-                  </div>
-                  {/* End .menu-col */}
-                </div>
-                {/* End .megamenu */}
+                </Link>
+
               </li>
               <li>
                 <a href="category.html" className="sf-with-ul">

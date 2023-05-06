@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import MobileMenuOverlay from "@/components/layout/MobileMenuOverlay";
 import MobileMenuContainer from "@/components/layout/MobileMenuContainer";
 import Hero from "@/components/home/Hero";
+import Banner1 from "@/components/home/Banner1";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function Home({ products, siteinfo }) {
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
           <BestDeal title="Hot Deals" products={products} />
+          <Banner1/>
         </main>
         {/* <Footer /> */}
       </div>
