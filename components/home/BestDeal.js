@@ -16,7 +16,7 @@ const BestDeal = ({title,products}) => {
     <h3 className="title text-center mt-5 font-weight-bold">
       {title}
     </h3>
-    <Swiper
+                <Swiper
                       breakpoints={{
                         0: {
                           slidesPerView: 2,
@@ -36,7 +36,7 @@ const BestDeal = ({title,products}) => {
                       }}
                
                       navigation={true}
-                      mousewheel={true}
+                      mousewheel={false}
                       keyboard={true}
                       modules={[Navigation, Mousewheel, Keyboard]}
                       className="mySwiper"

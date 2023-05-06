@@ -30,7 +30,12 @@ const ProductCard = ({data}) => {
       </div>
       {/* End .product-cat  */}
       <h3 className="product-title letter-spacing-normal font-size-normal text-left mb-0">
-      <Link href={`/product/${p.slug}`}>{p.title}</Link>
+      <Link href={`/product/${p.slug}`}>
+        {
+           p.title.length > 20 ? <span> {p.title.substring(0,20)}... </span>
+            : <span> {p.title} </span>
+            }
+      </Link>
 
       </h3>
       {/* End .product-title letter-spacing-normal font-size-normal */}
