@@ -38,7 +38,7 @@ const Header = ({siteInfo}) => {
                     <div className="header-menu">
                       <ul>
                         <li>
-                          <a href="#">Account Details</a>
+                          <Link href="/account">Account Details</Link>
                         </li>
                         <li>
                           <a href="#">Orders</a>

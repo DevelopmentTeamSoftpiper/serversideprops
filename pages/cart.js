@@ -1,14 +1,25 @@
 import CartItem from "@/components/product/CartItem";
+import { fetchDataFromApi } from "@/utils/api";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import Link from "next/link";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
 const cart = () => {
   const cartProducts = useSelector((state) => state.cart.cartItems);
- 
+ const [shippings, setShippings] = useState(null);
   const subTotal = useMemo(()=>{
     return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
   },[cartProducts])
+  const getShippings = async ()=>{
+    const ships = await fetchDataFromApi("/api/shippings?populate=*");
+    console.log(ships);
+    setShippings(ships);
+    }
+    useEffect(()=>{
+      getShippings();
+    },[])
+
   return (
     <main className="main">
       <div
@@ -109,69 +120,31 @@ const cart = () => {
                         <td>Shipping:</td>
                         <td>&nbsp;</td>
                       </tr>
-                      <tr className="summary-shipping-row">
-                        <td>
-                          <div className="custom-control custom-radio">
-                            <input
-                              type="radio"
-                              id="free-shipping"
-                              name="shipping"
-                              className="custom-control-input"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="free-shipping"
-                            >
-                              Free Shipping
-                            </label>
-                          </div>
-                          {/* End .custom-control */}
-                        </td>
-                        <td>$0.00</td>
-                      </tr>
+                      {shippings?.data?.map((ship)=>(
+  <tr key={ship?.id} className="summary-shipping-row">
+  <td>
+    <div className="custom-control custom-radio">
+      <input
+        type="radio"
+        value= {ship?.attributes?.title}
+        name="shipping"
+        className="custom-control-input"
+      />
+      <label
+        className="custom-control-label"
+        htmlFor="free-shipping"
+      >
+        {ship?.attributes?.title}
+      </label>
+    </div>
+    {/* End .custom-control */}
+  </td>
+  <td>BDT {ship?.attributes?.cost}</td>
+</tr>
+                      ))}
+                    
                       {/* End .summary-shipping-row */}
-                      <tr className="summary-shipping-row">
-                        <td>
-                          <div className="custom-control custom-radio">
-                            <input
-                              type="radio"
-                              id="standart-shipping"
-                              name="shipping"
-                              className="custom-control-input"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="standart-shipping"
-                            >
-                              Standart:
-                            </label>
-                          </div>
-                          {/* End .custom-control */}
-                        </td>
-                        <td>$10.00</td>
-                      </tr>
-                      {/* End .summary-shipping-row */}
-                      <tr className="summary-shipping-row">
-                        <td>
-                          <div className="custom-control custom-radio">
-                            <input
-                              type="radio"
-                              id="express-shipping"
-                              name="shipping"
-                              className="custom-control-input"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="express-shipping"
-                            >
-                              Express:
-                            </label>
-                          </div>
-                          {/* End .custom-control */}
-                        </td>
-                        <td>$20.00</td>
-                      </tr>
-                      {/* End .summary-shipping-row */}
+         
                       <tr className="summary-shipping-estimate">
                         <td>
                           Estimate for Your Country
@@ -188,12 +161,12 @@ const cart = () => {
                     </tbody>
                   </table>
                   {/* End .table table-summary */}
-                  <a
-                    href="checkout.html"
+                  <Link
+                    href="/checkout"
                     className="btn btn-outline-primary-2 btn-order btn-block"
                   >
                     PROCEED TO CHECKOUT
-                  </a>
+                  </Link>
                 </div>
                 {/* End .summary */}
                 <a
