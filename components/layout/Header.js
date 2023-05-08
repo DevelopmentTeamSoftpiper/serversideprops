@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Cart from './Cart';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/store/userSlice';
+import Search from './Search';
 
 const Header = ({siteInfo}) => {
   // console.log(siteInfo);
@@ -89,53 +90,7 @@ const Header = ({siteInfo}) => {
           </Link>
         </div>
         {/* End .header-left */}
-        <div className="header-center">
-          <div className="header-search header-search-visible header-search-no-radius">
-            <a href="#" className="search-toggle" role="button">
-              <i className="icon-search" />
-            </a>
-            <form action="#" method="get">
-              <div className="header-search-wrapper search-wrapper-wide">
-                <div className="select-custom">
-                  <select id="cat" name="cat">
-                    <option value="">All Departments</option>
-                    <option value={1}>Fashion</option>
-                    <option value={2}>- Women</option>
-                    <option value={3}>- Men</option>
-                    <option value={4}>- Jewellery</option>
-                    <option value={5}>- Kids Fashion</option>
-                    <option value={6}>Electronics</option>
-                    <option value={7}>- Smart TVs</option>
-                    <option value={8}>- Cameras</option>
-                    <option value={9}>- Games</option>
-                    <option value={10}>Home &amp; Garden</option>
-                    <option value={11}>Motors</option>
-                    <option value={12}>- Cars and Trucks</option>
-                    <option value={15}>- Boats</option>
-                    <option value={16}>- Auto Tools &amp; Supplies</option>
-                  </select>
-                </div>
-                {/* End .select-custom */}
-                <label htmlFor="q" className="sr-only">
-                  Search
-                </label>
-                <input
-                  type="search"
-                  className="form-control"
-                  name="q"
-                  id="q"
-                  placeholder="Search product ..."
-                  required=""
-                />
-                <button className="btn btn-primary" type="submit">
-                  <i className="icon-search" />
-                </button>
-              </div>
-              {/* End .header-search-wrapper */}
-            </form>
-          </div>
-          {/* End .header-search */}
-        </div>
+        <Search/>
         <div className="header-right">
           <div className="header-dropdown-link">
 
