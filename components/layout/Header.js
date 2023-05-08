@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Cart from './Cart';
 
 const Header = ({siteInfo}) => {
+  console.log(siteInfo);
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = ()=>{
     setShowMenu(!showMenu);
@@ -75,7 +76,7 @@ const Header = ({siteInfo}) => {
           </button>
           <Link href="/" className="logo">
             <Image
-              src="/assets/images/demos/demo-26/logo.png"
+              src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
               alt="Molla Logo"
               width={105}
               height={25}

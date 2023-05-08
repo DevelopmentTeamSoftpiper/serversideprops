@@ -3,23 +3,28 @@
 import React from 'react';
 import TestCategoryRow from './TestCategoryRow';
 import ProductCard from '../product/ProductCard';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/effect-coverflow";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Keyboard, Mousewheel, Navigation, } from "swiper";
+const TestCategory = ({catProducts}) => {
+    const categoryName = catProducts?.data?.[0]?.attributes?.category?.data?.attributes?.name;
 
-const TestCategory = ({categories}) => {
-    const ctgName = categories.data[3].attributes;
-    const subCategory = ctgName.sub_categories;
-    const products = ctgName.products;
-    console.log(products);
+    console.log(catProducts);
+
     return (
         <>
         <div className="container electronics mb-4">
             <div className="bg-lighter trending-products">
                 <div className="heading heading-flex">
                     <div className="heading-left">
-                        <h2 className="title font-weight-bold mb-1">{ctgName.name}</h2>
+                        <h2 className="title font-weight-bold mb-1">{categoryName}</h2>
                         {/* End .title */}
                     </div>
                 {/* End .heading-left */}
-                    <div className="heading-right">
+                    {/* <div className="heading-right">
                         <ul
                         className="nav nav-pills justify-content-center mr-n3"
                         role="tablist"
@@ -44,7 +49,7 @@ const TestCategory = ({categories}) => {
                             }) 
                             }
                         </ul>
-                    </div>
+                    </div> */}
                 {/* End .heading-right */}
                 </div>
 
@@ -52,57 +57,39 @@ const TestCategory = ({categories}) => {
                 {/* End .heading */}
 
 
-                <div className="tab-content tab-content-carousel position-relative">
-                 
-                    <div
-                        className="tab-pane p-0 fade show active"
-                        id="electronic-cell-tab"
-                        role="tabpanel"
-                        aria-labelledby="electronic-cell-link"
-                    >
-                        <div
-                            className="electronic-carousel owl-carousel owl-simple carousel-equal-height row cols-2 cols-md-3 cols-lg-4 cols-xl-5 cols-xxl-6"
-                            data-toggle="owl"
-                            data-owl-options='{
-                                            "nav": false, 
-                                            "dots": false,
-                                            "margin": 0,
-                                            "loop": false,
-                                            "responsive": {
-                                                "0": {
-                                                    "items":2
-                                                },
-                                                "480": {
-                                                    "items":2
-                                                },
-                                                "576": {
-                                                    "items":3
-                                                },
-                                                "992": {
-                                                    "items":4
-                                                },
-                                                "1200": {
-                                                    "items":5
-                                                },
-                                                "1400": {
-                                                    "items":6
-                                                }
-                                            }
-                                        }'
-                        >
-                        {/* start .product */}
+                <Swiper
+                breakpoints={{
+                  0: {
+                    slidesPerView: 2,
+                  },
+                  480: {
+                    slidesPerView: 2,
+                  },
+                  768: {
+                    slidesPerView: 4,
+                  },
+                  1024: {
+                    slidesPerView:5,
+                  },
+                  1280: {
+                    slidesPerView: 5,
+                  },
+                }}
+          
+                navigation={true}
+                mousewheel={false}
+                keyboard={true}
+                modules={[Navigation, Mousewheel, Keyboard]}
+                className="mySwiper"
+            >
 
-                        {
-                            products.data.map((pd) => <ProductCard data={pd} />)
-                        }
-
-                       
-                        {/* End .product */}
-
-                        </div>
-                        {/* End .owl-carousel */}
-                    </div>
-                </div>
+                {
+                    catProducts?.data?.map((product)=><SwiperSlide key={product?.id}> 
+                                                          <ProductCard key={product?.id} data = {product}/>
+                                              </SwiperSlide>
+                    )
+                }
+          </Swiper> 
 
             </div>
         </div>

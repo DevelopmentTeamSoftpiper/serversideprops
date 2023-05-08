@@ -13,9 +13,9 @@ import HomeCategory from "@/components/home/HomeCategory";
 import TestCategory from "@/components/home/TestCategory";
 
 
-export default function Home({ products,categories, siteinfo }) {
+export default function Home({ products,categories, siteinfo ,catProducts}) {
 
-
+// console.log(catProducts);
   return (
     <>
       <div className="page-wrapper">
@@ -23,12 +23,12 @@ export default function Home({ products,categories, siteinfo }) {
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
           <HomeService />
+          <HomeCategory categories={categories} />
           <MiniBanner />
-          <TestCategory categories={categories} />
+          <TestCategory catProducts={catProducts} />
           <LatestProduct />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale'/>
-          <HomeCategory />
           <ProductCarousel title="Best Deals" field="bestdeal" />
         </main>
         {/* <Footer /> */}
@@ -42,12 +42,16 @@ export default function Home({ products,categories, siteinfo }) {
 export async function getStaticProps(context) {
   const products = await fetchDataFromApi("/api/products?populate=*");
   const categories = await fetchDataFromApi("/api/categories?populate=*");
+  const catProducts = await fetchDataFromApi(
+    `/api/products?populate=*&[filters][category][slug][$eq]=grocery&pagination[page]=1&pagination[pageSize]=10`
+  );
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");
   return {
     props: {
       products,
       categories,
       siteinfo,
+      catProducts
     },
   };
 }

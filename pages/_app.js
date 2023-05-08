@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }) {
         <PersistGate loading={null} persistor={persistor}>
         <Header siteInfo ={siteInfo}/>
           <Component {...pageProps} />
-      <Footer/>
+      <Footer siteInfo ={siteInfo}/>
         </PersistGate>
       </Provider>
    <Script src="/assets/js/jquery.min.js"></Script>

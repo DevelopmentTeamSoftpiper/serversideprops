@@ -1,6 +1,7 @@
+import Image from 'next/image'
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({siteInfo}) => {
   return (
     <footer
     className="footer footer-2 font-weight-normal second-primary-color"
@@ -65,13 +66,12 @@ const Footer = () => {
         <div className="row">
           <div className="col-12 col-lg-2-5cols">
             <div className="widget widget-about mb-4">
-              <img
-                src="assets/images/demos/demo-26/logo-footer.png"
-                className="footer-logo"
-                alt="Footer Logo"
-                width={105}
-                height={25}
-              />
+            <Image
+              src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
+              alt="Molla Logo"
+              width={105}
+              height={25}
+            />
               <p className="font-weight-normal second-primary-color">
                 Praesent dapibus, neque id cursus ucibus, tortor neque egestas
                 augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.
