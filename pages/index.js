@@ -9,10 +9,12 @@ import MiniBanner from "@/components/home/MiniBanner";
 import HomeService from "@/components/home/HomeService";
 import LatestProduct from "@/components/home/LatestProduct";
 import ProductCarousel from "@/components/home/ProductCarousel";
+import HomeCategory from "@/components/home/HomeCategory";
+import TestCategory from "@/components/home/TestCategory";
 
 
-export default function Home({ products, siteinfo }) {
-  
+export default function Home({ products,categories, siteinfo }) {
+
 
   return (
     <>
@@ -22,9 +24,11 @@ export default function Home({ products, siteinfo }) {
           <Hero/>
           <HomeService />
           <MiniBanner />
+          <TestCategory categories={categories} />
           <LatestProduct />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale'/>
+          <HomeCategory />
           <ProductCarousel title="Best Deals" field="bestdeal" />
         </main>
         {/* <Footer /> */}
@@ -37,10 +41,12 @@ export default function Home({ products, siteinfo }) {
 
 export async function getStaticProps(context) {
   const products = await fetchDataFromApi("/api/products?populate=*");
+  const categories = await fetchDataFromApi("/api/categories?populate=*");
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");
   return {
     props: {
       products,
+      categories,
       siteinfo,
     },
   };

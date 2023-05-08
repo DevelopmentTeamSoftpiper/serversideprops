@@ -13,6 +13,8 @@ const Hero = () => {
     setCategories(data);
   };
 
+
+  console.log(categories)
   return (
     <div className="intro-section">
       <div className="container mt-2">
