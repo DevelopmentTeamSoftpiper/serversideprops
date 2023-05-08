@@ -21,10 +21,10 @@ export default function Home({ products,categories, siteinfo }) {
       <div className="page-wrapper">
         {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
-          <Hero/>
+          <Hero categories={categories.data} />
           <HomeService />
           <MiniBanner />
-          <TestCategory categories={categories} />
+          <TestCategory products={products} categories={categories} />
           <LatestProduct />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale'/>
@@ -39,7 +39,7 @@ export default function Home({ products,categories, siteinfo }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const products = await fetchDataFromApi("/api/products?populate=*");
   const categories = await fetchDataFromApi("/api/categories?populate=*");
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");

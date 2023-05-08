@@ -1,50 +1,51 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
-import TestCategoryRow from './TestCategoryRow';
+import React, { useEffect, useState } from 'react';
 import ProductCard from '../product/ProductCard';
+import { fetchDataFromApi } from '@/utils/api';
 
-const TestCategory = ({categories}) => {
-    const ctgName = categories.data[3].attributes;
-    const subCategory = ctgName.sub_categories;
-    const products = ctgName.products;
-    console.log(products);
+const TestCategory = ({products, categories}) => {
+    const pd =products.data[2].attributes;
+    const category = categories.data[3].attributes;
+    const subCategory = category.sub_categories.data;
+    const [filterProduct, setFilterProduct] = useState(null);
+
+    const handleProductFilter = async(slug) =>{
+            const { data } = await fetchDataFromApi(`/api/sub-categories?populate=*&filters[name][[$in]]=${slug}`);
+            setFilterProduct(data);
+    }
+    const finalProduct = filterProduct?.map(pd => pd.attributes.products.data)[0]
+    finalProduct && console.log(finalProduct.length);
+    
     return (
         <>
         <div className="container electronics mb-4">
             <div className="bg-lighter trending-products">
                 <div className="heading heading-flex">
                     <div className="heading-left">
-                        <h2 className="title font-weight-bold mb-1">{ctgName.name}</h2>
+                        <h2 className="title font-weight-bold mb-1">{category.name}</h2>
                         {/* End .title */}
                     </div>
                 {/* End .heading-left */}
-                    <div className="heading-right">
+                     <div className="heading-right">
                         <ul
                         className="nav nav-pills justify-content-center mr-n3"
                         role="tablist"
                         >
                             { 
-                            subCategory.data.map(sb => {
+                            subCategory.map(sb => {
                                 // eslint-disable-next-line react/jsx-key
                                 return <li className="nav-item">
-                                    <a
-                                        className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase active"
-                                        id={sb.attributes.slug}
-                                        data-toggle="tab"
-                                        href="#electronic-cell-tab"
-                                        role="tab"
-                                        aria-controls={sb.attributes.slug}
-                                        aria-selected="true"
-                                        >
-                                        {sb.attributes.name}
-                                    </a>
-                            </li> 
-
+                                                <button 
+                                                    onClick={() => handleProductFilter(sb.attributes.name)}
+                                                    className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase active">
+                                                    {sb.attributes.name}
+                                                </button>
+                                        </li> 
                             }) 
                             }
                         </ul>
-                    </div>
+                    </div> 
                 {/* End .heading-right */}
                 </div>
 

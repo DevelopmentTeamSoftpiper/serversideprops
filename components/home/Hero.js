@@ -3,18 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import MainSwiper from "./MainSwiper";
 
-const Hero = () => {
-  const [categories, setCategories] = useState(null);
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-  const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi("/api/categories?populate=*");
-    setCategories(data);
-  };
-
-
-  console.log(categories)
+const Hero = ({categories}) => {
+  
   return (
     <div className="intro-section">
       <div className="container mt-2">
