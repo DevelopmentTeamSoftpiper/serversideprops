@@ -5,9 +5,12 @@ import AuthModal from '../auth/AuthModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import Cart from './Cart';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/store/userSlice';
 
 const Header = ({siteInfo}) => {
-  console.log(siteInfo);
+  // console.log(siteInfo);
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = ()=>{
     setShowMenu(!showMenu);
@@ -45,7 +48,9 @@ const Header = ({siteInfo}) => {
                           <a href="#">Orders</a>
                         </li>
                         <li>
-                          <a href="#">Logout</a>
+                          <a href="#"  onClick={() => {
+                    dispatch(logout());
+                  }}>Logout</a>
                         </li>
                       </ul>
                     </div>
@@ -77,7 +82,7 @@ const Header = ({siteInfo}) => {
           <Link href="/" className="logo">
             <Image
               src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
-              alt="Molla Logo"
+              alt="safefoods Logo"
               width={105}
               height={25}
             />

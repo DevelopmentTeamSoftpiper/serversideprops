@@ -1,8 +1,8 @@
 import React from 'react'
 
-const AlertBox = ({text}) => {
+const AlertBox = ({text,type}) => {
   return (
-    <div className="alert alert-rounded alert-danger">
+    <div className={`alert alert-rounded alert-${type}`}>
     <i className="fa fa-exclamation-circle" style={{ color: "#ef8495" }} />
     <span>
       <strong>{text}</strong> 

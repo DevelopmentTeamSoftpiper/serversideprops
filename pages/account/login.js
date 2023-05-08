@@ -142,19 +142,12 @@ const login = () => {
                         <span>{buttonText}</span>
                         <i className="icon-long-arrow-right" />
                       </button>
-                      <div className="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          className="custom-control-input"
-                          id="register-policy-2"
-                          required=""
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="register-policy-2"
-                        >
-                          I agree to the <a href="#">privacy policy</a> *
-                        </label>
+
+                      <div className="custom-control ">
+                        
+                        
+                          <Link href="/account/forget-password">Forget Password!</Link> 
+                      
                       </div>
                       {/* End .custom-checkbox */}
                     </div>
