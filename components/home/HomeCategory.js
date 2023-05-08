@@ -1,15 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import { fetchDataFromApi } from '@/utils/api';
 import React, { useEffect, useState } from 'react';
 
-const HomeCategory = () => {
-//     const [categories, setCategories] = useState(null);
-//   useEffect(() => {
-//     fetchCategories();
-//   }, []);
-//   const fetchCategories = async () => {
-//     const { data } = await fetchDataFromApi("/api/categories?populate=*");
-//     setCategories(data);
-//   };
+const HomeCategory = ({categories}) => {
+
     return (
         <>
             <div className="container banner-group-1">
@@ -47,30 +41,36 @@ const HomeCategory = () => {
                                         }
                                     }'
                     >
+                        {
+                            categories.data.map((ctg,i) => {
+                                return <div key={i} className="category position-relative">
+                                <div className="category-image">
+                                <a href="#">
+                                    <img
+                                    src={`assets/images/demos/demo-26/categories/${i+1}.png`}
+                                    className="w-100"
+                                    alt=""
+                                    width={166}
+                                    height={160}
+                                    />
+                                </a>
+                                </div>
+                                <div className="category-body letter-spacing-normal font-size-normal text-center position-absolute text-uppercase">
+                                <a
+                                    href="#"
+                                    className="category-title text-truncate font-weight-normal"
+                                >
+                                    {
+                                        ctg.attributes.name
+                                    }
+                                </a>
+                                </div>
+                            </div>
+                            })
+                        }
+                    
 
-                    <div className="category position-relative">
-                        <div className="category-image">
-                        <a href="#">
-                            <img
-                            src="assets/images/demos/demo-26/categories/1.png"
-                            className="w-100"
-                            alt=""
-                            width={166}
-                            height={160}
-                            />
-                        </a>
-                        </div>
-                        <div className="category-body letter-spacing-normal font-size-normal text-center position-absolute text-uppercase">
-                        <a
-                            href="#"
-                            className="category-title text-truncate font-weight-normal"
-                        >
-                            Clothing
-                        </a>
-                        </div>
-                    </div>
-
-                    <div className="category position-relative">
+                    {/* <div className="category position-relative">
                         <div className="category-image">
                         <a href="#">
                             <img
@@ -216,7 +216,7 @@ const HomeCategory = () => {
                             Game &amp; Toy
                         </a>
                         </div>
-                    </div>
+                    </div> */}
                     </div>
                 </div>
             </div>

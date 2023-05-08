@@ -28,7 +28,7 @@ export default function Home({ products,categories, siteinfo }) {
           <LatestProduct />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale'/>
-          <HomeCategory />
+          <HomeCategory categories={categories} />
           <ProductCarousel title="Best Deals" field="bestdeal" />
         </main>
         {/* <Footer /> */}
