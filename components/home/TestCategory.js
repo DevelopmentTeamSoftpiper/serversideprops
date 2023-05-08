@@ -9,13 +9,21 @@ const TestCategory = ({products, categories}) => {
     const category = categories.data[3].attributes;
     const subCategory = category.sub_categories.data;
     const [filterProduct, setFilterProduct] = useState(null);
+    const [defaultProduct, setDefaultProduct] = useState(null);
 
     const handleProductFilter = async(slug) =>{
-            const { data } = await fetchDataFromApi(`/api/sub-categories?populate=*&filters[name][[$in]]=${slug}`);
+        console.log(slug);
+            const { data } = await fetchDataFromApi(`/api/products?populate=*&filters[sub_category][name][$in]=${slug}`);
             setFilterProduct(data);
     }
-    const finalProduct = filterProduct?.map(pd => pd.attributes.products.data)[0]
-    finalProduct && console.log(finalProduct.length);
+
+    useEffect(()=>{
+        (async function(){
+            const { data } = await fetchDataFromApi('/api/products?populate=*&filters[sub_category][name][$in]=Spices');
+            setDefaultProduct(data)
+        }())
+    },[]);
+    console.log(defaultProduct)
     
     return (
         <>
@@ -94,9 +102,12 @@ const TestCategory = ({products, categories}) => {
                         {/* start .product */}
 
                         {
-                            products.data.map((pd) => <ProductCard data={pd} />)
+                          filterProduct ? 
+                          filterProduct.length > 0 ?
+                                                      filterProduct?.map((pd) => <ProductCard data={pd} />)
+                                                    : <span style={{width:"100%", margin:"0px auto", display:'block', color:'red'}}> Product Not Available </span>
+                                        : defaultProduct?.map((pd) => <ProductCard data={pd} />)
                         }
-
                        
                         {/* End .product */}
 
