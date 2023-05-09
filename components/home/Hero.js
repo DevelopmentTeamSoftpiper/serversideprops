@@ -2,6 +2,7 @@ import { fetchDataFromApi } from "@/utils/api";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import MainSwiper from "./MainSwiper";
+import Image from "next/image";
 
 const Hero = () => {
   const [categories, setCategories] = useState(null);
@@ -12,9 +13,7 @@ const Hero = () => {
     const { data } = await fetchDataFromApi("/api/categories?populate=*");
     setCategories(data);
   };
-
-
-  console.log(categories)
+console.log(categories);
   return (
     <div className="intro-section">
       <div className="container mt-2">
@@ -35,20 +34,23 @@ const Hero = () => {
                     <Link
                       className={
                         c?.attributes?.sub_categories?.data?.length > 0
-                          ? "sf-with-ul text-dark"
-                          : "text-dark"
+                          ? "sf-with-ul text-dark d-flex"
+                          : "text-dark d-flex"
                       }
                       href={`/category/${c?.attributes?.slug}`}
                     >
-                      <i className="icon-couch" />
+                      <Image
+                        height={20}
+                        width={20}
+                        src={c?.attributes?.image?.data?.[0]?.attributes?.url}
+                        alt={c?.attributes?.name}
+                      />
                       {c?.attributes?.name}
                     </Link>
                     {c?.attributes?.sub_categories?.data?.length > 0 && (
                       <div className="megamenu">
                         <div className="row ">
-                          <div className="col-md-8">
-                            <div className="menu-col">
-                              <div className="row">
+              
                                 <div className="col-md-12">
                                   <ul>
                                     {c?.attributes?.sub_categories?.data?.map(
@@ -64,9 +66,7 @@ const Hero = () => {
                                     )}
                                   </ul>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
+                
                         </div>
                       </div>
                     )}

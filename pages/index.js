@@ -18,7 +18,7 @@ export default function Home({ products,categories, siteinfo ,catProducts}) {
 // console.log(catProducts);
   return (
     <>
-      <div className="page-wrapper">
+      <div className="page-wrapper" style={{padding:"10px"}}>
         {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
