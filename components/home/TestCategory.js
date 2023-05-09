@@ -12,7 +12,7 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 const TestCategory = ({catProducts}) => {
     const categoryName = catProducts?.data?.[0]?.attributes?.category?.data?.attributes?.name;
 
-    console.log(catProducts);
+    // console.log(catProducts);
 
     return (
         <>

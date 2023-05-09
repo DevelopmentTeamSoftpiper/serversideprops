@@ -9,20 +9,27 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
 import { fetchDataFromApi } from '@/utils/api';
 
-const ProductCarousel = ({title,field}) => {
+const ProductCarousel = ({title,field,showToastMessage}) => {
 
   const [products, setProducts] = useState([])
 
 const getProduct = async() => {
   const filterProduct = await fetchDataFromApi(`/api/products?populate=*&filters[${field}][$eq]=true`);
-  console.log("siteinfo", filterProduct)
+  // console.log("siteinfo", filterProduct)
   setProducts(filterProduct)
 }
 
 useEffect(()=> {
   getProduct();
-} , [field])
+} , [])
 
+
+const showToastMsg = (data)=>{
+  // console.log(data.msg);
+  showToastMessage({
+    msg: data.msg
+  })
+}
   return (
     <div className="container deal-section">
         <h3 className="title text-center mt-5 font-weight-bold">
@@ -57,7 +64,7 @@ useEffect(()=> {
 
                 {
                     products?.data?.map((product)=><SwiperSlide key={product?.id}> 
-                                                          <ProductCard key={product?.id} data = {product}/>
+                                                          <ProductCard key={product?.id} data = {product} showToastMsg={showToastMsg}/>
                                               </SwiperSlide>
                     )
                 }

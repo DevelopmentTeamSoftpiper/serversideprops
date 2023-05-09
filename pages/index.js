@@ -11,14 +11,28 @@ import LatestProduct from "@/components/home/LatestProduct";
 import ProductCarousel from "@/components/home/ProductCarousel";
 import HomeCategory from "@/components/home/HomeCategory";
 import TestCategory from "@/components/home/TestCategory";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home({ products,categories, siteinfo ,catProducts}) {
-
+const showToastMessage =(data)=>{
+  toast.success(data.msg, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+ 
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    });
+}
 // console.log(catProducts);
   return (
     <>
       <div className="page-wrapper" style={{padding:"10px"}}>
+      <ToastContainer/>
+
         {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
           <Hero/>
@@ -26,10 +40,10 @@ export default function Home({ products,categories, siteinfo ,catProducts}) {
           <HomeCategory categories={categories} />
           <MiniBanner />
           <TestCategory catProducts={catProducts} />
-          <LatestProduct />
+          <LatestProduct showToastMessage={showToastMessage} />
           <Banner1/>
-          <ProductCarousel title="Discount Sales" field='discountedsale'/>
-          <ProductCarousel title="Best Deals" field="bestdeal" />
+          <ProductCarousel title="Discount Sales" field='discountedsale' showToastMessage={showToastMessage} />
+          <ProductCarousel title="Best Deals" field="bestdeal" showToastMessage={showToastMessage} />
         </main>
         {/* <Footer /> */}
       </div>

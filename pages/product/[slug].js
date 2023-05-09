@@ -8,10 +8,23 @@ import { addToCart } from "@/store/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LatestProduct from "@/components/home/LatestProduct";
+import RelatedProducts from "@/components/product/RelatedProduct";
 
 const ProductDetails = ({ product, products }) => {
   const p = product?.data?.[0]?.attributes;
   const dispatch = useDispatch();
+  const showToastMessage =(data)=>{
+    toast.success(data.msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+   
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+  }
 
   return (
     <main className="main">
@@ -108,7 +121,7 @@ const ProductDetails = ({ product, products }) => {
               oneQuantityPrice: p?.price
             }));
             toast.success("Product Added to Cart", {
-              position: "bottom-right",
+              position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
               closeOnClick: true,
@@ -171,7 +184,7 @@ const ProductDetails = ({ product, products }) => {
             </div>
           </div>
         </div>
-      <LatestProduct />
+      < RelatedProducts products={products} showToastMessage={showToastMessage} />
       </div>
 
 

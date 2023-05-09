@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import Image from 'next/image';
 const HomeCategory = ({categories}) => {
-    console.log(categories);
+    // console.log(categories);
 //     const [categories, setCategories] = useState(null);
 //   useEffect(() => {
 //     fetchCategories();
@@ -62,6 +62,7 @@ const HomeCategory = ({categories}) => {
                             alt=""
                             width={166}
                             height={160}
+                            
                             />
                         </a>
                         </div>

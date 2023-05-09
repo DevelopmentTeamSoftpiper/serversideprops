@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react'
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,18 +9,7 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
 import { fetchDataFromApi } from '@/utils/api';
 
-const LatestProduct = ({showToastMessage}) => {
-
-  const [products, setProducts] = useState([])
-
-const getProduct = async() => {
-  const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
-  setProducts(latestProduct)
-}
-
-useEffect(()=> {
-  getProduct();
-} , [])
+const RelatedProducts = ({showToastMessage, products}) => {
 
 const showToastMsg = (data)=>{
   // console.log(data.msg);
@@ -30,11 +17,10 @@ const showToastMsg = (data)=>{
     msg: data.msg
   })
 }
-
   return (
     <div className="container deal-section">
         <h3 className="title text-center mt-5 font-weight-bold">
-          Latest Product
+          Related Products
         </h3>
 
           <Swiper
@@ -74,5 +60,5 @@ const showToastMsg = (data)=>{
   )
 }
 
-export default LatestProduct;
+export default RelatedProducts;
 

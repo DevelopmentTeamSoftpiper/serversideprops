@@ -91,6 +91,7 @@ const Header = ({siteInfo}) => {
         </div>
         {/* End .header-left */}
         <Search/>
+      
         <div className="header-right">
           <div className="header-dropdown-link">
 

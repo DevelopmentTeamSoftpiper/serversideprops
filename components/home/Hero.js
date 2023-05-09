@@ -13,7 +13,7 @@ const Hero = () => {
     const { data } = await fetchDataFromApi("/api/categories?populate=*");
     setCategories(data);
   };
-console.log(categories);
+// console.log(categories);
   return (
     <div className="intro-section">
       <div className="container mt-2">

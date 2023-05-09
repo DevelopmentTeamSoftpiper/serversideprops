@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 
-const ProductCard = ({data}) => {
+const ProductCard = ({data, showToastMsg}) => {
     const p = data?.attributes;
     const dispatch = useDispatch();
   return (
@@ -57,6 +57,9 @@ const ProductCard = ({data}) => {
             ...data,
             oneQuantityPrice: p?.price
           }));
+          showToastMsg({
+            msg: `${p?.title} is added to the cart`
+          })
 
         }}
       >

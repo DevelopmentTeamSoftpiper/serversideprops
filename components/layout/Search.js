@@ -1,4 +1,5 @@
 import { fetchDataFromApi } from '@/utils/api';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 
 const Search = () => {
@@ -14,7 +15,7 @@ const Search = () => {
       setProducts(data);
     
     };
-console.log(products);
+// console.log(products);
     const filterChangeHandler = (e) => {
         const searchedWord = e.target.value;
         setQuery(searchedWord);
@@ -35,7 +36,7 @@ console.log(products);
 
   return (
 <>
-<div className="header-center">
+<div className="header-center d-flex flex-column ">
     <div className="header-search header-search-visible header-search-no-radius">
       <a href="#" className="search-toggle" role="button">
         <i className="icon-search" />
@@ -88,7 +89,33 @@ console.log(products);
     </div>
     
     {/* End .header-search */}
-    
+    {/* <div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+          Search Results
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <Image src="https://res.cloudinary.com/dz5nyqdv5/image/upload/v1683592036/medium_safefoods_4f9f35f05f.jpg" alt="Video thumbnail" class="mr-3" height={20} width={20}/>
+          <div class="media-body">
+            <h5 class="mt-0">Video Title</h5>
+            <p>Description</p>
+          </div>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <Image src="https://res.cloudinary.com/dz5nyqdv5/image/upload/v1683592036/medium_safefoods_4f9f35f05f.jpg" alt="Video thumbnail" class="mr-3" height={20} width={20}/>
+          <div class="media-body">
+            <h5 class="mt-0">Video Title</h5>
+            <p>Description</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+     */}
   </div>
     
 </>

@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
   useEffect(()=>{
     getSiteInfo();
   },[])
-  console.log(siteInfo);
+  // console.log(siteInfo);
   return(
     <>
 
