@@ -6,13 +6,11 @@ const CartProduct = ({cartProduct}) => {
     <td>
       <a href="#">{cartProduct?.attributes?.title}</a>
     </td>
-    <td>
-      <a href="#">{cartProduct?.oneQuantityPrice}</a>
-    </td>
-    <td>
-      <a href="#">{cartProduct?.quantity}</a>
-    </td>
-    <td>${cartProduct?.attributes?.price}</td>
+    <td></td>
+    <td></td>
+
+
+    <td>{cartProduct?.oneQuantityPrice}*{cartProduct?.quantity}={cartProduct?.attributes?.price}BDT</td>
   </tr>
   )
 }

@@ -39,7 +39,7 @@ const showToastMessage =(data)=>{
           <HomeService />
           <HomeCategory categories={categories} />
           <MiniBanner />
-          <TestCategory catProducts={catProducts} />
+          <TestCategory catProducts={catProducts} showToastMessage={showToastMessage}/>
           <LatestProduct showToastMessage={showToastMessage} />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale' showToastMessage={showToastMessage} />

@@ -7,18 +7,27 @@ import { useSelector } from "react-redux";
 
 const cart = () => {
   const cartProducts = useSelector((state) => state.cart.cartItems);
- const [shippings, setShippings] = useState(null);
-  const subTotal = useMemo(()=>{
-    return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
-  },[cartProducts])
-  const getShippings = async ()=>{
+  const [shippings, setShippings] = useState(null);
+  const [shippingCost, setShippingCost] = useState(70);
+
+  const shippingCostChangeHandler = (e) => {
+    setShippingCost(e.target.value);
+  };
+
+  const subTotal = useMemo(() => {
+    return cartProducts.reduce((total, val) => total + val.attributes.price, 0);
+  }, [cartProducts]);
+  const getShippings = async () => {
     const ships = await fetchDataFromApi("/api/shippings?populate=*");
-    console.log(ships);
+    // console.log(ships);
     setShippings(ships);
-    }
-    useEffect(()=>{
-      getShippings();
-    },[])
+  };
+  useEffect(() => {
+    getShippings();
+  }, []);
+
+  const total = parseInt(subTotal) + parseInt(shippingCost);
+  console.log(total);
 
   return (
     <main className="main">
@@ -68,12 +77,15 @@ const cart = () => {
                   </thead>
                   <tbody>
                     {cartProducts?.map((cartProduct) => (
-                    <CartItem key={cartProduct?.id} cartProduct={cartProduct} />
+                      <CartItem
+                        key={cartProduct?.id}
+                        cartProduct={cartProduct}
+                      />
                     ))}
                   </tbody>
                 </table>
                 {/* End .table table-wishlist */}
-                <div className="cart-bottom">
+                {/* <div className="cart-bottom">
                   <div className="cart-discount">
                     <form action="#">
                       <div className="input-group">
@@ -91,18 +103,18 @@ const cart = () => {
                             <i className="icon-long-arrow-right" />
                           </button>
                         </div>
-                        {/* .End .input-group-append */}
+            
                       </div>
-                      {/* End .input-group */}
+               
                     </form>
                   </div>
-                  {/* End .cart-discount */}
+          
                   <a href="#" className="btn btn-outline-dark-2">
                     <span>UPDATE CART</span>
                     <i className="icon-refresh" />
                   </a>
-                </div>
-                {/* End .cart-bottom */}
+                </div> */}
+         
               </div>
               {/* End .col-lg-9 */}
               <aside className="col-lg-3">
@@ -116,47 +128,20 @@ const cart = () => {
                         <td>${subTotal}</td>
                       </tr>
                       {/* End .summary-subtotal */}
-                      <tr className="summary-shipping">
-                        <td>Shipping:</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                      {shippings?.data?.map((ship)=>(
-  <tr key={ship?.id} className="summary-shipping-row">
-  <td>
-    <div className="custom-control custom-radio">
-      <input
-        type="radio"
-        value= {ship?.attributes?.title}
-        name="shipping"
-        className="custom-control-input"
-      />
-      <label
-        className="custom-control-label"
-        htmlFor="free-shipping"
-      >
-        {ship?.attributes?.title}
-      </label>
-    </div>
-    {/* End .custom-control */}
-  </td>
-  <td>BDT {ship?.attributes?.cost}</td>
-</tr>
-                      ))}
-                    
+              
+                     
+
                       {/* End .summary-shipping-row */}
-         
+
                       <tr className="summary-shipping-estimate">
                         <td>
-                          Estimate for Your Country
+                  
                           <br /> <a href="dashboard.html">Change address</a>
                         </td>
                         <td>&nbsp;</td>
                       </tr>
                       {/* End .summary-shipping-estimate */}
-                      <tr className="summary-total">
-                        <td>Total:</td>
-                        <td>$160.00</td>
-                      </tr>
+              
                       {/* End .summary-total */}
                     </tbody>
                   </table>
