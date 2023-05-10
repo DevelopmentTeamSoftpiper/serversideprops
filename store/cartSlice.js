@@ -14,7 +14,9 @@ export const cartSlice = createSlice({
                 item.quantity++;
                 item.attributes.price = item.oneQuantityPrice * item.quantity;
             } else {
-                state.cartItems.push({ ...action.payload, quantity: 1 });
+                state.cartItems.push({ ...action.payload,
+                     quantity: action.payload.quantity ? action.payload.quantity : 1, 
+                     price: action.payload.oneQuantityPrice* action.payload.quantity });
             }
         },
         updateCart: (state, action) => {

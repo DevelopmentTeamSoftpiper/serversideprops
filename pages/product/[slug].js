@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fetchDataFromApi } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +26,8 @@ const ProductDetails = ({ product, products }) => {
       });
   }
 
+  const [quantity, setQuantity] = useState(1);
+  console.log(quantity);
   return (
     <main className="main">
       <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
@@ -111,6 +113,8 @@ const ProductDetails = ({ product, products }) => {
                         step={1}
                         data-decimals={0}
                         required=""
+                        value={quantity}
+                        onChange={(e)=>{setQuantity(e.target.value)}}
                       />
                     </div>
                   </div>
@@ -118,7 +122,8 @@ const ProductDetails = ({ product, products }) => {
                     <button className="btn-product btn-cart"  onClick={()=>{
             dispatch(addToCart({
               ...product?.data?.[0],
-              oneQuantityPrice: p?.price
+              oneQuantityPrice: p?.price,
+              quantity:quantity
             }));
             toast.success("Product Added to Cart", {
               position: "top-right",

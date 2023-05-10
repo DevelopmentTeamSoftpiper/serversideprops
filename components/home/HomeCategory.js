@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Keyboard, Mousewheel, Navigation } from "swiper";
 import Image from "next/image";
+import Link from "next/link";
 const HomeCategory = ({ categories }) => {
   // console.log(categories);
   //     const [categories, setCategories] = useState(null);
@@ -53,7 +54,7 @@ const HomeCategory = ({ categories }) => {
               <SwiperSlide key={cat?.id}>
                 <div className="category position-relative">
                   <div className="category-image">
-                    <a href="#">
+                    <Link href={`/category/${cat?.attributes?.slug}`}>
                       <Image
                         src={cat?.attributes?.image?.data?.[0]?.attributes?.url}
                         className="w-100"
@@ -61,7 +62,7 @@ const HomeCategory = ({ categories }) => {
                         width={166}
                         height={160}
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="category-body letter-spacing-normal font-size-normal text-center position-absolute text-uppercase">
                     <a

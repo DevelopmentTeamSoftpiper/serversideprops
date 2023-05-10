@@ -10,9 +10,6 @@ const cart = () => {
   const [shippings, setShippings] = useState(null);
   const [shippingCost, setShippingCost] = useState(70);
 
-  const shippingCostChangeHandler = (e) => {
-    setShippingCost(e.target.value);
-  };
 
   const subTotal = useMemo(() => {
     return cartProducts.reduce((total, val) => total + val.attributes.price, 0);
@@ -27,7 +24,7 @@ const cart = () => {
   }, []);
 
   const total = parseInt(subTotal) + parseInt(shippingCost);
-  console.log(total);
+  // console.log(total);
 
   return (
     <main className="main">
