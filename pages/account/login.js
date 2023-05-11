@@ -1,3 +1,4 @@
+/* eslint-disable */
 import AlertBox from "@/components/elements/AlertBox";
 import {
   jwtSuccess,
@@ -6,15 +7,19 @@ import {
   loginSuccess,
 } from "@/store/userSlice";
 import axios from "axios";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoginOTP from "./LoginOTP";
 
-const login = () => {
+
+const Login = () => {
+
+  const [toggleProvider, setToggleProvider] = useState(false);
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [values, setValues] = useState({
@@ -27,8 +32,8 @@ const login = () => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  //
-  //
+  
+
   //Login Handler
   const login = async () => {
     try {
@@ -96,83 +101,102 @@ const login = () => {
         <div className="container">
           <div className="form-box">
             <div className="form-tab">
-            <h6>Login</h6>
-
               <div className="tab-content">
                 <div
                   className="tab-pane fade show active"
                   id="register-2"
                   role="tabpanel"
                   aria-labelledby="register-tab-2"
-                >
-                  <form onSubmit={submitHandler}>
-                    <div className="form-group">
-                      <label htmlFor="email">Email Address</label>
-                      <input
-                        type="email"
-                        placeholder="email"
-                        onChange={handleChange}
-                        name="identifier"
-                        value={identifier}
-                        className="form-control"
-                        id="email"
-                        required
-                      />
-                    </div>
+                >              
+                <div>
+                  <p className="text-center uppercase text-accent text-3xl text-black fs-bold">
+                    sign in with {toggleProvider ? 'EMAIL' : 'OTP'}
+                  </p> 
+                </div> 
+          
 
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        placeholder="password"
-                        name="password"
-                        value={password}
-                        onChange={handleChange}
-                        className="form-control"
-                        id="password"
-                        required
-                      />
-                    </div>
+            {
 
-                    <div className="form-footer">
-                      <button
-                        type="submit"
-                        className="btn btn-outline-primary-2"
-                      >
-                        <span>{buttonText}</span>
-                        <i className="icon-long-arrow-right" />
-                      </button>
-
-                      <div className="custom-control ">
-                        
-                        
-                          <Link href="/account/forget-password">Forget Password!</Link> 
-                      
-                      </div>
-                      {/* End .custom-checkbox */}
-                    </div>
-                    {/* End .form-footer */}
-                  </form>
-                  {/* <div className="form-choice">
-                  <p className="text-center">or sign in with</p>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <a href="#" className="btn btn-login btn-g">
-                        <i className="icon-google" />
-                        Login With Google
-                      </a>
-                    </div>
-                 
-                    <div className="col-sm-6">
-                      <a href="#" className="btn btn-login  btn-f">
-                        <i className="icon-facebook-f" />
-                        Login With Facebook
-                      </a>
-                    </div>
-                  
+              toggleProvider 
+              ?
+                <form onSubmit={submitHandler}>
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                      type="email"
+                      placeholder="email"
+                      onChange={handleChange}
+                      name="identifier"
+                      value={identifier}
+                      className="form-control"
+                      id="email"
+                      required
+                    />
                   </div>
-               
-                </div> */}
+
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      placeholder="password"
+                      name="password"
+                      value={password}
+                      onChange={handleChange}
+                      className="form-control"
+                      id="password"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-footer">
+                    <button
+                      type="submit"
+                      className="btn btn-outline-primary-2"
+                    >
+                      <span>{buttonText}</span>
+                      <i className="icon-long-arrow-right" />
+                    </button>
+
+                    <div className="custom-control ">
+                        <Link href="/account/forget-password">Forget Password!</Link> 
+                    </div>
+                  </div>
+                </form>
+              :
+             <LoginOTP /> 
+            
+            }
+
+
+              <div style={{textAlign:'center'}} className="d-flex justify-center">
+                {
+                  
+                  !toggleProvider 
+                        ? 
+                        <div className="row">
+                        <div className="col-sm-12">
+                          <button className="btn btn-login btn-g" onClick={(e)=> setToggleProvider(!toggleProvider)}>
+                            <i className="icon-long-arrow-right" />
+                            Login With EMAIL
+                          </button>
+                        </div>
+                      </div>
+                  
+                      : 
+                      
+                      
+                      <div className="row">
+                          <div className="col-sm-12">
+                            <button className="btn btn-login btn-g " onClick={(e)=> setToggleProvider(!toggleProvider)}>
+                              <i className="icon-long-arrow-right" />
+                              Login With MOBILE
+                            </button>
+                          </div>
+                      </div>
+                }
+
+              </div>
+
                   {/* End .form-choice */}
                 </div>
                 {/* .End .tab-pane */}
@@ -190,4 +214,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
