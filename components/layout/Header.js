@@ -5,12 +5,16 @@ import AuthModal from '../auth/AuthModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import Cart from './Cart';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/store/userSlice';
 import Search from './Search';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/firebase.config';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Header = ({siteInfo}) => {
   // console.log(siteInfo);
+  const {user} = useSelector(state=> state)
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = ()=>{
@@ -19,8 +23,16 @@ const Header = ({siteInfo}) => {
   const menuCloseHandler = (data)=>{
     setShowMenu(data.closeMenu);
   }
+
+  const logOut = async() =>{
+      dispatch(logout());
+      await signOut(auth);
+      toast.success("Sign out successfully");
+  }
+
   return (
     <>
+    <ToastContainer />
     <header className="header header-intro-clearance header-26">
     <div className="header-top">
       <div className="container">
@@ -37,32 +49,43 @@ const Header = ({siteInfo}) => {
               <a href="#">Links</a>
               <ul>
      
-                <li>
-                  <div className="header-dropdown">
-                    <a href="#">Account</a>
-                    <div className="header-menu">
-                      <ul>
-                        <li>
-                          <Link href="/account">Account Details</Link>
-                        </li>
-                        <li>
-                          <a href="#">Orders</a>
-                        </li>
-                        <li>
-                          <a href="#"  onClick={() => {
-                    dispatch(logout());
-                  }}>Logout</a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* End .header-menu */}
-                  </div>
-                </li>
-                <li>
-                  <a href="#signin-modal" data-toggle="modal">
-                    Sign in / Sign up
-                  </a>
-                </li>
+                {
+                  user.currentUser != null ?
+                    <li>
+                      <div className="header-dropdown">
+                        <a href="#">Account</a>
+                        <div className="header-menu">
+                          <ul>
+                            <li>
+                              <Link href="/account">Account Details</Link>
+                            </li>
+                            <li>
+                              <a href="#">Orders</a>
+                            </li>
+                            <li>
+                              <button 
+                                  className='icon-long-arrow-right text-red-700' 
+                                  onClick={logOut}>
+                                    Logout
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                        {/* End .header-menu */}
+                      </div>
+                    </li>
+                    :
+                    
+                    <li>
+                      <Link href="/account/login" data-toggle="modal">
+                        Sign in / 
+                      </Link>
+                      <Link href="/account/register" data-toggle="modal">
+                        Sign up
+                      </Link>
+                    </li>
+                }
+               
               </ul>
             </li>
           </ul>

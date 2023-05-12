@@ -1,4 +1,5 @@
 /* eslint-disable */
+import LoginOTP from "@/components/auth/LoginOTP";
 import AlertBox from "@/components/elements/AlertBox";
 import {
   jwtSuccess,
@@ -13,7 +14,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginOTP from "./LoginOTP";
+
 
 
 const Login = () => {

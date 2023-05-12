@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { logout } from "@/store/userSlice";
 import { fetchDataFromApi, postDataToApi,updateDataToApi } from "@/utils/api";
 import withAuth from "@/utils/restrict";
