@@ -1,5 +1,9 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { MdCall } from 'react-icons/md';
+import { AiOutlineMail } from 'react-icons/ai';
 
 const Footer = ({siteInfo}) => {
   return (
@@ -57,10 +61,12 @@ const Footer = ({siteInfo}) => {
       </div>
       {/* End .container-fluid */}
     </div>
+    
     {/* End .cta */}
     <div className="container">
       <hr className="mt-0 mb-0" style={{ borderColor: "#444" }} />
     </div>
+
     <div className="footer-middle border-0">
       <div className="container">
         <div className="row">
@@ -72,65 +78,59 @@ const Footer = ({siteInfo}) => {
               width={105}
               height={25}
             />
-              <p className="font-weight-normal second-primary-color">
-                Praesent dapibus, neque id cursus ucibus, tortor neque egestas
-                augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.
-                Nam dui mi, tincidunt quis, accumsan porttitor, facilisis
-                luctus, metus.{" "}
-              </p>
-              <div className="widget-about-info">
-                <div className="row">
-                  <div className="col-sm-6 col-md-4">
-                    <span className="widget-about-title text-white">
-                      Got Question? Call us 24/7
+            
+             <ul className="widget-list mt-3">
+                <li>
+                  <div className='d-flex items-center'>
+                    <span> 
+                      <FaMapMarkerAlt className='text-3xl mr-3' />
                     </span>
-                    <a href="tel:123456789" className="text-primary">
-                      +0123 456 789
-                    </a>
+                    <span> Shop #33, Road #5, Block-B, Banasree, Dhaka </span>
                   </div>
-                  {/* End .col-sm-6 */}
-                  <div className="col-sm-6 col-md-8">
-                    <span className="pl-3 widget-about-title text-white">
-                      Payment Method
-                    </span>
-                    <figure className="pl-3 mb-0 footer-payments">
-                      <img
-                        src="assets/images/payments.png"
-                        alt="Payment methods"
-                        width={272}
-                        height={20}
-                      />
-                    </figure>
-                    {/* End .footer-payments */}
+                </li>
+                <li>
+                  <div className='d-flex items-center'>
+                    <span> 
+                    <MdCall className='text-3xl mr-3' />
+                    </span> 
+                    <span> +8801730593754 </span>
                   </div>
-                  {/* End .col-sm-6 */}
-                </div>
-                {/* End .row */}
-              </div>
+                </li>
+                <li>
+                  <div className='d-flex items-center'>
+                    <span> 
+                      <AiOutlineMail className='text-3xl mr-3' />
+                    </span> 
+                    <span> safefoods.info@gmail.com </span>
+                  </div>
+                </li>
+                
+              </ul>
               {/* End .widget-about-info */}
             </div>
             {/* End .widget about-widget */}
           </div>
           {/* End .col-sm-12 col-lg-3 */}
+
           <div className="col-sm-4 col-lg-5cols">
             <div className="widget mb-4">
               <h4 className="widget-title text-white">Information</h4>
               {/* End .widget-title */}
               <ul className="widget-list">
                 <li>
-                  <a href="about.html">About Molla</a>
+                  <Link href="/about">About Us</Link>
                 </li>
                 <li>
-                  <a href="#">How to shop on Molla</a>
+                  <Link href="/blog">Latest Post</Link>
                 </li>
                 <li>
-                  <a href="faq.html">FAQ</a>
+                  <Link href="/shop">Selling Tips</Link>
                 </li>
                 <li>
-                  <a href="contact.html">Contact us</a>
+                 <Link href="/shop">Advertising</Link>
                 </li>
                 <li>
-                  <a href="login.html">Log in</a>
+                <Link href="/about">Contact Us</Link>
                 </li>
               </ul>
               {/* End .widget-list */}
@@ -144,23 +144,21 @@ const Footer = ({siteInfo}) => {
               {/* End .widget-title */}
               <ul className="widget-list">
                 <li>
-                  <a href="#">Payment Methods</a>
+                  <Link href="#">Payment Methods</Link>
                 </li>
                 <li>
-                  <a href="#">Money-back guarantee!</a>
+                  <Link href="#">Money-back guarantee!</Link>
                 </li>
                 <li>
-                  <a href="#">Returns</a>
+                  <Link href="/returns-refund">Returns</Link>
                 </li>
                 <li>
-                  <a href="#">Shipping</a>
+                  <Link href="/shop">Shipping</Link>
                 </li>
                 <li>
-                  <a href="#">Terms and conditions</a>
+                    <Link href="/terms-and-conditions">Terms and conditions</Link>
                 </li>
-                <li>
-                  <a href="#">Privacy Policy</a>
-                </li>
+
               </ul>
               {/* End .widget-list */}
             </div>
@@ -173,19 +171,19 @@ const Footer = ({siteInfo}) => {
               {/* End .widget-title */}
               <ul className="widget-list">
                 <li>
-                  <a href="#">Sign In</a>
+                  <Link href="/account/login">Sign In</Link>
                 </li>
                 <li>
-                  <a href="cart.html">View Cart</a>
+                  <Link href="/cart">View Cart</Link>
                 </li>
                 <li>
-                  <a href="#">My Wishlist</a>
+                  <Link href="/wishlist">My Wishlist</Link>
                 </li>
                 <li>
-                  <a href="#">Track My Order</a>
+                  <Link href="/account">Track My Order</Link>
                 </li>
                 <li>
-                  <a href="#">Help</a>
+                  <Link href="#">Help</Link>
                 </li>
               </ul>
               {/* End .widget-list */}
@@ -205,14 +203,20 @@ const Footer = ({siteInfo}) => {
           Copyright © 2019 Molla Store. All Rights Reserved.{" "}
         </p>
         {/* End .footer-copyright */}
-        <ul className="footer-menu justify-content-center">
-          <li>
-            <a href="#">Terms Of Use</a>
-          </li>
-          <li>
-            <a href="#">Privacy Policy</a>
-          </li>
-        </ul>
+        <div className="col-sm-6 col-md-8">
+                    <span className="pl-3 widget-about-title text-white">
+                      Payment Method
+                    </span>
+                    <figure className="pl-3 mb-0 footer-payments">
+                      <Image
+                        src="/assets/images/payments.png"
+                        alt="Payment methods"
+                        width={272}
+                        height={20}
+                      />
+                    </figure>
+                    {/* End .footer-payments */}
+        </div>
         {/* End .footer-menu */}
         <div className="social-icons social-icons-color justify-content-center">
           <span className="social-label">Social Media</span>
