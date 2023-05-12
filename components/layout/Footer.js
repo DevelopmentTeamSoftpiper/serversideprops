@@ -11,56 +11,6 @@ const Footer = ({siteInfo}) => {
     className="footer footer-2 font-weight-normal second-primary-color"
     style={{ backgroundColor: "#222" }}
   >
-    <div className="cta cta-horizontal cta-horizontal-box pt-5 pb-5">
-      <div className="container">
-        <div className="row align-items-center justify-content-center">
-          <div className="col-xl-4-5col offset-xl-10col">
-            <div className="row align-items-center">
-              <div className="col-lg-5 cta-txt text-lg-left text-center">
-                <h3 className="cta-title text-white my-2 mt-0">
-                  Join Our Newsletter
-                </h3>
-                {/* End .cta-title */}
-                <p className="cta-desc font-size-normal second-primary-color font-weight-normal">
-                  Subcribe to get information about products and coupons
-                </p>
-                {/* End .cta-desc font-size-normal */}
-              </div>
-              {/* End .col-lg-5 */}
-              <div className="col-lg-7">
-                <form
-                  action="#"
-                  className="d-flex justify-content-end justify-content-center"
-                >
-                  <div className="input-group">
-                    <input
-                      type="email"
-                      className="form-control mr-0 font-weight-normal"
-                      placeholder="Enter your Email Address"
-                      aria-label="Email Adress"
-                      required=""
-                    />
-                    <div className="input-group-append">
-                      <button className="btn text-uppercase" type="submit">
-                        Subscribe
-                        <i className="icon-long-arrow-right mr-0" />
-                      </button>
-                    </div>
-                    {/* .End .input-group-append */}
-                  </div>
-                  {/* .End .input-group */}
-                </form>
-              </div>
-              {/* End .col-lg-7 */}
-            </div>
-            {/* End .row */}
-          </div>
-          {/* End .col-xl-8 offset-2 */}
-        </div>
-        {/* End .row */}
-      </div>
-      {/* End .container-fluid */}
-    </div>
     
     {/* End .cta */}
     <div className="container">
@@ -200,22 +150,21 @@ const Footer = ({siteInfo}) => {
     <div className="footer-bottom font-weight-normal">
       <div className="container">
         <p className="footer-copyright font-weight-normal ml-lg-2 second-primary-color">
-          Copyright © 2019 Molla Store. All Rights Reserved.{" "}
+          Copyright © 2023 SOFTPIPER  
         </p>
         {/* End .footer-copyright */}
-        <div className="col-sm-6 col-md-8">
-                    <span className="pl-3 widget-about-title text-white">
-                      Payment Method
-                    </span>
-                    <figure className="pl-3 mb-0 footer-payments">
-                      <Image
-                        src="/assets/images/payments.png"
-                        alt="Payment methods"
-                        width={272}
-                        height={20}
-                      />
-                    </figure>
-                    {/* End .footer-payments */}
+        <div className="col-sm-6 d-flex items-center col-md-6">
+              <span className="pl-3 widget-about-title text-white">
+                Payment Method
+              </span>
+              <figure className="pl-3 mb-0 footer-payments">
+                <Image
+                  src="/assets/images/payments.png"
+                  alt="Payment methods"
+                  width={272}
+                  height={20}
+                />
+              </figure>
         </div>
         {/* End .footer-menu */}
         <div className="social-icons social-icons-color justify-content-center">
