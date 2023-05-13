@@ -1,6 +1,6 @@
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {
@@ -22,9 +22,7 @@ const LoginOTP = () => {
     const [user, setUser] = useState(null);
     const dispatch = useDispatch();
 
-    user && console.log(user);
-  
- 
+
     function onCaptchVerify() {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(
@@ -70,8 +68,18 @@ const LoginOTP = () => {
           const  {phoneNumber, accessToken ,uid} = res?.user;
           const firebaseUser = {uid, phoneNumber, accessToken};
           dispatch(loginSuccess(firebaseUser));
-          const {data} = await axios.post("http://localhost:1337/api/profiles", {"data": {uid, phone:phoneNumber, accessToken}});
-          console.log(data);
+
+          const existUser = await axios.get(`http://localhost:1337/api/profiles?filters[uid][$eq]=${uid}`);
+    
+          if(existUser.data.data.length === 0){
+            const {data} = await axios.post("http://localhost:1337/api/profiles", {"data": {uid, phone:phoneNumber, accessToken}});
+            console.log('create new user', data);
+          }
+          else{
+            const {data} = await axios.put(`http://localhost:1337/api/profiles/${existUser?.data?.data?.id}`,
+            {"data": {uid, phone:phoneNumber, accessToken}});
+             console.log('update new user', data);
+          }
           setLoading(false);
           toast.success("Login Sucessfully");
         })

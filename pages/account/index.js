@@ -34,6 +34,7 @@ const index = () => {
   },[])
 
   const profile = async () => {
+    
     try {
       if(!profileId){
         const response = await postDataToApi("/api/profiles",
@@ -318,7 +319,23 @@ const index = () => {
                 <form onSubmit={profileSubmitHandler}>
                   <div className="row">
                     <div className="col-sm-12">
-                      <label>Mobile No </label>
+                      <label>Email </label>
+                      <input
+                        type="email"
+                        name="email"
+                        className="form-control"
+                        required=""
+                        value={phone}
+                        onChange={(e) => {
+                          return setPhone(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <label>Phone </label>
                       <input
                         type="text"
                         name="phone"
