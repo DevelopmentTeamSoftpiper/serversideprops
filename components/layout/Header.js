@@ -14,7 +14,6 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const Header = ({siteInfo}) => {
   // console.log(siteInfo);
-  const {user} = useSelector(state=> state)
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = ()=>{
@@ -34,7 +33,7 @@ const Header = ({siteInfo}) => {
     <>
     <ToastContainer />
     <header className="header header-intro-clearance header-26">
-    <div className="header-top">
+    {/* <div className="header-top">
       <div className="container">
         <div className="header-left">
           <a href="tel:#" className="font-weight-normal">
@@ -42,59 +41,48 @@ const Header = ({siteInfo}) => {
             Call: {siteInfo?.data?.attributes?.phone}
           </a>
         </div>
-        {/* End .header-left */}
+  
         <div className="header-right font-weight-normal">
           <ul className="top-menu">
             <li>
               <a href="#">Links</a>
               <ul>
      
-                {
-                  user.currentUser != null ?
-                    <li>
-                      <div className="header-dropdown">
-                        <a href="#">Account</a>
-                        <div className="header-menu">
-                          <ul>
-                            <li>
-                              <Link href="/account">Account Details</Link>
-                            </li>
-                            <li>
-                              <a href="#">Orders</a>
-                            </li>
-                            <li>
-                              <button 
-                                  className='icon-long-arrow-right text-red-700' 
-                                  onClick={logOut}>
-                                    Logout
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                        {/* End .header-menu */}
-                      </div>
-                    </li>
-                    :
-                    
-                    <li>
-                      <Link href="/account/login" data-toggle="modal">
-                        Sign in / 
-                      </Link>
-                      <Link href="/account/register" data-toggle="modal">
-                        Sign up
-                      </Link>
-                    </li>
-                }
-               
+                <li>
+                  <div className="header-dropdown">
+                    <a href="#">Account</a>
+                    <div className="header-menu">
+                      <ul>
+                        <li>
+                          <Link href="/account">Account Details</Link>
+                        </li>
+                        <li>
+                          <a href="#">Orders</a>
+                        </li>
+                        <li>
+                          <a href="#"  onClick={() => {
+                    dispatch(logout());
+                  }}>Logout</a>
+                        </li>
+                      </ul>
+                    </div>
+       
+                  </div>
+                </li>
+                <li>
+                  <a href="#signin-modal" data-toggle="modal">
+                    Sign in / Sign up
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
-          {/* End .top-menu */}
+   
         </div>
-        {/* End .header-right */}
+     
       </div>
-      {/* End .container */}
-    </div>
+
+    </div> */}
     {/* End .header-top */}
     <div className="header-middle">
       <div className="container">
@@ -117,7 +105,41 @@ const Header = ({siteInfo}) => {
       
         <div className="header-right">
           <div className="header-dropdown-link">
-
+          <ul className="top-menu">
+            <li>
+            {/* <Link href={user? "#": "/account/login"} className='' style={{backgroundColor: "#61AB00",color:"white", padding:"10px"}}>{user? "Account" : "Login/Register"}</Link> */}
+              
+     
+           
+                  <div className="header-dropdown">
+                    <Link href={user? "#": "/account/login"} className='btn btn-sm' style={{backgroundColor: "#61AB00", padding:'10px', minWidth:"100px"}}>{user? "Account" : "Login/Register"}</Link>
+                    {user && 
+                               <div className="header-menu">
+                               <ul>
+                                 <li>
+                                   <Link href="/account">Account Details</Link>
+                                 </li>
+                                 {/* <li>
+                                   <a href="#">Orders</a>
+                                 </li> */}
+                                 <li>
+                                   <a href="#"  onClick={() => {
+                             dispatch(logout());
+                           }}>Logout</a>
+                                 </li>
+                               </ul>
+                             </div>}
+                    {/* End .header-menu */}
+                  </div>
+      
+                {/* <li>
+                  <a href="#signin-modal" data-toggle="modal">
+                    Sign in / Sign up
+                  </a>
+                </li> */}
+             
+            </li>
+          </ul>
         <Cart/>
   
           </div>
@@ -160,7 +182,7 @@ const Header = ({siteInfo}) => {
               </li>
        
      
-              <li>
+              {/* <li>
                 <a href="blog.html" className="sf-with-ul">
                   Blog
                 </a>
@@ -233,7 +255,7 @@ const Header = ({siteInfo}) => {
                     </ul>
                   </li>
                 </ul>
-              </li>
+              </li> */}
         
             </ul>
             {/* End .menu */}
@@ -241,10 +263,10 @@ const Header = ({siteInfo}) => {
           {/* End .main-nav */}
         </div>
         {/* End .header-center */}
-        <div className="header-right">
+        {/* <div className="header-right">
           <i className="la la-lightbulb-o" />
           <p className="text-dark">Clearance Up to 30% Off</p>
-        </div>
+        </div> */}
       </div>
       {/* End .container */}
     </div>
@@ -252,7 +274,7 @@ const Header = ({siteInfo}) => {
   </header>
   <MobileMenuOverlay showMenu ={showMenu} menuCloseHandler = {menuCloseHandler} />
   <MobileMenuContainer showMenu ={showMenu}  menuCloseHandler = {menuCloseHandler} />
-  <AuthModal/>
+  {/* <AuthModal/> */}
   </>
   )
 }

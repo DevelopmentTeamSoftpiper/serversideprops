@@ -1178,7 +1178,9 @@ blockquote {
   .header-intro-clearance .header-dropdown > a:after,
   .header-intro-clearance .header-dropdown > span:after {
     font-size: 1rem;
-    margin-top: -.6rem; }
+    margin-top: -.6rem;
+    margin-right: 5px;
+  }
 .header-intro-clearance .dropdown.category-dropdown {
   width: 275px;
   max-width: 95%; }
@@ -1288,7 +1290,7 @@ blockquote {
         padding-right: 0; }
       .top-menu:not(.top-link-menu) > li::after {
         font-family: "molla";
-        content: '\f110';
+        /* content: '\f110'; */
         position: absolute;
         right: 0;
         top: 50%;
