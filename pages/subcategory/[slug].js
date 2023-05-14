@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 import ProductCard from "@/components/product/ProductCard";
 import Link from "next/link";
 import BestDeal from "@/components/home/ProductCarousel";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const maxResult = 3;
 
 const SubCategoryProduct = ({ category, products, slug }) => {
-    console.log(category);
+    console.log(products);
     const [pageIndex, setPageIndex] = useState(1);
     const { query } = useRouter();
   
@@ -34,6 +35,19 @@ const SubCategoryProduct = ({ category, products, slug }) => {
       const { data } = await fetchDataFromApi("/api/categories?populate=*");
       setCategories(data);
     };
+
+    const showToastMsg =(data)=>{
+      toast.success(data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+     
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
   return (
     <main className="main">
     <div
@@ -75,7 +89,7 @@ const SubCategoryProduct = ({ category, products, slug }) => {
               <div className="row justify-content-center">
               {products?.data?.map((product) => (
           <div key={product?.id} className="col-6 col-md-4 col-lg-4 col-xl-3">
-            <ProductCard key={product?.id} data={product} />
+            <ProductCard key={product?.id} data={product} showToastMsg={showToastMsg} />
           </div>
         ))}
         
