@@ -88,14 +88,23 @@ const checkout = () => {
     // console.log(ships);
     setShippings(ships);
   };
+
+  const [paymentMethods, setPaymentMethods] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
+
+  const getPaymentMethods = async () => {
+    const pMethods = await fetchDataFromApi("/api/payment-methods?populate=*");
+    console.log(pMethods);
+    setPaymentMethods(pMethods);
+  };
   const total = parseInt(subTotal) + parseInt(shippingCost);
   // console.log(total);
 
   useEffect(() => {
     getShippings();
+    getPaymentMethods();
   }, []);
 
-  const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
   const [phoneNo, setPhoneNo] = useState("");
   const [transactionId, setTransactionId] = useState("");
 
@@ -307,54 +316,36 @@ const checkout = () => {
                       </td>
                       <td>&nbsp;</td>
                     </tr>
-                    <div className="form-check">
-                      <label className="form-check-label">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="cashOnDelivery"
-                          value="cashOnDelivery"
-                          onChange={(e) => {
-                            setPaymentMethod(e.target.value);
-                          }}
-                          style={{ marginTop: ".6rem", marginLeft: "-2rem" }}
-                          checked={paymentMethod === "cashOnDelivery"}
-                        />
-                        Cash on Delivery
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <label className="form-check-label">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="bkash"
-                          value="bkash"
-                          onChange={(e) => {
-                            setPaymentMethod(e.target.value);
-                          }}
-                          style={{ marginTop: ".6rem", marginLeft: "-2rem" }}
-                        />
-                        BKash
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <label className="form-check-label">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="nagad"
-                          value="nagad"
-                          onChange={(e) => {
-                            setPaymentMethod(e.target.value);
-                          }}
-                          style={{ marginTop: ".6rem", marginLeft: "-2rem" }}
-                        />
-                        Nagad
-                      </label>
-                    </div>
-                    {(paymentMethod === "bkash" ||
-                      paymentMethod === "nagad") && (
+                    {paymentMethods?.data?.map((method) => (
+                          <tr key={method?.id} className="summary-shipping-row">
+                            <td>
+                              <div className="form-check ">
+                                <label className="form-check-label">
+                                  <input
+                                    type="radio"
+                                    className="form-check-input"
+                                    name="paymentMethod"
+                                    value={method?.attributes?.title}
+                                    style={{
+                                      marginTop: ".6rem",
+                                      marginLeft: "-2rem",
+                                    }}
+                                    onChange={(e)=>{setPaymentMethod(e.target.value)}}
+                                    checked={
+                                      method?.attributes?.title == paymentMethod
+                                    }
+                                  />
+                                  <p>{method?.attributes?.title} </p>
+                                  <small>{method?.attributes?.description}</small>
+                                </label>
+                              </div>
+                              {/* End .custom-control */}
+                            </td>
+                          
+                          </tr>
+                        ))}
+                    {(paymentMethod === "Bkash" ||
+                      paymentMethod === "Rocket" || paymentMethod === "Nagad") && (
                       <div className="row">
                         <div className="col-md-6">
                           <input
