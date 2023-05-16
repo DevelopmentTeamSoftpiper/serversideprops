@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
+import React from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/effect-coverflow";
 import "swiper/css";
@@ -7,12 +6,11 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
-import { fetchDataFromApi } from '@/utils/api';
+
 
 const RelatedProducts = ({showToastMessage, products}) => {
 
 const showToastMsg = (data)=>{
-  // console.log(data.msg);
   showToastMessage({
     msg: data.msg
   })

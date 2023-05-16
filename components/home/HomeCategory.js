@@ -58,19 +58,19 @@ const HomeCategory = ({ categories }) => {
                       <Image
                         src={cat?.attributes?.image?.data?.[0]?.attributes?.url}
                         className="w-100"
-                        alt=""
+                        alt="img"
                         width={166}
                         height={160}
                       />
                     </Link>
                   </div>
                   <div className="category-body letter-spacing-normal font-size-normal text-center position-absolute text-uppercase">
-                    <a
+                    <Link
                       href="#"
                       className="category-title text-truncate font-weight-normal"
                     >
                       {cat?.attributes?.name}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </SwiperSlide>

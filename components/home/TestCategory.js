@@ -9,12 +9,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Keyboard, Mousewheel, Navigation } from "swiper";
+
 const TestCategory = ({catProducts, showToastMessage}) => {
     const categoryName = catProducts?.data?.[0]?.attributes?.category?.data?.attributes?.name;
-
-    // console.log(catProducts);
     const showToastMsg = (data)=>{
-      // console.log(data.msg);
       showToastMessage({
         msg: data.msg
       })

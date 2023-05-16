@@ -100,10 +100,10 @@ const Login = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
+              <Link href="index.html">Home</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">Pages</a>
+              <Link href="#">Pages</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Login

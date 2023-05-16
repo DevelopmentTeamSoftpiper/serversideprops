@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Banner1 = () => {
@@ -14,14 +15,14 @@ const Banner1 = () => {
           >
             <div className="banner-content position-relative pt-0">
               <h4 className="banner-subtitle letter-spacing-normal font-size-normal text-white text-center pt-0 mb-1">
-                <a href="#">Discount</a>
+                <Link href="#">Discount</Link>
               </h4>
               {/* End .banner-subtitle letter-spacing-normal font-size-normal */}
               <h3 className="banner-title text-white text-center font-weight-bold mb-0">
-                <a href="#">
+                <Link href="#">
                   New Lower Prices On Hundreds
                   <br /> Of Home Furnishings
-                </a>
+                </Link>
               </h3>
               {/* End .banner-title */}
               <h4 className="banner-text text-secondary text-center font-weight-light text-uppercase">

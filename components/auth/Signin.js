@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Signin = () => {
@@ -49,9 +50,9 @@ const Signin = () => {
         </label>
       </div>
       {/* End .custom-checkbox */}
-      <a href="#" className="forgot-link">
+      <Link href="#" className="forgot-link">
         Forgot Your Password?
-      </a>
+      </Link>
     </div>
     {/* End .form-footer */}
   </form>

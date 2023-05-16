@@ -13,7 +13,7 @@ const Hero = () => {
     const { data } = await fetchDataFromApi("/api/categories?populate=*");
     setCategories(data);
   };
-// console.log(categories);
+
   return (
     <div className="intro-section">
       <div className="container mt-2">
@@ -50,7 +50,6 @@ const Hero = () => {
                     {c?.attributes?.sub_categories?.data?.length > 0 && (
                       <div className="megamenu">
                         <div className="row ">
-              
                                 <div className="col-md-12">
                                   <ul>
                                     {c?.attributes?.sub_categories?.data?.map(
@@ -66,7 +65,6 @@ const Hero = () => {
                                     )}
                                   </ul>
                                 </div>
-                
                         </div>
                       </div>
                     )}

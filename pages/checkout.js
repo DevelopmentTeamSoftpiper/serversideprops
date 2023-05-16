@@ -1,3 +1,4 @@
+/* eslint-disable */
 import CartProduct from "@/components/checkout/CartProduct";
 import { emptyCart } from "@/store/cartSlice";
 import { fetchDataFromApi, postDataToApi } from "@/utils/api";
@@ -10,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BsFillCartXFill } from 'react-icons/bs';
+import Link from "next/link";
 const checkout = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +30,6 @@ const checkout = () => {
   const user = useSelector((state) => state.user.currentUser);
   const provider = useSelector((state)=>state.user.provider);
 
-  // console.log(user);
 
   const getUserInfo = async () => {
     if(provider === "strapi"){
@@ -199,10 +200,10 @@ const checkout = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
+              <Link href="index.html">Home</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">Shop</a>
+              <Link href="#">Shop</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Checkout

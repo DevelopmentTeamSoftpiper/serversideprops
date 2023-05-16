@@ -11,7 +11,7 @@ import { fetchDataFromApi } from '@/utils/api';
 
 const LatestProduct = ({showToastMessage}) => {
 
-  const [products, setProducts] = useState([])
+const [products, setProducts] = useState([])
 
 const getProduct = async() => {
   const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
@@ -23,9 +23,8 @@ useEffect(()=> {
 } , [])
 
 const showToastMsg = (data)=>{
-  // console.log(data.msg);
   showToastMessage({
-    msg: data.msg
+    msg: data?.msg
   })
 }
 

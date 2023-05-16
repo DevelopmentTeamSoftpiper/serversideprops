@@ -66,10 +66,10 @@ const SubCategoryProduct = ({ category, products, slug }) => {
       <div className="container">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="index.html">Home</a>
+            <Link href="index.html">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <a href={`/category/${category?.data?.[0]?.attributes?.category?.data?.attributes?.slug}`}>{category?.data?.[0]?.attributes?.category?.data?.attributes?.name}</a>
+            <Link href={`/category/${category?.data?.[0]?.attributes?.category?.data?.attributes?.slug}`}>{category?.data?.[0]?.attributes?.category?.data?.attributes?.name}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
           {category?.data?.[0]?.attributes?.name}

@@ -16,7 +16,6 @@ const Header = ({ siteInfo }) => {
   const user = useSelector((state) => state.user.currentUser);
   const provider = useSelector((state)=>state.user.provider);
 
-  // console.log(user.provider);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const showMenuHandler = () => {
@@ -39,6 +38,7 @@ const Header = ({ siteInfo }) => {
     <>
       <ToastContainer />
       <header className="header header-intro-clearance header-26">
+
         {/* <div className="header-top">
       <div className="container">
         <div className="header-left">
@@ -89,6 +89,8 @@ const Header = ({ siteInfo }) => {
       </div>
 
     </div> */}
+
+    
         {/* End .header-top */}
         <div className="header-middle">
           <div className="container">
@@ -126,8 +128,24 @@ const Header = ({ siteInfo }) => {
                           paddingRight:"17px"
                         }}
                       >
-                        {user ? "Account" : "Login/Register"}
+                        {
+                          user ? <li className="text-white"> Account </li> 
+                              : <li> 
+                                    <Link 
+                                        href='/account/login' 
+                                        className="text-white">
+                                           Login  / 
+                                    </Link>         
+                                    <Link
+                                         href='/account/register' 
+                                         className="text-white"> 
+                                            Register 
+                                    </Link>
+                                </li>
+                         }
+
                       </Link>
+                      
                       {user && (
                         <div className="header-menu">
                           <ul>

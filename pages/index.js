@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home({ products,categories, siteinfo ,catProducts}) {
+  
 const showToastMessage =(data)=>{
   toast.success(data.msg, {
     position: "top-right",
@@ -27,7 +28,7 @@ const showToastMessage =(data)=>{
     theme: "dark",
     });
 }
-// console.log(catProducts);
+
   return (
     <>
       <div className="page-wrapper" style={{padding:"10px"}}>

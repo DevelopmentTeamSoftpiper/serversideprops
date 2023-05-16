@@ -1,6 +1,6 @@
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import {
@@ -11,7 +11,6 @@ import { auth } from "@/firebase.config";
 import { toast, Toaster } from "react-hot-toast";
 import { loginSuccess, providerSuccess } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { fetchDataFromApi, postDataToApi } from "@/utils/api";
 

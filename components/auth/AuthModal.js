@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const AuthModal = () => {
@@ -26,7 +27,7 @@ const AuthModal = () => {
             <div className="form-tab">
               <ul className="nav nav-pills nav-fill" role="tablist">
                 <li className="nav-item">
-                  <a
+                  <Link
                     className="nav-link font-size-normal second-primary-color active"
                     id="signin-tab"
                     data-toggle="tab"
@@ -36,10 +37,10 @@ const AuthModal = () => {
                     aria-selected="true"
                   >
                     Sign In
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a
+                  <Link
                     className="nav-link font-size-normal second-primary-color"
                     id="register-tab"
                     data-toggle="tab"
@@ -49,7 +50,7 @@ const AuthModal = () => {
                     aria-selected="false"
                   >
                     Register
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <div className="tab-content" id="tab-content-5">
@@ -106,9 +107,9 @@ const AuthModal = () => {
                         </label>
                       </div>
                       {/* End .custom-checkbox */}
-                      <a href="#" className="forgot-link">
+                      <Link href="#" className="forgot-link">
                         Forgot Your Password?
-                      </a>
+                      </Link>
                     </div>
                     {/* End .form-footer */}
                   </form>
@@ -116,17 +117,17 @@ const AuthModal = () => {
                     <p className="text-center">or sign in with</p>
                     <div className="row">
                       <div className="col-sm-6">
-                        <a href="#" className="btn btn-login btn-g">
+                        <Link href="#" className="btn btn-login btn-g">
                           <i className="icon-google" />
                           Login With Google
-                        </a>
+                        </Link>
                       </div>
                       {/* End .col-6 */}
                       <div className="col-sm-6">
-                        <a href="#" className="btn btn-login btn-f">
+                        <Link href="#" className="btn btn-login btn-f">
                           <i className="icon-facebook-f" />
                           Login With Facebook
-                        </a>
+                        </Link>
                       </div>
                       {/* End .col-6 */}
                     </div>
@@ -186,7 +187,7 @@ const AuthModal = () => {
                           htmlFor="register-policy"
                         >
                           I agree to the
-                          <a href="#">privacy policy</a> *
+                          <Link href="#">privacy policy</Link> *
                         </label>
                       </div>
                       {/* End .custom-checkbox */}
@@ -197,17 +198,17 @@ const AuthModal = () => {
                     <p className="text-center">or sign in with</p>
                     <div className="row">
                       <div className="col-sm-6">
-                        <a href="#" className="btn btn-login btn-g">
+                        <Link href="#" className="btn btn-login btn-g">
                           <i className="icon-google" />
                           Login With Google
-                        </a>
+                        </Link>
                       </div>
                       {/* End .col-6 */}
                       <div className="col-sm-6">
-                        <a href="#" className="btn btn-login  btn-f">
+                        <Link href="#" className="btn btn-login  btn-f">
                           <i className="icon-facebook-f" />
                           Login With Facebook
-                        </a>
+                        </Link>
                       </div>
                       {/* End .col-6 */}
                     </div>

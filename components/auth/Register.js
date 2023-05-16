@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Register = () => {
@@ -47,7 +48,7 @@ const Register = () => {
           htmlFor="register-policy"
         >
           I agree to the
-          <a href="#">privacy policy</a> *
+          <Link href="#">privacy policy</Link> *
         </label>
       </div>
       {/* End .custom-checkbox */}

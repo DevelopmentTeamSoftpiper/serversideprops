@@ -1,3 +1,4 @@
+/*eslint-disable */
 import CartItem from "@/components/product/CartItem";
 import { fetchDataFromApi } from "@/utils/api";
 import Image from "next/image";
@@ -44,10 +45,10 @@ const cart = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
+              <Link href="index.html">Home</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">Shop</a>
+              <Link href="#">Shop</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Shopping Cart

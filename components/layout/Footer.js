@@ -8,11 +8,10 @@ import { AiOutlineMail } from 'react-icons/ai';
 const Footer = ({siteInfo}) => {
   return (
     <footer
-    className="footer footer-2 font-weight-normal second-primary-color"
-    style={{ backgroundColor: "#222" }}
-  >
+      className="footer footer-2 font-weight-normal second-primary-color"
+      style={{ backgroundColor: "#222" }}
+    >
     
-    {/* End .cta */}
     <div className="container">
       <hr className="mt-0 mb-0" style={{ borderColor: "#444" }} />
     </div>
@@ -24,7 +23,7 @@ const Footer = ({siteInfo}) => {
             <div className="widget widget-about mb-4">
             <Image
               src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
-              alt="Molla Logo"
+              alt="safefood logo"
               width={105}
               height={25}
             />

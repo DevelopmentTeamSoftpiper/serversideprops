@@ -120,7 +120,7 @@ const Orders = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="nav-link"
                   id="tab-5-tab"
                   data-toggle="tab"
@@ -133,7 +133,7 @@ const Orders = () => {
                   }}
                 >
                   Logout
-                </a>
+                </Link>
               </li>
             </ul>
             <div className="tab-content tab-content-border" id="tab-content-1">

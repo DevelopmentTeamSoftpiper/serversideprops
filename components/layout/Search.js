@@ -1,5 +1,6 @@
 import { fetchDataFromApi } from '@/utils/api';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 const Search = () => {
@@ -38,9 +39,9 @@ const Search = () => {
 <>
 <div className="header-center d-flex flex-column ">
     <div className="header-search header-search-visible header-search-no-radius">
-      <a href="#" className="search-toggle" role="button">
+      <Link href="#" className="search-toggle" role="button">
         <i className="icon-search" />
-      </a>
+      </Link>
       <form action="#" method="get">
         <div className="header-search-wrapper search-wrapper-wide">
           <div className="select-custom">

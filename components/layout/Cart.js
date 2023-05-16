@@ -4,14 +4,15 @@ import CartProduct from '../product/CartProduct';
 import Link from 'next/link';
 
 const Cart = () => {
+
     const cartProducts = useSelector((state)=>state.cart.cartItems);
     const subTotal = useMemo(()=>{
       return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
     },[cartProducts])
-    // console.log(cartProducts);
+    
   return (
     <div className="dropdown cart-dropdown">
-    <a
+    <Link
       href="#"
       className="dropdown-toggle"
       role="button"
@@ -25,7 +26,7 @@ const Cart = () => {
         <span className="cart-count">{cartProducts.length}</span>
       </div>
       <p>Cart</p>
-    </a>
+    </Link>
     <div className="dropdown-menu dropdown-menu-right">
       <div className="dropdown-cart-products">
         {cartProducts?.map((product)=>

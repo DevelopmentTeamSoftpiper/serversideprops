@@ -44,7 +44,7 @@ const MobileMenuContainer = ({showMenu, menuCloseHandler}) => {
       </form>
       <ul className="nav nav-pills-mobile" role="tablist">
         <li className="nav-item">
-          <a
+          <Link
             className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase active"
             id="mobile-menu-link"
             data-toggle="tab"
@@ -54,10 +54,10 @@ const MobileMenuContainer = ({showMenu, menuCloseHandler}) => {
             aria-selected="true"
           >
             Categories
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
-          <a
+          <Link
             className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase"
             id="mobile-cats-link"
             data-toggle="tab"
@@ -67,7 +67,7 @@ const MobileMenuContainer = ({showMenu, menuCloseHandler}) => {
             aria-selected="false"
           >
             Menu
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="tab-content">

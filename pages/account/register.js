@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Link from "next/link";
 
 const register = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -40,8 +43,7 @@ const register = () => {
       });
     }
   };
-  console.log(values);
-
+  
   const submitHandler = (e) => {
     e.preventDefault();
     signup();
@@ -52,13 +54,13 @@ const register = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
+              <Link href="index.html">Home</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">Pages</a>
+              <Link href="#">Pages</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Login
+              Register
             </li>
           </ol>
         </div>
@@ -68,7 +70,7 @@ const register = () => {
       <div
         className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
         style={{
-          backgroundImage: 'url("assets/images/backgrounds/login-bg.jpg")',
+          backgroundImage: `url("/assets/images/backgrounds/login-bg.jpg")`,
         }}
       >
         <div className="container">
@@ -136,7 +138,7 @@ const register = () => {
                           className="custom-control-label"
                           htmlFor="register-policy-2"
                         >
-                          I agree to the <a href="#">privacy policy</a> *
+                          I agree to the <Link href="#">privacy policy</Link> *
                         </label>
                       </div>
                       {/* End .custom-checkbox */}

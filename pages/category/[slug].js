@@ -69,13 +69,11 @@ const CategoryProduct = ({ category, products, slug }) => {
       <div className="container">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="index.html">Home</a>
+            <Link href="index.html">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <a href="#">{category?.data?.[0]?.attributes?.name}
-</a>
+            <Link href="#">{category?.data?.[0]?.attributes?.name}</Link>
           </li>
-     
         </ol>
       </div>
       {/* End .container */}
@@ -85,7 +83,6 @@ const CategoryProduct = ({ category, products, slug }) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-9">
-        
             {/* End .toolbox */}
             <div className="products mb-3">
               <div className="row justify-content-center">

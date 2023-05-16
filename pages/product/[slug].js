@@ -37,7 +37,7 @@ const ProductDetails = ({ product, products }) => {
               <Link href="/">Home</Link>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">Products</a>
+              <Link href="#">Products</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Default
@@ -64,13 +64,13 @@ const ProductDetails = ({ product, products }) => {
                         alt={p?.title}
                         priority="true"
                       />
-                      <a
+                      <Link
                         href="#"
                         id="btn-product-gallery"
                         className="btn-product-gallery"
                       >
                         <i className="icon-arrows" />
-                      </a>
+                      </Link>
                     </figure>
                   </div>
                 </div>

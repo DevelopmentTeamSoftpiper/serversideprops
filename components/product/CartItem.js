@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useDispatch } from "react-redux";
 import { removeFromCart } from '@/store/cartSlice';
 import { updateCart } from '@/store/cartSlice';
+import Link from 'next/link';
 const CartItem = ({cartProduct}) => {
   const dispatch = useDispatch();
   const updateCartItem = (e, key)=>{
@@ -19,7 +20,7 @@ const CartItem = ({cartProduct}) => {
     <td className="product-col">
       <div className="product">
         <figure className="product-media">
-          <a href="#">
+          <Link href="#">
             <Image
               src={
                 cartProduct?.attributes?.image?.data?.[0]
@@ -29,10 +30,10 @@ const CartItem = ({cartProduct}) => {
               width={200}
               height={300}
             />
-          </a>
+          </Link>
         </figure>
         <h3 className="product-title">
-          <a href="#">{cartProduct?.attributes?.title}</a>
+          <Link href="#">{cartProduct?.attributes?.title}</Link>
         </h3>
         {/* End .product-title */}
       </div>

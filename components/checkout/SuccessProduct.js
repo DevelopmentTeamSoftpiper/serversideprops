@@ -1,10 +1,11 @@
+import Link from 'next/link'
 import React from 'react'
 
 const SuccessProduct = ({cartProduct}) => {
   return (
     <tr>
     <td>
-      <a href="#">{cartProduct?.title}</a>
+      <Link href="#">{cartProduct?.title}</Link>
     </td>
     <td>{cartProduct?.quantityPrice} BDT</td>
     <td>{cartProduct?.quantity}</td>

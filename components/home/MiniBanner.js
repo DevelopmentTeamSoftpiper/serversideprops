@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const MiniBanner = () => {
@@ -13,26 +14,26 @@ const MiniBanner = () => {
                     >
                     <div className="banner-content position-relative d-flex flex-column justify-content-center">
                         <h4 className="banner-subtitle letter-spacing-normal font-size-normal text-white d-none d-sm-block font-weight-light">
-                        <a href="#">Headphone Savings</a>
+                        <Link href="#">Headphone Savings</Link>
                         </h4>
                         {/* End .banner-subtitle letter-spacing-normal font-size-normal */}
                         <h3 className="banner-title text-white mb-0 font-weight-bold">
-                        <a href="#">
+                        <Link href="#">
                             Headphone
                             <br />
                             Trending
                             <br />
                             JBL Harman
-                        </a>
+                        </Link>
                         </h3>
                         {/* End .banner-title */}
-                        <a
+                        <Link
                         href="#"
                         className="btn font-size-normal btn-primary text-uppercase text-dark btn-rounded text-center"
                         >
                         <span>Shop Now </span>
                         <i className="icon-long-arrow-right d-inline-block" />
-                        </a>
+                        </Link>
                     </div>
                     {/* End .banner-content */}
                     </div>
@@ -47,24 +48,24 @@ const MiniBanner = () => {
                     >
                     <div className="banner-content position-relative d-flex flex-column justify-content-center">
                         <h4 className="banner-subtitle letter-spacing-normal font-size-normal d-none d-sm-block font-weight-light">
-                        <a href="#">Weekend Sale</a>
+                        <Link href="#">Weekend Sale</Link>
                         </h4>
                         {/* End .banner-subtitle letter-spacing-normal font-size-normal */}
                         <h3 className="banner-title mb-0 font-weight-bold">
-                        <a href="#">
+                        <Link href="#">
                             Home Furnishings
                             <br />
                             Outdoor &amp; Office
-                        </a>
+                        </Link>
                         </h3>
                         {/* End .banner-title */}
-                        <a
+                        <Link
                         href="#"
                         className="btn font-size-normal btn-primary text-uppercase text-dark btn-rounded text-center d-inline-block"
                         >
                         <span>Shop Now </span>
                         <i className="icon-long-arrow-right d-inline-block" />
-                        </a>
+                        </Link>
                     </div>
                     {/* End .banner-content */}
                     </div>
@@ -79,27 +80,27 @@ const MiniBanner = () => {
                     >
                     <div className="banner-content position-relative d-flex flex-column justify-content-center">
                         <h4 className="banner-subtitle letter-spacing-normal font-size-normal text-white font-weight-light d-none d-sm-block">
-                        <a href="#">Amazing Value</a>
+                        <Link href="#">Amazing Value</Link>
                         </h4>
                         {/* End .banner-subtitle letter-spacing-normal font-size-normal */}
                         <h3 className="banner-title text-white mb-0 font-weight-bold">
-                        <a href="#">
+                        <Link href="#">
                             Clothes Trending
                             <br />
                             Spring / Summer{" "}
-                        </a>
+                        </Link>
                         </h3>
                         {/* End .banner-title */}
                         <h4 className="banner-text font-weight-normal text-secondary mb-0 font-weight-light">
                         from $12.99
                         </h4>
-                        <a
+                        <Link
                         href="#"
                         className="btn font-size-normal btn-primary text-uppercase text-dark btn-rounded text-center"
                         >
                         <span>Discover Now </span>
                         <i className="icon-long-arrow-right d-inline-block" />
-                        </a>
+                        </Link>
                     </div>
                     {/* End .banner-content */}
                     </div>

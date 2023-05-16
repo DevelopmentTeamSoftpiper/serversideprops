@@ -57,7 +57,7 @@ const ResetPassword = () => {
       <div className="container">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="index.html">Home</a>
+            <Link href="index.html">Home</Link>
           </li>
           <li className="breadcrumb-item">
             <Link href="/account">Account</Link>
