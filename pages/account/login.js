@@ -6,7 +6,9 @@ import {
   loginFailure,
   loginStart,
   loginSuccess,
+  providerSuccess,
 } from "@/store/userSlice";
+import { fetchDataFromApi, postDataToApi } from "@/utils/api";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -43,9 +45,27 @@ const Login = () => {
         identifier,
         password,
       });
-      console.log(res.data);
+
+      const userInfo = await fetchDataFromApi(
+        `/api/profiles?populate=*&[filters][user][id][$eq]=${res?.data?.user?.id}`
+      );
+
+    
+
+      if(userInfo?.data?.length ===0){
+        const response = await postDataToApi("/api/profiles",
+        {"data":{
+          "user": res?.data?.user?.id,
+          "username": res?.data?.user?.username,
+          "email": res?.data?.user?.email,
+          "user_id_no": res?.data?.user?.id.toString()
+        }} );
+      }
+
+
       dispatch(loginSuccess(res.data.user));
       dispatch(jwtSuccess(res.data.jwt));
+      dispatch(providerSuccess("strapi"));
       const redirectPath = router.query.redirect || "/account";
       router.push(redirectPath);
     } catch (error) {

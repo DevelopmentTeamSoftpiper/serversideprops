@@ -1,39 +1,45 @@
-import React, { useState } from 'react'
-import MobileMenuOverlay from './MobileMenuOverlay';
-import MobileMenuContainer from './MobileMenuContainer';
-import AuthModal from '../auth/AuthModal';
-import Image from 'next/image';
-import Link from 'next/link';
-import Cart from './Cart';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '@/store/userSlice';
-import Search from './Search';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/firebase.config';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useState } from "react";
+import MobileMenuOverlay from "./MobileMenuOverlay";
+import MobileMenuContainer from "./MobileMenuContainer";
+import AuthModal from "../auth/AuthModal";
+import Image from "next/image";
+import Link from "next/link";
+import Cart from "./Cart";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/store/userSlice";
+import Search from "./Search";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase.config";
+import { toast, ToastContainer } from "react-toastify";
 
-const Header = ({siteInfo}) => {
-  // console.log(siteInfo);
+const Header = ({ siteInfo }) => {
+  const user = useSelector((state) => state.user.currentUser);
+  const provider = useSelector((state)=>state.user.provider);
+
+  // console.log(user.provider);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const showMenuHandler = ()=>{
+  const showMenuHandler = () => {
     setShowMenu(!showMenu);
-  }
-  const menuCloseHandler = (data)=>{
+  };
+  const menuCloseHandler = (data) => {
     setShowMenu(data.closeMenu);
-  }
+  };
 
-  const logOut = async() =>{
-      dispatch(logout());
+
+  const logOut = async () => {
+    dispatch(logout());
+    if(provider === "firebase"){
       await signOut(auth);
-      toast.success("Sign out successfully");
-  }
+    }
+    toast.success("Sign out successfully");
+  };
 
   return (
     <>
-    <ToastContainer />
-    <header className="header header-intro-clearance header-26">
-    {/* <div className="header-top">
+      <ToastContainer />
+      <header className="header header-intro-clearance header-26">
+        {/* <div className="header-top">
       <div className="container">
         <div className="header-left">
           <a href="tel:#" className="font-weight-normal">
@@ -83,106 +89,107 @@ const Header = ({siteInfo}) => {
       </div>
 
     </div> */}
-    {/* End .header-top */}
-    <div className="header-middle">
-      <div className="container">
-        <div className="header-left">
-          <button className="mobile-menu-toggler" onClick={showMenuHandler}>
-            <span className="sr-only">Toggle mobile menu</span>
-            <i className="icon-bars" />
-          </button>
-          <Link href="/" className="logo">
-            <Image
-              src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
-              alt="safefoods Logo"
-              width={105}
-              height={25}
-            />
-          </Link>
-        </div>
-        {/* End .header-left */}
-        <Search/>
-      
-        <div className="header-right">
-          <div className="header-dropdown-link">
-          <ul className="top-menu">
-            <li>
-            {/* <Link href={user? "#": "/account/login"} className='' style={{backgroundColor: "#61AB00",color:"white", padding:"10px"}}>{user? "Account" : "Login/Register"}</Link> */}
-              
-     
-           
-                  <div className="header-dropdown">
-                    <Link href={user? "#": "/account/login"} className='btn btn-sm' style={{backgroundColor: "#61AB00", padding:'10px', minWidth:"100px"}}>{user? "Account" : "Login/Register"}</Link>
-                    {user && 
-                               <div className="header-menu">
-                               <ul>
-                                 <li>
-                                   <Link href="/account">Account Details</Link>
-                                 </li>
-                                 {/* <li>
+        {/* End .header-top */}
+        <div className="header-middle">
+          <div className="container">
+            <div className="header-left">
+              <button className="mobile-menu-toggler" onClick={showMenuHandler}>
+                <span className="sr-only">Toggle mobile menu</span>
+                <i className="icon-bars" />
+              </button>
+              <Link href="/" className="logo">
+                <Image
+                  src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
+                  alt="safefoods Logo"
+                  width={105}
+                  height={25}
+                />
+              </Link>
+            </div>
+            {/* End .header-left */}
+            <Search />
+
+            <div className="header-right">
+              <div className="header-dropdown-link">
+                <ul className="top-menu">
+                  <li>
+                    {/* <Link href={user? "#": "/account/login"} className='' style={{backgroundColor: "#61AB00",color:"white", padding:"10px"}}>{user? "Account" : "Login/Register"}</Link> */}
+
+                    <div className="header-dropdown">
+                      <Link
+                        href={user ? "#" : "/account/login"}
+                        className="btn btn-sm"
+                        style={{
+                          backgroundColor: "#61AB00",
+                          padding: "10px",
+                          minWidth: "100px",
+                          paddingRight:"17px"
+                        }}
+                      >
+                        {user ? "Account" : "Login/Register"}
+                      </Link>
+                      {user && (
+                        <div className="header-menu">
+                          <ul>
+                            <li>
+                              <Link href="/account">Account Details</Link>
+                            </li>
+                            {/* <li>
                                    <a href="#">Orders</a>
                                  </li> */}
-                                 <li>
-                                   <a href="#"  onClick={() => {
-                             dispatch(logout());
-                           }}>Logout</a>
-                                 </li>
-                               </ul>
-                             </div>}
-                    {/* End .header-menu */}
-                  </div>
-      
-                {/* <li>
+                            <li>
+                              <button
+                                style={{ paddingLeft: "15px" }}
+                                onClick={() => {
+                                  logOut()
+                                }}
+                              >
+                                Logout
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                      {/* End .header-menu */}
+                    </div>
+
+                    {/* <li>
                   <a href="#signin-modal" data-toggle="modal">
                     Sign in / Sign up
                   </a>
                 </li> */}
-             
-            </li>
-          </ul>
-        <Cart/>
-  
+                  </li>
+                </ul>
+                <Cart />
+              </div>
+            </div>
+            {/* End .header-right */}
           </div>
+          {/* End .container */}
         </div>
-        {/* End .header-right */}
-      </div>
-      {/* End .container */}
-    </div>
-    {/* End .header-middle */}
-    <div className="header-bottom sticky-header">
-      <div className="container">
-        <div className="header-center">
-          <nav className="main-nav">
-            <ul className="menu sf-arrows">
-              <li className="megamenu-container active">
-                <Link href="/">
-                  Home
-                </Link>
+        {/* End .header-middle */}
+        <div className="header-bottom sticky-header">
+          <div className="container">
+            <div className="header-center">
+              <nav className="main-nav">
+                <ul className="menu sf-arrows">
+                  <li className="megamenu-container active">
+                    <Link href="/">Home</Link>
+                  </li>
+                  <li>
+                    <Link href="/shop">Shop</Link>
+                  </li>
+                  <li>
+                    <Link href="/about">About</Link>
+                  </li>
+                  <li>
+                    <Link href="/private-policy">Private Policy</Link>
+                  </li>
+                  <li>
+                    <Link href="/terms-and-conditions">Terms & Conditions</Link>
+                  </li>
 
-              </li>
-              <li>
-                <Link href="/shop">
-                  Shop
-                </Link>
-              </li>
-              <li>
-                <Link href="/about">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/private-policy">
-                  Private Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-and-conditions">
-                  Terms & Conditions
-                </Link>
-              </li>
-       
-     
-              {/* <li>
+                  {/* <li>
                 <a href="blog.html" className="sf-with-ul">
                   Blog
                 </a>
@@ -256,27 +263,32 @@ const Header = ({siteInfo}) => {
                   </li>
                 </ul>
               </li> */}
-        
-            </ul>
-            {/* End .menu */}
-          </nav>
-          {/* End .main-nav */}
-        </div>
-        {/* End .header-center */}
-        {/* <div className="header-right">
+                </ul>
+                {/* End .menu */}
+              </nav>
+              {/* End .main-nav */}
+            </div>
+            {/* End .header-center */}
+            {/* <div className="header-right">
           <i className="la la-lightbulb-o" />
           <p className="text-dark">Clearance Up to 30% Off</p>
         </div> */}
-      </div>
-      {/* End .container */}
-    </div>
-    {/* End .header-bottom */}
-  </header>
-  <MobileMenuOverlay showMenu ={showMenu} menuCloseHandler = {menuCloseHandler} />
-  <MobileMenuContainer showMenu ={showMenu}  menuCloseHandler = {menuCloseHandler} />
-  {/* <AuthModal/> */}
-  </>
-  )
-}
+          </div>
+          {/* End .container */}
+        </div>
+        {/* End .header-bottom */}
+      </header>
+      <MobileMenuOverlay
+        showMenu={showMenu}
+        menuCloseHandler={menuCloseHandler}
+      />
+      <MobileMenuContainer
+        showMenu={showMenu}
+        menuCloseHandler={menuCloseHandler}
+      />
+      {/* <AuthModal/> */}
+    </>
+  );
+};
 
-export default Header
+export default Header;

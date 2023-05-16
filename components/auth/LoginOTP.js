@@ -9,9 +9,11 @@ import {
   } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import { toast, Toaster } from "react-hot-toast";
-import { loginSuccess } from "@/store/userSlice";
+import { loginSuccess, providerSuccess } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { fetchDataFromApi, postDataToApi } from "@/utils/api";
 
 const LoginOTP = () => {
 
@@ -21,7 +23,7 @@ const LoginOTP = () => {
     const [showOTP, setShowOTP] = useState(false);
     const [user, setUser] = useState(null);
     const dispatch = useDispatch();
-
+    const router = useRouter();
 
     function onCaptchVerify() {
         if (!window.recaptchaVerifier) {
@@ -68,20 +70,25 @@ const LoginOTP = () => {
           const  {phoneNumber, accessToken ,uid} = res?.user;
           const firebaseUser = {uid, phoneNumber, accessToken};
           dispatch(loginSuccess(firebaseUser));
-
-          const existUser = await axios.get(`http://localhost:1337/api/profiles?filters[uid][$eq]=${uid}`);
+          dispatch(providerSuccess("firebase"));
+          const userInfo = await fetchDataFromApi(
+            `/api/profiles?populate=*&[filters][user_id_no][$eq]=${uid}`
+          );
     
-          if(existUser.data.data.length === 0){
-            const {data} = await axios.post("http://localhost:1337/api/profiles", {"data": {uid, phone:phoneNumber, accessToken}});
-            console.log('create new user', data);
+        
+    
+          if(userInfo?.data?.length ===0){
+            const response = await postDataToApi("/api/profiles",
+            {"data":{
+              "phone": phoneNumber, 
+              "user_id_no": uid,
+              
+            }} );
           }
-          else{
-            const {data} = await axios.put(`http://localhost:1337/api/profiles/${existUser?.data?.data?.id}`,
-            {"data": {uid, phone:phoneNumber, accessToken}});
-             console.log('update new user', data);
-          }
+        
           setLoading(false);
           toast.success("Login Sucessfully");
+          router.push("/");
         })
         .catch((err) => {
           console.log("Otp===> ", err);

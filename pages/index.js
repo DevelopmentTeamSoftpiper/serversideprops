@@ -18,7 +18,7 @@ export default function Home({ products,categories, siteinfo ,catProducts}) {
 const showToastMessage =(data)=>{
   toast.success(data.msg, {
     position: "top-right",
-    autoClose: 5000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
  

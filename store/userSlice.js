@@ -6,7 +6,8 @@ const userSlice = createSlice({
     currentUser: null,
     isFetching: false,
     error: false,
-    jwt:null
+    jwt:null,
+    provider: null
   },
   reducers: {
     loginStart: (state) => {
@@ -21,6 +22,9 @@ const userSlice = createSlice({
     jwtSuccess:(state, action)=>{
         state.jwt = action.payload;
     },
+    providerSuccess:(state, action)=>{
+      state.provider = action.payload;
+  },
     loginFailure: (state) => {
       state.isFetching = false;
       state.error = true;
@@ -33,5 +37,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginStart,loginSuccess,loginFailure ,logout,jwtSuccess} = userSlice.actions;
+export const { loginStart,loginSuccess,loginFailure ,logout,jwtSuccess,providerSuccess} = userSlice.actions;
 export default userSlice.reducer;

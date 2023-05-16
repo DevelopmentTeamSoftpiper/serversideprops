@@ -6,16 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
 
-const index = () => {
-
+const AccountDetails = () => {
+  const [userInfo, setUserInfo] = useState(null);
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
-  const provider = useSelector((state)=>state.user.provider);
-  const [userInfo, setUserInfo] = useState(null);
-  // console.log('redux user',user);
+  // console.log(user);
 
+  const provider = useSelector((state)=>state.user.provider);
   const getUserInfo = async ()=>{
     if(provider === "strapi"){
       const userInformation = await fetchDataFromApi(
@@ -28,30 +26,24 @@ const index = () => {
       );
       setUserInfo(userInformation);
     }
-   
- 
-    
+
+
+
+
   }
   useEffect(()=>{
     getUserInfo();
   },[])
-  
-  
+
   console.log('profile',userInfo);
 
-  const dispatch = useDispatch();
 
   if (!user) {
     router.push("/account/login");
     return null;
   }
-  const logOut = async () => {
-    dispatch(logout());
-    if(provider === "firebase"){
-      await signOut(auth);
-    }
-    toast.success("Sign out successfully");
-  };
+
+  const dispatch = useDispatch();
   return (
     <main className="main">
       <div
@@ -60,8 +52,7 @@ const index = () => {
       >
         <div className="container">
           <h1 className="page-title">
-            My Account<span>Welcome! {userInfo?.data?.[0]?.attributes?.username ? userInfo?.data?.[0]?.attributes?.username : ""} </span>
-            
+          My Account Details
           </h1>
         </div>
       </div>
@@ -70,10 +61,10 @@ const index = () => {
         <div className="row d-flex justify-content-center p-5">
           {/* End .col-12 */}
           <div className="col-md-10">
-          <ul className="nav nav-tabs nav-tabs-bg" id="tabs-1" role="tablist">
+            <ul className="nav nav-tabs nav-tabs-bg" id="tabs-1" role="tablist">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className="nav-link "
                   id="tab-1-tab"
                   data-toggle="tab"
                   href="/account"
@@ -99,7 +90,7 @@ const index = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  className="nav-link"
+                  className="nav-link active"
                   id="tab-3-tab"
                   data-toggle="tab"
                   href="/account/details"
@@ -133,7 +124,7 @@ const index = () => {
                   aria-controls="tab-5"
                   aria-selected="false"
                   onClick={() => {
-                    logOut();
+                    dispatch(logout());
                   }}
                 >
                   Logout
@@ -147,41 +138,63 @@ const index = () => {
                 role="tabpanel"
                 aria-labelledby="tab-1-tab"
               >
-                <p>
-                  Hello{" "}
-                  <span className="font-weight-normal text-dark">
-                    {userInfo?.data?.[0]?.attributes?.username ? userInfo?.data?.[0]?.attributes?.username : "User"}
-                  </span>{" "}
-                  (not{" "}
-                  <span className="font-weight-normal text-dark">
-                  {userInfo?.data?.[0]?.attributes?.username ? userInfo?.data?.[0]?.attributes?.username : "User"}
-                  </span>
-                  ?{" "}
-                  <button
-                    style={{ color: "red", fontWeight: 600 }}
-                    onClick={() => {
-                      dispatch(logout());
-                    }}
-                  >
-                    Log out
-                  </button>
-                  )
-                  <br />
-                  From your account dashboard you can view your{" "}
-                  <Link
-                    href="/account/orders"
-                    className="tab-trigger-link link-underline"
-                  >
-                    recent orders
-                  </Link>
-                  , manage your shipping and billing addresses, and{" "}
-                  <Link href="/account/edit-profile" className="tab-trigger-link">
-                    edit account details
-                    </Link>
-                  .
-                </p>
+                    <div className="row">
+                  <div className="col-lg-6">
+                    <div className="card card-dashboard">
+                      <div className="card-body">
+                        <h3 className="card-title">Billing Address</h3>
+                        {/* End .card-title */}
+                        <p>
+                          Name : {userInfo?.data?.[0]?.attributes?.username}
+                          <br />
+                          Email: {userInfo?.data?.[0]?.attributes?.email}
+                          <br />
+                          Phone: {userInfo?.data?.[0]?.attributes?.phone} 
+                          <br />
+                   
+       
+                        </p>
+                      </div>
+                      {/* End .card-body */}
+                    </div>
+                    {/* End .card-dashboard */}
+                  </div>
+                  {/* End .col-lg-6 */}
+                  <div className="col-lg-6">
+                    <div className="card card-dashboard">
+                      <div className="card-body">
+                        <h3 className="card-title">Shipping Address</h3>
+                        {/* End .card-title */}
+                        <p>
+                         
+                          {userInfo?.data?.[0]?.attributes?.address === null && 
+                          <div>
+                          <p> You have not set up this type of address yet.</p> 
+                          <Link href="/account/edit-profile" className="btn btn-sm btn-warning mt-2">Edit Profile Information</Link>
+                          </div>
+                          
+                          }
+                          <br />
+                          {userInfo?.data?.[0]?.attributes?.address !== null &&
+                          <>
+                          <p>{userInfo?.data?.[0]?.attributes?.address}</p>
+                          <p>{userInfo?.data?.[0]?.attributes?.city}, {userInfo?.data?.[0]?.attributes?.post_code},</p>
+                          <p>{userInfo?.data?.[0]?.attributes?.country}</p>
+
+                          <Link href="/account/edit-profile" className="btn btn-sm btn-warning mt-2">Edit Profile Information</Link>
+                          </>
+                      
+                            }
+                        </p>
+                      </div>
+                      {/* End .card-body */}
+                    </div>
+                    {/* End .card-dashboard */}
+                  </div>
+                  {/* End .col-lg-6 */}
+                </div>
               </div>
-     
+    
 
             </div>
             {/* End .tab-content */}
@@ -195,4 +208,4 @@ const index = () => {
   );
 };
 
-export default withAuth(index);
+export default withAuth(AccountDetails);

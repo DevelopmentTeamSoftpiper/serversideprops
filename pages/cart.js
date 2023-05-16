@@ -130,13 +130,13 @@ const cart = () => {
 
                       {/* End .summary-shipping-row */}
 
-                      <tr className="summary-shipping-estimate">
+                      {/* <tr className="summary-shipping-estimate">
                         <td>
                   
                           <br /> <a href="dashboard.html">Change address</a>
                         </td>
                         <td>&nbsp;</td>
-                      </tr>
+                      </tr> */}
                       {/* End .summary-shipping-estimate */}
               
                       {/* End .summary-total */}
@@ -151,13 +151,13 @@ const cart = () => {
                   </Link>
                 </div>
                 {/* End .summary */}
-                <a
-                  href="category.html"
+                <Link
+                  href="/"
                   className="btn btn-outline-dark-2 btn-block mb-3"
                 >
                   <span>CONTINUE SHOPPING</span>
                   <i className="icon-refresh" />
-                </a>
+                </Link>
               </aside>
               {/* End .col-lg-3 */}
             </div>
