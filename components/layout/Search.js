@@ -103,7 +103,7 @@ const Search = () => {
     {/* End .header-search */}
 
     {filterData.length !== 0 && query.length > 1 && 
-          <div style={{position: "absolute", top: 46, left:0,zIndex:100, width:"100%", backgroundColor:"white"}}>
+          <div style={{position: "absolute", top: 46, left:0,zIndex:100, width:"100%", backgroundColor:"whitesmoke"}}>
            <ul
                 className="menu-vertical sf-arrows sf-js-enabled"
                 style={{ touchAction: "pan-y"}}
