@@ -8,15 +8,20 @@ const Search = () => {
     const [query, setQuery] = useState("");
 
     const [products, setProducts] = useState(null);
-    useEffect(() => {
-      fetchProducts();
-    }, []);
+ 
     const fetchProducts = async () => {
       const { data } = await fetchDataFromApi("/api/products?populate=*");
-      setProducts(data);
+      const productData = data.map((p)=>({
+        title: p?.attributes?.title,
+        price: p?.attributes?.price,
+        slug: p?.attributes?.slug,
+        url: p?.attributes?.image?.data?.[0]?.attributes?.url
+      }))
+      console.log(data);
+      console.log('search',productData);
+      setProducts(productData);
     
     };
-// console.log(products);
     const filterChangeHandler = (e) => {
         const searchedWord = e.target.value;
         setQuery(searchedWord);
@@ -30,19 +35,25 @@ const Search = () => {
         }
       };
 
+      console.log('filter',filterData);
+
       const clearInputHandler = () => {
         setQuery("");
         setFilterData([]);
       };
+      useEffect(() => {
+        fetchProducts();
+      }, []);
 
   return (
 <>
-<div className="header-center d-flex flex-column ">
+
+<div className="header-center d-flex flex-column " style={{position: "relative"}}>
     <div className="header-search header-search-visible header-search-no-radius">
       <Link href="#" className="search-toggle" role="button">
         <i className="icon-search" />
       </Link>
-      <form action="#" method="get">
+  
         <div className="header-search-wrapper search-wrapper-wide">
           <div className="select-custom">
             <select id="cat" name="cat">
@@ -84,41 +95,45 @@ const Search = () => {
         </div>
         {/* End .header-search-wrapper */}
         
-      </form>
+
       
 
     </div>
     
     {/* End .header-search */}
-    {/* <div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-          Search Results
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <Image src="https://res.cloudinary.com/dz5nyqdv5/image/upload/v1683592036/medium_safefoods_4f9f35f05f.jpg" alt="Video thumbnail" class="mr-3" height={20} width={20}/>
-          <div class="media-body">
-            <h5 class="mt-0">Video Title</h5>
-            <p>Description</p>
-          </div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <Image src="https://res.cloudinary.com/dz5nyqdv5/image/upload/v1683592036/medium_safefoods_4f9f35f05f.jpg" alt="Video thumbnail" class="mr-3" height={20} width={20}/>
-          <div class="media-body">
-            <h5 class="mt-0">Video Title</h5>
-            <p>Description</p>
-          </div>
-        </a>
 
-      </div>
-    </div>
+    {filterData.length !== 0 && query.length > 1 && 
+          <div style={{position: "absolute", top: 46, left:0,zIndex:100, width:"100%", backgroundColor:"white"}}>
+           <ul
+                className="menu-vertical sf-arrows sf-js-enabled"
+                style={{ touchAction: "pan-y"}}
+              >
+
+            {filterData?.map((p)=>(
+
+                      <li key={p?.id} className="megamenu-container">
+                    <Link
+                     className="d-flex align-items-center"
+                      href={`/product/${p?.slug}`}
+                    >
+                      <Image
+                        height={30}
+                        width={30}
+                        src={p?.url}
+                        alt={p?.title}
+                      />
+                      <span className='d-flex align-items-center' >{p?.title}</span>
+                    </Link>
+                    </li>
+            ))}
+          </ul>
+        </div>
+    }
+
   </div>
-</div>
-     */}
-  </div>
-    
+
+
+
 </>
   )
 }
