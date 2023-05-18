@@ -2,10 +2,10 @@ import React from 'react';
 
 const TermsCondition = () => {
     return (
-        <div className='container text-justify px-5 my-10'>
+        <div className='container text-justify p-5 my-10'>
             <div className='row'>
                 <section>
-                <h3> OVERVIEW </h3>
+                <h3> Terms & Conditions </h3>
                 <p>
                     This website is operated by Safefoods. Throughout the site, the terms “we”, “us” and “our” refer to Safefoods. Safefoods offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.
                 </p>

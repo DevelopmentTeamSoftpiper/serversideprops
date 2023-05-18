@@ -143,19 +143,20 @@ const Orders = () => {
                 role="tabpanel"
                 aria-labelledby="tab-1-tab"
               >
-                <div className="row p-5">
+                <div className="row p-5 ">
                   {orders?.data?.map((order, index) => (
                     <div className="col-md-6">
-                      <div className="card p-3" style={{border: "2px dotted black"}}>
+                      <div className="card p-3 m-2" style={{border: "2px dotted black"}}>
                         <div className="card-body">
                           <div className="d-flex justify-between">
                             <h5 className="card-title">
                               {" "}
                               Order Id: {order?.id}
                             </h5>
-                            <h6 className="card-subtitle mb-2 text-muted" 
-                            style={{color: order?.attributes?.delivery_status === "pending" ? "yellow" : "green" }} >
-                              {order?.attributes?.delivery_status}
+                            <h6 className="card-subtitle mb-2" 
+                             >
+                             <span>Order Status:</span>
+                              <span style={{color: order?.attributes?.delivery_status === "pending" ? "red" : "green" }}> {order?.attributes?.delivery_status}</span>
                             </h6>
                           </div>
                           <p>Order Date: {new Date(order?.attributes?.updatedAt).toLocaleDateString()}</p>
@@ -169,7 +170,7 @@ const Orders = () => {
                           <div className="d-flex justify-between">
                           <button
                             type="button"
-                            style={{color:'green',fontWeight:600}}
+                            style={{color:'green',fontWeight:600, border:"2px solid black", padding: "2px", borderRadius: "5px"}}
                             data-toggle="modal"
                             data-target={`#exampleModal-${order?.id}`}
                           >

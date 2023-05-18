@@ -12,84 +12,86 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import { toast, ToastContainer } from "react-toastify";
 import { fetchDataFromApi } from "@/utils/api";
+import { useRouter } from "next/router";
 
 const Header = ({ siteInfo }) => {
+  const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
-  const provider = useSelector((state)=>state.user.provider);
+  const provider = useSelector((state) => state.user.provider);
 
   const dispatch = useDispatch();
 
   const logOut = async () => {
     dispatch(logout());
-    if(provider === "firebase"){
+    if (provider === "firebase") {
       await signOut(auth);
     }
     toast.success("Sign out successfully");
   };
 
-// mobile menu 
-const [closeMenu, setCloseMenu] = useState(false);
-const showMenuHandler = () => {
-  setCloseMenu(!closeMenu);
+  //menu tab
+  const [tab, setTab] = useState("category");
+  console.log(tab);
 
-};
+  // mobile menu
+  const [closeMenu, setCloseMenu] = useState(false);
+  const showMenuHandler = () => {
+    setCloseMenu(!closeMenu);
+  };
 
-const [categories, setCategories] = useState(null);
-useEffect(() => {
-  fetchCategories();
-}, []);
-const fetchCategories = async () => {
-  const { data } = await fetchDataFromApi("/api/categories?populate=*");
-  setCategories(data);
-};
+  const [categories, setCategories] = useState(null);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  const fetchCategories = async () => {
+    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    setCategories(data);
+  };
 
-const [filterData, setFilterData] = useState([]);
-const [query, setQuery] = useState("");
+  const [filterData, setFilterData] = useState([]);
+  const [query, setQuery] = useState("");
 
-const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState(null);
 
-const fetchProducts = async () => {
-  const { data } = await fetchDataFromApi("/api/products?populate=*");
-  const productData = data.map((p) => ({
-    title: p?.attributes?.title,
-    price: p?.attributes?.price,
-    slug: p?.attributes?.slug,
-    url: p?.attributes?.image?.data?.[0]?.attributes?.url,
-  }));
-  console.log(data);
-  console.log("search", productData);
-  setProducts(productData);
-};
-const filterChangeHandler = (e) => {
-  const searchedWord = e.target.value;
-  setQuery(searchedWord);
-  const newFilter = products.filter((value) => {
-    return value.title.toLowerCase().includes(searchedWord.toLowerCase());
-  });
-  if (query === "") {
+  const fetchProducts = async () => {
+    const { data } = await fetchDataFromApi("/api/products?populate=*");
+    const productData = data.map((p) => ({
+      title: p?.attributes?.title,
+      price: p?.attributes?.price,
+      slug: p?.attributes?.slug,
+      url: p?.attributes?.image?.data?.[0]?.attributes?.url,
+    }));
+    console.log(data);
+    console.log("search", productData);
+    setProducts(productData);
+  };
+  const filterChangeHandler = (e) => {
+    const searchedWord = e.target.value;
+    setQuery(searchedWord);
+    const newFilter = products.filter((value) => {
+      return value.title.toLowerCase().includes(searchedWord.toLowerCase());
+    });
+    if (query === "") {
+      setFilterData([]);
+    } else {
+      setFilterData(newFilter);
+    }
+  };
+
+  console.log("filter", filterData);
+
+  const clearInputHandler = () => {
+    setQuery("");
     setFilterData([]);
-  } else {
-    setFilterData(newFilter);
-  }
-};
-
-console.log("filter", filterData);
-
-const clearInputHandler = () => {
-  setQuery("");
-  setFilterData([]);
-};
-useEffect(() => {
-  fetchProducts();
-}, []);
-
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <>
       <ToastContainer />
       <header className="header header-intro-clearance header-26">
-
-    
         {/* End .header-top */}
         <div className="header-middle">
           <div className="container">
@@ -124,41 +126,43 @@ useEffect(() => {
                           backgroundColor: "#61AB00",
                           padding: "10px",
                           minWidth: "100px",
-                          paddingRight:"17px"
+                          paddingRight: "17px",
                         }}
                       >
-                        {
-                          user ? <li className="text-white"> Account </li> 
-                              : <li> 
-                                    <Link 
-                                        href='/account/login' 
-                                        className="text-white">
-                                           Login  / 
-                                    </Link>         
-                                    <Link
-                                         href='/account/register' 
-                                         className="text-white"> 
-                                            Register 
-                                    </Link>
-                                </li>
-                         }
-
+                        {user ? (
+                          <li className="text-white"> Account </li>
+                        ) : (
+                          <li>
+                            <Link href="/account/login" className="text-white">
+                              Login /
+                            </Link>
+                            <Link
+                              href="/account/register"
+                              className="text-white"
+                            >
+                              Register
+                            </Link>
+                          </li>
+                        )}
                       </Link>
-                      
+
                       {user && (
                         <div className="header-menu">
                           <ul>
                             <li>
-                              <Link href="/account">Account Details</Link>
+                              <Link href="/account/details">Account Details</Link>
                             </li>
-                            {/* <li>
-                                   <a href="#">Orders</a>
-                                 </li> */}
+                            <li>
+                              <Link href="/account/edit-profile">Edit Profile</Link>
+                            </li>
+                             <li>
+                              <Link href="/account/orders">Orders</Link>
+                            </li>
                             <li>
                               <button
                                 style={{ paddingLeft: "15px" }}
                                 onClick={() => {
-                                  logOut()
+                                  logOut();
                                 }}
                               >
                                 Logout
@@ -186,24 +190,46 @@ useEffect(() => {
         </div>
         {/* End .header-middle */}
         <div className="header-bottom sticky-header">
-          <div className="container">
-            <div className="header-center">
+          <div className="container d-flex justify-center">
+            <div className="">
               <nav className="main-nav">
                 <ul className="menu sf-arrows">
-                  <li className="megamenu-container active">
+                  <li className={router.pathname === "/" ? "active" : ""}>
                     <Link href="/">Home</Link>
                   </li>
-                  <li>
+                  <li className={router.pathname === "/shop" ? "active" : ""}>
                     <Link href="/shop">Shop</Link>
                   </li>
-                  <li>
+                  <li className={router.pathname === "/about" ? "active" : ""}>
                     <Link href="/about">About</Link>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      router.pathname === "/private-policy" ? "active" : ""
+                    }
+                  >
                     <Link href="/private-policy">Private Policy</Link>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      router.pathname === "/returns-refund" ? "active" : ""
+                    }
+                  >
+                    <Link href="/returns-refund">Refund & Returns</Link>
+                  </li>
+                  <li
+                    className={
+                      router.pathname === "/terms-and-conditions"
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link href="/terms-and-conditions">Terms & Conditions</Link>
+                  </li>
+                  <li
+                    className={router.pathname === "/contact" ? "active" : ""}
+                  >
+                    <Link href="/contact">Contact</Link>
                   </li>
 
                   {/* <li>
@@ -304,206 +330,237 @@ useEffect(() => {
         menuCloseHandler={menuCloseHandler}
       /> */}
 
+      {/* Mobile Menu overlay */}
 
-{/* Mobile Menu overlay */}
-
-<div className="mobile-menu-overlay" style={{visibility: closeMenu? "visible" : "", opacity: closeMenu? 1: 0}} onClick={showMenuHandler}></div>
-{/* Mobile Menu Container */}
-<div
-      className="mobile-menu-container"
-      style={{
-        visibility: "visible",
-        transform: closeMenu ? "translateX(280px)" : "translateX(0px)",
-      }}
-    >
-      <div className="mobile-menu-wrapper">
-        <span className="mobile-menu-close" onClick={showMenuHandler}>
-          <i className="icon-close" />
-        </span>
-        <div style={{ position: "relative", marginBottom: "2rem" }}>
-          <div className="d-flex align-items-center justify-content-between">
-            <input
-              type="search"
-              className="form-control"
-              style={{ marginBottom: "0rem" }}
-              name="mobile-search"
-              id="mobile-search"
-              placeholder="Search in..."
-              required=""
-              value={query}
-              onChange={filterChangeHandler}
-            />
-            <button
-              className="btn btn-primary btn-sm"
-              style={{ minWidth: "30px" }}
-              type="submit"
-            >
-              <i className="icon-search" />
-            </button>
-          </div>
-
-          {filterData.length !== 0 && query.length > 1 && (
-            <div
-              style={{
-                position: "absolute",
-                top: 46,
-                left: 0,
-                zIndex: 100,
-                width: "100%",
-                backgroundColor: "whitesmoke",
-              }}
-            >
-              <ul
-                className="menu-vertical sf-arrows sf-js-enabled"
-                style={{ touchAction: "pan-y" }}
+      <div
+        className="mobile-menu-overlay"
+        style={{
+          visibility: closeMenu ? "visible" : "",
+          opacity: closeMenu ? 1 : 0,
+        }}
+        onClick={showMenuHandler}
+      ></div>
+      {/* Mobile Menu Container */}
+      <div
+        className="mobile-menu-container"
+        style={{
+          visibility: "visible",
+          transform: closeMenu ? "translateX(280px)" : "translateX(0px)",
+        }}
+      >
+        <div className="mobile-menu-wrapper">
+          <span className="mobile-menu-close" onClick={showMenuHandler}>
+            <i className="icon-close" />
+          </span>
+          <div style={{ position: "relative", marginBottom: "2rem" }}>
+            <div className="d-flex align-items-center justify-content-between">
+              <input
+                type="search"
+                className="form-control"
+                style={{ marginBottom: "0rem" }}
+                name="mobile-search"
+                id="mobile-search"
+                placeholder="Search in..."
+                required=""
+                value={query}
+                onChange={filterChangeHandler}
+              />
+              <button
+                className="btn btn-primary btn-sm"
+                style={{ minWidth: "30px" }}
+                type="submit"
               >
-                {filterData?.map((p) => (
-                  <li
-                    key={p?.id}
-                    className="megamenu-container"
-                    onClick={() => {
-                      showMenuHandler();
-                      clearInputHandler();
-                    }}
-                    // onClick={showMenuHandler}
-                  >
-                    <Link
-                      className="d-flex align-items-center"
-                      href={`/product/${p?.slug}`}
+                <i className="icon-search" />
+              </button>
+            </div>
+
+            {filterData.length !== 0 && query.length > 1 && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 46,
+                  left: 0,
+                  zIndex: 100,
+                  width: "100%",
+                  backgroundColor: "whitesmoke",
+                }}
+              >
+                <ul
+                  className="menu-vertical sf-arrows sf-js-enabled"
+                  style={{ touchAction: "pan-y" }}
+                >
+                  {filterData?.map((p) => (
+                    <li
+                      key={p?.id}
+                      className="megamenu-container"
                       onClick={() => {
                         showMenuHandler();
                         clearInputHandler();
                       }}
+                      // onClick={showMenuHandler}
                     >
-                      <Image
-                        height={30}
-                        width={30}
-                        src={p?.url}
-                        alt={p?.title}
-                      />
-                      <span className="d-flex align-items-center">
-                        {p?.title}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <ul className="nav nav-pills-mobile" role="tablist">
-          <li className="nav-item">
-            <Link
-              className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase active"
-              id="mobile-menu-link"
-              data-toggle="tab"
-              href="#mobile-menu-tab"
-              role="tab"
-              aria-controls="mobile-menu-tab"
-              aria-selected="true"
-            >
-              Categories
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase"
-              id="mobile-cats-link"
-              data-toggle="tab"
-              href="#mobile-cats-tab"
-              role="tab"
-              aria-controls="mobile-cats-tab"
-              aria-selected="false"
-            >
-              Menu
-            </Link>
-          </li>
-        </ul>
-        <div className="tab-content">
-          <div
-            className="tab-pane fade show active"
-            id="mobile-menu-tab"
-            role="tabpanel"
-            aria-labelledby="mobile-menu-link"
-          >
-            <nav className="mobile-nav">
-              <ul className="mobile-menu">
-                {categories?.map((c) => (
-                  <li key={c?.id} className="active" onClick={showMenuHandler}>
-                    <Link href={`/category/${c?.attributes?.slug}`}  onClick={showMenuHandler}>
-                      {c?.attributes?.name}
-                    </Link>
-                    {c?.attributes?.sub_categories?.data?.length > 0 && (
-                      <ul style={{ display: "block" }}>
-                        {c?.attributes?.sub_categories?.data?.map((sub) => (
-                          <Link
-                          key={sub?.id}  
-                              href={`/subcategory/${sub?.attributes?.slug}`}
-                              onClick={showMenuHandler}
-                            >
-                          <li>
-
-
-                              {sub?.attributes?.name}
-                          </li>
-                            </Link>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            {/* End .mobile-nav */}
+                      <Link
+                        className="d-flex align-items-center"
+                        href={`/product/${p?.slug}`}
+                        onClick={() => {
+                          showMenuHandler();
+                          clearInputHandler();
+                        }}
+                      >
+                        <Image
+                          height={30}
+                          width={30}
+                          src={p?.url}
+                          alt={p?.title}
+                        />
+                        <span className="d-flex align-items-center">
+                          {p?.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-          {/* .End .tab-pane */}
-          <div
-            className="tab-pane fade"
-            id="mobile-cats-tab"
-            role="tabpanel"
-            aria-labelledby="mobile-cats-link"
-          >
-            <nav className="mobile-cats-nav">
-              <ul className="mobile-cats-menu">
-                <li>
-                  <Link className="mobile-cats-lead" href="/">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link className="mobile-cats-lead" href="/shop">
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <Link className="mobile-cats-lead" href="/">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link className="mobile-cats-lead" href="/">
-                    Private Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link className="mobile-cats-lead" href="/">
-                    Terms & Conditions
-                  </Link>
-                </li>
-              </ul>
-              {/* End .mobile-cats-menu */}
-            </nav>
-            {/* End .mobile-cats-nav */}
-          </div>
-          {/* .End .tab-pane */}
-        </div>
-        {/* End .tab-content */}
 
-        {/* End .social-icons */}
+          <ul className="nav nav-pills-mobile" role="tablist">
+            <li className="nav-item">
+              <Link
+                className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase active"
+                // id="mobile-menu-link"
+                // data-toggle="tab"
+                href="#"
+                // role="tab"
+                // aria-controls="mobile-menu-tab"
+                // aria-selected="true"
+                onClick={() => {
+                  setTab("category");
+                }}
+              >
+                Categories
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link font-size-normal second-primary-color font-weight-normal text-uppercase"
+                // id="mobile-cats-link"
+                // data-toggle="tab"
+                href="#"
+                // role="tab"
+                // aria-controls="mobile-cats-tab"
+                // aria-selected="false"
+                onClick={() => {
+                  setTab("menu");
+                }}
+              >
+                Menu
+              </Link>
+            </li>
+          </ul>
+          <div className="tab-content">
+            {tab === "category" && (
+              <div
+                className="tab-pane  show "
+                style={{ display: "block" }}
+                // id="mobile-menu-tab"
+                // role="tabpanel"
+                // aria-labelledby="mobile-menu-link"
+              >
+                <nav className="mobile-nav">
+                  <ul className="mobile-menu">
+                    {categories?.map((c) => (
+                      <li
+                        key={c?.id}
+                        className="active"
+                        onClick={showMenuHandler}
+                      >
+                        <Link
+                          href={`/category/${c?.attributes?.slug}`}
+                          onClick={showMenuHandler}
+                        >
+                          {c?.attributes?.name}
+                        </Link>
+                        {c?.attributes?.sub_categories?.data?.length > 0 && (
+                          <ul style={{ display: "block" }}>
+                            {c?.attributes?.sub_categories?.data?.map((sub) => (
+                              <Link
+                                key={sub?.id}
+                                href={`/subcategory/${sub?.attributes?.slug}`}
+                                onClick={showMenuHandler}
+                              >
+                                <li>{sub?.attributes?.name}</li>
+                              </Link>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            )}
+
+            {tab === "menu" && (
+              <div
+                className="tab-pane  show"
+                style={{ display: "block" }}
+                // id="mobile-cats-tab"
+                // role="tabpanel"
+                // aria-labelledby="mobile-cats-link"
+              >
+                <nav className="mobile-cats-nav">
+                  <ul className="mobile-cats-menu">
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/">
+                        Home
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/shop">
+                        Shop
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/about">
+                        About
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/private-policy">
+                        Private Policy
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/returns-refund">
+                        Refund & Returns
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link
+                        className="mobile-cats-lead"
+                        href="/terms-and-conditions"
+                      >
+                        Terms & Conditions
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mob ile-cats-lead" href="/contact">
+                        Contact Us
+                      </Link>
+                    </li>
+                  </ul>
+                  {/* End .mobile-cats-menu */}
+                </nav>
+              </div>
+            )}
+          </div>
+          {/* End .tab-content */}
+
+          {/* End .social-icons */}
+        </div>
+        {/* End .mobile-menu-wrapper */}
       </div>
-      {/* End .mobile-menu-wrapper */}
-    </div>
       {/* <AuthModal/> */}
     </>
   );

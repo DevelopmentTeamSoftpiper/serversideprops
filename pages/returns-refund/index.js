@@ -2,7 +2,7 @@ import React from 'react';
 
 const Return = () => {
     return (
-        <div className='container text-center my-8'>
+        <div className='container  my-8 p-5'>
             <h3>
                  Return Policy
             </h3>

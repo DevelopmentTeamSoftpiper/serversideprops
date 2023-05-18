@@ -2,7 +2,8 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className='container text-justify my-10'>
+        <div className='container text-justify my-10 p-5'>
+            <h3> About </h3>
            <div>
                 <h5> Why We Start? </h5>
                 <p>

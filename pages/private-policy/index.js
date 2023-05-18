@@ -2,11 +2,11 @@ import React from 'react';
 
 const Policy = () => {
     return (
-        <div className='container my-5'>
+        <div className='container my-5 p-5'>
              <div className="row">
                 <div className="col-lg-12">
                     <div className=''>
-                        <h6> Privacy Policy </h6>
+                        <h3> Privacy Policy </h3>
                         <p>
                             This privacy policy has been published for visitors to let them know how Personally Identifiable Information (PII) is being used on our website. PII has been described based on US privacy law and information security. Please go through this privacy policy sincerely to know about how we collect, use, protect your PII on our website.
                         </p>
