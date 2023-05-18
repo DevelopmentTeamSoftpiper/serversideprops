@@ -150,12 +150,16 @@ const Header = ({ siteInfo }) => {
                         <div className="header-menu">
                           <ul>
                             <li>
-                              <Link href="/account/details">Account Details</Link>
+                              <Link href="/account/details">
+                                Account Details
+                              </Link>
                             </li>
                             <li>
-                              <Link href="/account/edit-profile">Edit Profile</Link>
+                              <Link href="/account/edit-profile">
+                                Edit Profile
+                              </Link>
                             </li>
-                             <li>
+                            <li>
                               <Link href="/account/orders">Orders</Link>
                             </li>
                             <li>
@@ -484,13 +488,14 @@ const Header = ({ siteInfo }) => {
                         {c?.attributes?.sub_categories?.data?.length > 0 && (
                           <ul style={{ display: "block" }}>
                             {c?.attributes?.sub_categories?.data?.map((sub) => (
-                              <Link
-                                key={sub?.id}
-                                href={`/subcategory/${sub?.attributes?.slug}`}
-                                onClick={showMenuHandler}
-                              >
-                                <li>{sub?.attributes?.name}</li>
-                              </Link>
+                              <li key={sub?.id}>
+                                <Link
+                                  href={`/subcategory/${sub?.attributes?.slug}`}
+                                  onClick={showMenuHandler}
+                                >
+                                  {sub?.attributes?.name}
+                                </Link>
+                              </li>
                             ))}
                           </ul>
                         )}
