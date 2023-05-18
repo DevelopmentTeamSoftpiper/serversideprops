@@ -13,6 +13,7 @@ import HomeCategory from "@/components/home/HomeCategory";
 import TestCategory from "@/components/home/TestCategory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewsLetter from "@/components/home/NewsLetter";
 
 export default function Home({ products,categories, siteinfo ,catProducts}) {
   
@@ -45,6 +46,7 @@ const showToastMessage =(data)=>{
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale' showToastMessage={showToastMessage} />
           <ProductCarousel title="Best Deals" field="bestdeal" showToastMessage={showToastMessage} />
+          <NewsLetter/>
         </main>
         {/* <Footer /> */}
       </div>
