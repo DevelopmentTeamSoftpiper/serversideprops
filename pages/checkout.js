@@ -12,7 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BsFillCartXFill } from 'react-icons/bs';
 import Link from "next/link";
+import Loader from "@/components/Loader";
 const checkout = () => {
+
+  const [isLoading, setIsLoading] =useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -123,6 +126,7 @@ const checkout = () => {
 
   const order = async () => {
     try {
+
       const response = await postDataToApi("/api/orders", {
         data: {
           products: productData,
@@ -152,8 +156,10 @@ const checkout = () => {
 
       console.log(response);
       dispatch(emptyCart());
-
+      
       router.push("/success");
+      setIsLoading(false);
+
     } catch (error) {
       console.log(error);
       toast.error(error.error.message, {
@@ -166,9 +172,11 @@ const checkout = () => {
         progress: undefined,
         theme: "dark",
       });
+      setIsLoading(false);
     }
   };
   const orderSubmitHandler = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     order();
   };
@@ -490,6 +498,9 @@ const checkout = () => {
                       </div>
                     </div>
                   )}
+
+                  {isLoading && <Loader />}
+
                   {/* End .accordion */}
                   <button
                     className="btn btn-outline-primary-2 btn-order btn-block mt-2"

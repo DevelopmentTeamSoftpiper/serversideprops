@@ -1,4 +1,5 @@
 /*eslint-disable */
+import Loader from "@/components/Loader";
 import { logout } from "@/store/userSlice";
 import { fetchDataFromApi, postDataToApi,updateDataToApi } from "@/utils/api";
 import withAuth from "@/utils/restrict";
@@ -10,6 +11,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EditProfile = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -25,8 +29,11 @@ const EditProfile = () => {
   
   const provider = useSelector((state)=>state.user.provider);
 
+  console.log(profileId,'===============>')
+
 
   const getUserInfo = async ()=>{
+
     if(provider === "strapi"){
       const userInfo = await fetchDataFromApi(
         `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.id}`
@@ -54,8 +61,6 @@ const EditProfile = () => {
       setProfileId(userInfo?.data?.[0]?.id);
 
     }
-
- 
   }
   useEffect(()=>{
     getUserInfo();
@@ -84,15 +89,17 @@ const EditProfile = () => {
           theme: "dark",
         });
         console.log(response);
+        setIsLoading(false);
     } catch (error) {
       console.log(error);
-     
+      setIsLoading(false);
     }
   };
 
 
   const profileSubmitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     profile();
   };
 
@@ -299,6 +306,7 @@ const EditProfile = () => {
                       />
                     </div>
                   </div>
+                  {isLoading && <Loader />}
 
                   <button type="submit" className="btn btn-outline-primary-2">
                     <span>SAVE CHANGES</span>

@@ -119,24 +119,24 @@ const ProductDetails = ({ product, products }) => {
                     </div>
                   </div>
                   <div className="product-details-action">
-                    <button className="btn-product btn-cart"  onClick={()=>{
-            dispatch(addToCart({
-              ...product?.data?.[0],
-              oneQuantityPrice: p?.price,
-              quantity:quantity
-            }));
-            toast.success("Product Added to Cart", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-           
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
-           }}>
-                      <span>add to cart</span>
+
+                    <button className="btn-product btn-cart" onClick={()=>{
+                            dispatch(addToCart({
+                              ...product?.data?.[0],
+                              oneQuantityPrice: p?.price,
+                              quantity:quantity
+                            }));
+                            toast.success("Product Added to Cart", {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "dark",
+                              });
+                      }}>
+                        <span id='btn-add-to-cart'>add to cart</span>
                     </button>
 
                   </div>

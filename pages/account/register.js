@@ -1,9 +1,15 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import Loader from "@/components/Loader";
 
 const register = () => {
+
+  
+  const [isLoading, setIsLoading] =useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -14,6 +20,7 @@ const register = () => {
     response: "",
     buttonText: "sign up",
   });
+
   const { username, email, password, response, buttonText } = values;
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -34,6 +41,7 @@ const register = () => {
       });
       console.log(response);
       router.push("/account/email-verification");
+      setIsLoading(false)
     } catch (error) {
       console.log(error.response);
       setValues({
@@ -41,10 +49,12 @@ const register = () => {
         response: error.response,
         buttonText: "sign up",
       });
+      setIsLoading(false)
     }
   };
   
   const submitHandler = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     signup();
   };
@@ -118,6 +128,8 @@ const register = () => {
                         required
                       />
                     </div>
+
+                    {isLoading && <Loader />}
 
                     <div className="form-footer">
                       <button

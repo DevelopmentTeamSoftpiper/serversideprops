@@ -1,4 +1,5 @@
 /* eslint-disable */
+import Loader from "@/components/Loader";
 import LoginOTP from "@/components/auth/LoginOTP";
 import AlertBox from "@/components/elements/AlertBox";
 import {
@@ -22,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
 
   const [toggleProvider, setToggleProvider] = useState(false);
+  const [isLoading, setIsLoading] =useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -39,7 +41,9 @@ const Login = () => {
 
   //Login Handler
   const login = async () => {
+
     try {
+      setIsLoading(true);
       setValues({ ...values, buttonText: "Singing in" });
       const res = await axios.post("http://localhost:1337/api/auth/local", {
         identifier,
@@ -50,9 +54,8 @@ const Login = () => {
         `/api/profiles?populate=*&[filters][user][id][$eq]=${res?.data?.user?.id}`
       );
 
-    
-
       if(userInfo?.data?.length ===0){
+        setIsLoading(false);
         const response = await postDataToApi("/api/profiles",
         {"data":{
           "user": res?.data?.user?.id,
@@ -62,12 +65,13 @@ const Login = () => {
         }} );
       }
 
-
       dispatch(loginSuccess(res.data.user));
       dispatch(jwtSuccess(res.data.jwt));
       dispatch(providerSuccess("strapi"));
       const redirectPath = router.query.redirect || "/account";
       router.push(redirectPath);
+      setIsLoading(false);
+
     } catch (error) {
       console.log(error.response);
       setValues({
@@ -86,15 +90,18 @@ const Login = () => {
         progress: undefined,
         theme: "dark",
       });
+      setIsLoading(false);
     }
   };
   const submitHandler = (e) => {
     e.preventDefault();
     login();
   };
+
+
   return (
     <main className="main">
-                <ToastContainer/>
+      <ToastContainer/>
 
       <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
         <div className="container">
@@ -168,6 +175,8 @@ const Login = () => {
                       required
                     />
                   </div>
+
+                  {  isLoading &&  <Loader />}
 
                   <div className="form-footer">
                     <button
