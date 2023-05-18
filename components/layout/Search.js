@@ -1,141 +1,138 @@
-import { fetchDataFromApi } from '@/utils/api';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import { fetchDataFromApi } from "@/utils/api";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 const Search = () => {
-    const [filterData, setFilterData] = useState([]);
-    const [query, setQuery] = useState("");
+  const [filterData, setFilterData] = useState([]);
+  const [query, setQuery] = useState("");
 
-    const [products, setProducts] = useState(null);
- 
-    const fetchProducts = async () => {
-      const { data } = await fetchDataFromApi("/api/products?populate=*");
-      const productData = data.map((p)=>({
-        title: p?.attributes?.title,
-        price: p?.attributes?.price,
-        slug: p?.attributes?.slug,
-        url: p?.attributes?.image?.data?.[0]?.attributes?.url
-      }))
-      console.log(data);
-      console.log('search',productData);
-      setProducts(productData);
-    
-    };
-    const filterChangeHandler = (e) => {
-        const searchedWord = e.target.value;
-        setQuery(searchedWord);
-        const newFilter = products.filter((value) => {
-          return value.title.toLowerCase().includes(searchedWord.toLowerCase());
-        });
-        if (query === "") {
-          setFilterData([]);
-        } else {
-          setFilterData(newFilter);
-        }
-      };
+  const [products, setProducts] = useState(null);
 
-      console.log('filter',filterData);
+  const fetchProducts = async () => {
+    const { data } = await fetchDataFromApi("/api/products?populate=*");
+    const productData = data.map((p) => ({
+      title: p?.attributes?.title,
+      price: p?.attributes?.price,
+      slug: p?.attributes?.slug,
+      url: p?.attributes?.image?.data?.[0]?.attributes?.url,
+    }));
+    console.log(data);
+    console.log("search", productData);
+    setProducts(productData);
+  };
+  const filterChangeHandler = (e) => {
+    const searchedWord = e.target.value;
+    setQuery(searchedWord);
+    const newFilter = products.filter((value) => {
+      return value.title.toLowerCase().includes(searchedWord.toLowerCase());
+    });
+    if (query === "") {
+      setFilterData([]);
+    } else {
+      setFilterData(newFilter);
+    }
+  };
 
-      const clearInputHandler = () => {
-        setQuery("");
-        setFilterData([]);
-      };
-      useEffect(() => {
-        fetchProducts();
-      }, []);
+  console.log("filter", filterData);
+
+  const clearInputHandler = () => {
+    setQuery("");
+    setFilterData([]);
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
-<>
-
-<div className="header-center d-flex flex-column " style={{position: "relative"}}>
-    <div className="header-search header-search-visible header-search-no-radius">
-      <Link href="#" className="search-toggle" role="button">
-        <i className="icon-search" />
-      </Link>
-  
-        <div className="header-search-wrapper search-wrapper-wide">
-          <div className="select-custom">
-            <select id="cat" name="cat">
-              <option value="">All Departments</option>
-              <option value={1}>Fashion</option>
-              <option value={2}>- Women</option>
-              <option value={3}>- Men</option>
-              <option value={4}>- Jewellery</option>
-              <option value={5}>- Kids Fashion</option>
-              <option value={6}>Electronics</option>
-              <option value={7}>- Smart TVs</option>
-              <option value={8}>- Cameras</option>
-              <option value={9}>- Games</option>
-              <option value={10}>Home &amp; Garden</option>
-              <option value={11}>Motors</option>
-              <option value={12}>- Cars and Trucks</option>
-              <option value={15}>- Boats</option>
-              <option value={16}>- Auto Tools &amp; Supplies</option>
-            </select>
-          </div>
-          {/* End .select-custom */}
-          <label htmlFor="q" className="sr-only">
-            Search
-          </label>
-          <input
-            type="search"
-            className="form-control"
-            name="q"
-            id="q"
-            value={query}
-            onChange={filterChangeHandler}
-            placeholder="Search product ..."
-            required=""
-          />
-          
-          <button className="btn btn-primary" type="submit">
+    <>
+      <div
+        className="header-center d-flex flex-column "
+        style={{ position: "relative" }}
+      >
+        <div className="header-search header-search-visible header-search-no-radius">
+          <Link href="#" className="search-toggle" role="button">
             <i className="icon-search" />
-          </button>
+          </Link>
+
+          <div className="header-search-wrapper search-wrapper-wide">
+            <div className="select-custom">
+              <select id="cat" name="cat">
+                <option value="">All Departments</option>
+                <option value={1}>Fashion</option>
+                <option value={2}>- Women</option>
+                <option value={3}>- Men</option>
+                <option value={4}>- Jewellery</option>
+                <option value={5}>- Kids Fashion</option>
+                <option value={6}>Electronics</option>
+                <option value={7}>- Smart TVs</option>
+                <option value={8}>- Cameras</option>
+                <option value={9}>- Games</option>
+                <option value={10}>Home &amp; Garden</option>
+                <option value={11}>Motors</option>
+                <option value={12}>- Cars and Trucks</option>
+                <option value={15}>- Boats</option>
+                <option value={16}>- Auto Tools &amp; Supplies</option>
+              </select>
+            </div>
+            {/* End .select-custom */}
+            <label htmlFor="q" className="sr-only">
+              Search
+            </label>
+            <input
+              type="search"
+              className="form-control"
+              name="q"
+              id="q"
+              value={query}
+              onChange={filterChangeHandler}
+              placeholder="Search product ..."
+              required=""
+            />
+
+            <button className="btn btn-primary" type="submit">
+              <i className="icon-search" />
+            </button>
+          </div>
+          {/* End .header-search-wrapper */}
         </div>
-        {/* End .header-search-wrapper */}
-        
 
-      
+        {/* End .header-search */}
 
-    </div>
-    
-    {/* End .header-search */}
+        {filterData.length !== 0 && query.length > 1 && (
+          <div
+            style={{
+              position: "absolute",
+              top: 46,
+              left: 0,
+              zIndex: 100,
+              width: "100%",
+              backgroundColor: "whitesmoke",
+            }}
+          >
+            <ul
+              className="menu-vertical sf-arrows sf-js-enabled"
+              style={{ touchAction: "pan-y" }}
+            >
+              {filterData?.map((p) => (
+                <li key={p?.id} className="megamenu-container" onClick={clearInputHandler}>
+                  <Link
+                    className="d-flex align-items-center"
+                    href={`/product/${p?.slug}`}
+                  >
+                    <Image height={30} width={30} src={p?.url} alt={p?.title} />
+                    <span className="d-flex align-items-center">
+                      {p?.title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
-    {filterData.length !== 0 && query.length > 1 && 
-          <div style={{position: "absolute", top: 46, left:0,zIndex:100, width:"100%", backgroundColor:"whitesmoke"}}>
-           <ul
-                className="menu-vertical sf-arrows sf-js-enabled"
-                style={{ touchAction: "pan-y"}}
-              >
-
-            {filterData?.map((p)=>(
-
-                      <li key={p?.id} className="megamenu-container">
-                    <Link
-                     className="d-flex align-items-center"
-                      href={`/product/${p?.slug}`}
-                    >
-                      <Image
-                        height={30}
-                        width={30}
-                        src={p?.url}
-                        alt={p?.title}
-                      />
-                      <span className='d-flex align-items-center' >{p?.title}</span>
-                    </Link>
-                    </li>
-            ))}
-          </ul>
-        </div>
-    }
-
-  </div>
-
-
-
-</>
-  )
-}
-
-export default Search
+export default Search;

@@ -114,18 +114,19 @@ const MobileMenuContainer = ({ showMenu, menuCloseHandler }) => {
                   <li
                     key={p?.id}
                     className="megamenu-container"
-                    onClick={() => {
-                      showMenuHandler();
-                      clearInputHandler();
-                    }}
+                    // onClick={() => {
+                    //   showMenuHandler();
+                    //   clearInputHandler();
+                    // }}
+                    onClick={showMenuHandler}
                   >
                     <Link
                       className="d-flex align-items-center"
                       href={`/product/${p?.slug}`}
-                      onClick={() => {
-                        showMenuHandler();
-                        clearInputHandler();
-                      }}
+                      // onClick={() => {
+                      //   showMenuHandler();
+                      //   clearInputHandler();
+                      // }}
                     >
                       <Image
                         height={30}
