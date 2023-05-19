@@ -3,8 +3,10 @@ import React from 'react'
 import { useState } from 'react'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from '../Loader';
 const NewsLetter = () => {
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
     const newsletter = async()=>{
         try{
             const response = await postDataToApi("/api/newsletters",{
@@ -22,6 +24,7 @@ const NewsLetter = () => {
                 progress: undefined,
                 theme: "dark",
               });
+            setIsLoading(false)
         }catch(error){
             toast.error("Something went wrong", {
                 position: "top-right",
@@ -33,9 +36,11 @@ const NewsLetter = () => {
                 progress: undefined,
                 theme: "dark",
               });
+              setIsLoading(false)
         }
     }
     const submitHandler =()=>{
+      setIsLoading(true);
         newsletter();
         setEmail("");
     }
@@ -71,8 +76,9 @@ const NewsLetter = () => {
                   />
                   <div className="input-group-append">
                     <button className="btn text-uppercase" type="submit" onClick={submitHandler} >
-                      Subscribe
+                      Subscribe 
                       <i className="icon-long-arrow-right mr-0" />
+                      {isLoading && <Loader />}
                     </button>
                   </div>
                   {/* .End .input-group-append */}
