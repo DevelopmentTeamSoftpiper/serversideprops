@@ -64,11 +64,9 @@ const register = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link href="index.html">Home</Link>
+              <Link href="/">Home</Link>
             </li>
-            <li className="breadcrumb-item">
-              <Link href="#">Pages</Link>
-            </li>
+    
             <li className="breadcrumb-item active" aria-current="page">
               Register
             </li>
@@ -78,7 +76,7 @@ const register = () => {
       </nav>
 
       <div
-        className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+        className="login-page bg-image pt-2 pb-2 pt-md-2 pb-md-2 pt-lg-2 pb-lg-2"
         style={{
           backgroundImage: `url("/assets/images/backgrounds/login-bg.jpg")`,
         }}
@@ -139,20 +137,11 @@ const register = () => {
                         <span>{buttonText}</span>
                         <i className="icon-long-arrow-right" />
                       </button>
-                      <div className="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          className="custom-control-input"
-                          id="register-policy-2"
-                          required=""
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="register-policy-2"
-                        >
-                          I agree to the <Link href="#">privacy policy</Link> *
-                        </label>
-                      </div>
+                      <div className="custom-control ">
+                      
+                        <Link href="/account/login">Already a User!</Link> 
+
+                    </div>
                       {/* End .custom-checkbox */}
                     </div>
                     {/* End .form-footer */}

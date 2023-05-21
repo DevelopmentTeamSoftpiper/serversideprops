@@ -188,7 +188,9 @@ const Login = () => {
                     </button>
 
                     <div className="custom-control ">
-                        <Link href="/account/forget-password">Forget Password!</Link> 
+                        <Link href="/account/forget-password" style={{marginRight:"10px"}}>Forget Password!</Link> 
+                        <Link href="/account/register">Not a User!</Link> 
+
                     </div>
                   </div>
                 </form>
@@ -205,7 +207,7 @@ const Login = () => {
                         ? 
                         <div className="row">
                         <div className="col-sm-12">
-                          <button className="btn btn-login btn-g" onClick={(e)=> setToggleProvider(!toggleProvider)}>
+                          <button className="btn btn-login btn-g" style={{color:"black",fontWeight:600, border: "1px solid black"}} onClick={(e)=> setToggleProvider(!toggleProvider)}>
                             <i className="icon-long-arrow-right" />
                             Login With EMAIL
                           </button>
@@ -217,7 +219,7 @@ const Login = () => {
                       
                       <div className="row">
                           <div className="col-sm-12">
-                            <button className="btn btn-login btn-g " onClick={(e)=> setToggleProvider(!toggleProvider)}>
+                            <button className="btn btn-login btn-g " style={{color:"black",fontWeight:600, border: "1px solid black"}}  onClick={(e)=> setToggleProvider(!toggleProvider)}>
                               <i className="icon-long-arrow-right" />
                               Login With MOBILE
                             </button>

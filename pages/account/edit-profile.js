@@ -1,8 +1,10 @@
 /*eslint-disable */
 import Loader from "@/components/Loader";
 import { logout } from "@/store/userSlice";
-import { fetchDataFromApi, postDataToApi,updateDataToApi } from "@/utils/api";
+import { fetchDataFromApi, postDataToApi, updateDataToApi } from "@/utils/api";
 import withAuth from "@/utils/restrict";
+import { API_URL } from "@/utils/urls";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -11,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EditProfile = () => {
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [name, setName] = useState("");
@@ -23,18 +24,24 @@ const EditProfile = () => {
   const [country, setCountry] = useState("");
   const [profileInfo, setProfileInfo] = useState(null);
   const [profileId, setProfileId] = useState(null);
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
-  // console.log(user);
   
-  const provider = useSelector((state)=>state.user.provider);
+  const provider = useSelector((state) => state.user.provider);
+  const jwt = useSelector((state) => state.user.jwt);
+  
+  console.log(jwt);
 
-  console.log(profileId,'===============>')
+  console.log(currentPassword);
+  console.log(password);
+  console.log(passwordConfirmation);
 
-
-  const getUserInfo = async ()=>{
-
-    if(provider === "strapi"){
+  const getUserInfo = async () => {
+    if (provider === "strapi") {
       const userInfo = await fetchDataFromApi(
         `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.id}`
       );
@@ -46,8 +53,7 @@ const EditProfile = () => {
       setCity(userInfo?.data?.[0]?.attributes?.city);
       setCountry(userInfo?.data?.[0]?.attributes?.country);
       setProfileId(userInfo?.data?.[0]?.id);
-   
-    }else{
+    } else {
       const userInfo = await fetchDataFromApi(
         `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.uid}`
       );
@@ -59,43 +65,42 @@ const EditProfile = () => {
       setCity(userInfo?.data?.[0]?.attributes?.city);
       setCountry(userInfo?.data?.[0]?.attributes?.country);
       setProfileId(userInfo?.data?.[0]?.id);
-
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getUserInfo();
-  },[])
+  }, []);
 
   const profile = async () => {
     try {
-        const response = await updateDataToApi(`/api/profiles/${profileId}`,
-        {"data":{
-          "username": name,
-          "email": email,
-          "phone": phone,
-          "address":address,
-          "post_code":postalCode,
-          "city":city,
-          "country":country
-        }} );
-        toast.success("Profile Edited Successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-  
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        console.log(response);
-        setIsLoading(false);
+      const response = await updateDataToApi(`/api/profiles/${profileId}`, {
+        data: {
+          username: name,
+          email: email,
+          phone: phone,
+          address: address,
+          post_code: postalCode,
+          city: city,
+          country: country,
+        },
+      });
+      toast.success("Profile Edited Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      console.log(response);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
   };
-
 
   const profileSubmitHandler = (e) => {
     e.preventDefault();
@@ -103,7 +108,54 @@ const EditProfile = () => {
     profile();
   };
 
+  const updatePassword = async () => {
+    try {
+      const res =await axios.post(
+        `${API_URL}/api/auth/change-password`,
+        {
+          currentPassword: currentPassword,
+          password: password,
+          passwordConfirmation: passwordConfirmation,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      toast.success("Password Updated Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
 
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setPassword("");
+      setCurrentPassword("");
+      setPasswordConfirmation("");
+      console.log("res", res);
+    } catch (error) {
+      toast.error(error?.response?.data?.error?.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      console.log(error?.response?.data?.error?.message);
+    }
+  };
+
+  const passwordChangeHandler = (e) => {
+    e.preventDefault();
+    updatePassword();
+  };
 
   if (!user) {
     router.push("/account/login");
@@ -113,16 +165,14 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   return (
     <main className="main">
-                <ToastContainer/>
+      <ToastContainer />
 
       <div
         className="page-header text-center"
         style={{ backgroundImage: 'url("assets/images/page-header-bg.jpg")' }}
       >
         <div className="container">
-          <h1 className="page-title">
-          Edit Account Information
-          </h1>
+          <h1 className="page-title">Edit Account Information</h1>
         </div>
       </div>
 
@@ -130,7 +180,7 @@ const EditProfile = () => {
         <div className="row d-flex justify-content-center p-5">
           {/* End .col-12 */}
           <div className="col-md-10">
-          <ul className="nav nav-tabs nav-tabs-bg" id="tabs-1" role="tablist">
+            <ul className="nav nav-tabs nav-tabs-bg" id="tabs-1" role="tablist">
               <li className="nav-item">
                 <Link
                   className="nav-link "
@@ -180,7 +230,7 @@ const EditProfile = () => {
                   aria-controls="tab-4"
                   aria-selected="false"
                 >
-                 Edit Profile
+                  Edit Profile
                 </Link>
               </li>
               <li className="nav-item">
@@ -207,7 +257,7 @@ const EditProfile = () => {
                 role="tabpanel"
                 aria-labelledby="tab-1-tab"
               >
-               <form onSubmit={profileSubmitHandler}>
+                <form onSubmit={profileSubmitHandler}>
                   <div className="row">
                     <div className="col-sm-6">
                       <label>Username </label>
@@ -313,9 +363,71 @@ const EditProfile = () => {
                     <i className="icon-long-arrow-right" />
                   </button>
                 </form>
-              </div>
-    
 
+              {
+                provider === "strapi" && 
+                
+            (
+              <>
+              <h3 className="pt-2">Change Password:</h3>
+              <form onSubmit={passwordChangeHandler}>
+              <div className="row">
+                <div className="col-sm-4">
+                  <label>Current Password </label>
+                  <input
+                    type="password"
+                    name="currentPassword"
+                    className="form-control"
+                    required=""
+                    value={currentPassword}
+                    onChange={(e) => {
+                      return setCurrentPassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-sm-4">
+                  <label>Password </label>
+                  <input
+                    type="password"
+                    name="password"
+                    className="form-control"
+                    required=""
+                    value={password}
+                    onChange={(e) => {
+                      return setPassword(e.target.value);
+                    }}
+                  />
+                </div>
+
+                <div className="col-sm-4">
+                  <label>Confirmed Password </label>
+                  <input
+                    type="password"
+                    name="passwordConfirmation"
+                    className="form-control"
+                    required=""
+                    value={passwordConfirmation}
+                    onChange={(e) => {
+                      return setPasswordConfirmation(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+              {password !== passwordConfirmation && passwordConfirmation.length>0 && 
+              <span style={{color:"brown", fontWeight:600}}>Passwords should be matched</span>}
+              </div>
+              {isLoading && <Loader />}
+
+              <button type="submit" className="btn btn-outline-primary-2">
+                <span>SAVE CHANGES</span>
+                <i className="icon-long-arrow-right" />
+              </button>
+            </form>
+            </>
+            )
+              }
+              </div>
             </div>
             {/* End .tab-content */}
           </div>

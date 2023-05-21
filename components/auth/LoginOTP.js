@@ -52,7 +52,7 @@ const LoginOTP = () => {
          window.confirmationResult = confirmationResult;
           setLoading(false);
           setShowOTP(true);
-          toast.success("OTP sended successfully!");
+          toast.success("OTP sent successfully!");
         })
         .catch((error) => {
           console.log("sign in -->", error);
@@ -87,7 +87,8 @@ const LoginOTP = () => {
         
           setLoading(false);
           toast.success("Login Sucessfully");
-          router.push("/");
+          const redirectPath = router.query.redirect || "/account";
+          router.push(redirectPath);
         })
         .catch((err) => {
           console.log("Otp===> ", err);

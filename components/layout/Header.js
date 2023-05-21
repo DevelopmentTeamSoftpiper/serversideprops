@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import MobileMenuOverlay from "./MobileMenuOverlay";
-import MobileMenuContainer from "./MobileMenuContainer";
-import AuthModal from "../auth/AuthModal";
 import Image from "next/image";
 import Link from "next/link";
 import Cart from "./Cart";
@@ -13,6 +10,9 @@ import { auth } from "@/firebase.config";
 import { toast, ToastContainer } from "react-toastify";
 import { fetchDataFromApi } from "@/utils/api";
 import { useRouter } from "next/router";
+import { FiUserPlus } from "react-icons/fi";
+import { FiUserCheck } from "react-icons/fi";
+import { BiUserPin } from "react-icons/bi";
 
 const Header = ({ siteInfo }) => {
   const router = useRouter();
@@ -61,8 +61,8 @@ const Header = ({ siteInfo }) => {
       slug: p?.attributes?.slug,
       url: p?.attributes?.image?.data?.[0]?.attributes?.url,
     }));
-    console.log(data);
-    console.log("search", productData);
+    // console.log(data);
+    // console.log("search", productData);
     setProducts(productData);
   };
   const filterChangeHandler = (e) => {
@@ -78,7 +78,7 @@ const Header = ({ siteInfo }) => {
     }
   };
 
-  console.log("filter", filterData);
+  // console.log("filter", filterData);
 
   const clearInputHandler = () => {
     setQuery("");
@@ -121,26 +121,33 @@ const Header = ({ siteInfo }) => {
                     <div className="header-dropdown">
                       <Link
                         href={user ? "#" : "/account/login"}
-                        className="btn btn-sm"
+                        className=""
                         style={{
-                          backgroundColor: "#61AB00",
-                          padding: "10px",
+                         
                           minWidth: "100px",
                           paddingRight: "17px",
+                      
                         }}
                       >
                         {user ? (
-                          <li className="text-white"> Account </li>
+                          <li style={{fontSize:"17px", backgroundColor:"#61AB00",padding:"5px", color:"white"}}>
+                            Account                           
+                          </li>
                         ) : (
-                          <li>
-                            <Link href="/account/login" className="text-white">
-                              Login /
+                          <li className="d-flex">
+                            <Link href="/account/login" className="text-dark">
+                              <FiUserCheck
+                                style={{ fontSize: "21px", color: "black" }}
+                              />{" "}
+                              /
                             </Link>
                             <Link
                               href="/account/register"
-                              className="text-white"
+                              className="text-dark"
                             >
-                              Register
+                              <FiUserPlus
+                                style={{ fontSize: "21px", color: "black" }}
+                              />
                             </Link>
                           </li>
                         )}

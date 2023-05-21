@@ -595,7 +595,7 @@ blockquote {
     .header-dropdown > a::after,
     .header-dropdown > span::after {
       font-family: "molla";
-      content: '\f110';
+      /* content: '\f110'; */
       position: absolute;
       right: 0;
       top: 50%;
@@ -1283,7 +1283,7 @@ blockquote {
       display: flex;
       align-items: center;
       align-self: stretch;
-      padding-right: 2.2rem; }
+      padding-right: .2rem; }
       .top-menu:not(.top-link-menu) > li > a {
         display: block;
         padding-left: 0;
@@ -1327,7 +1327,7 @@ blockquote {
     .top-menu:not(.top-link-menu) li + li {
       margin-left: 0 !important; }
     .top-menu:not(.top-link-menu) a {
-      padding: .3rem 1.5rem; }
+      padding: .3rem .5rem; }
 
   .header-left .top-menu ul {
     right: auto;
@@ -4019,7 +4019,7 @@ p {
   .header-26 .header-dropdown-link {
     padding-top: .5rem; }
   .header-26 .cart-dropdown {
-    padding-left: 3.6rem;
+    padding-left: 1.6rem;
     padding-right: .4rem; }
   .header-26 .wishlist {
     padding-left: 2.6rem; }
