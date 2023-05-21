@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -10,8 +10,12 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
+import { fetchDataFromApi } from "@/utils/api";
 
-export default function MainSwiper() {
+
+
+export default function MainSwiper({mainSlider}) {
+
   return (
     <>
       <Swiper
@@ -29,9 +33,9 @@ export default function MainSwiper() {
         modules={[Autoplay, Pagination, Navigation]}
         className="mainSwiper"
       >
-        {[...Array(10).keys()].map((i) => (
-          <SwiperSlide key={i}>
-            <img style={{width:'100%'}} src={`../../../images/swiper/${i + 1}.jpg`} alt="" />
+        {mainSlider?.data?.map((slider) => (
+          <SwiperSlide key={slider?.id}>
+            <img style={{width:'100%'}} src={slider?.attributes?.slider?.data?.attributes?.url} alt="" />
           </SwiperSlide>
         ))}
       </Swiper>

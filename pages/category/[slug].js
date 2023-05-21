@@ -29,14 +29,16 @@ const CategoryProduct = ({ category, products, slug }) => {
   );
 
     const [categories, setCategories] = useState(null);
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+
   const fetchCategories = async () => {
     const { data } = await fetchDataFromApi("/api/categories?populate=*");
     setCategories(data);
   };
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  
   const showToastMsg =(data)=>{
     toast.success(data.msg, {
       position: "top-right",

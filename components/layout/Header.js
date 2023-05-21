@@ -207,6 +207,9 @@ const Header = ({ siteInfo }) => {
                   <li className={router.pathname === "/about" ? "active" : ""}>
                     <Link href="/about">About</Link>
                   </li>
+                  <li className={router.pathname === "/blogs" ? "active" : ""}>
+                    <Link href="/blogs">Blogs</Link>
+                  </li>
                   <li
                     className={
                       router.pathname === "/private-policy" ? "active" : ""
@@ -524,6 +527,11 @@ const Header = ({ siteInfo }) => {
                     <li onClick={showMenuHandler}>
                       <Link className="mobile-cats-lead" href="/shop">
                         Shop
+                      </Link>
+                    </li>
+                    <li onClick={showMenuHandler}>
+                      <Link className="mobile-cats-lead" href="/blogs">
+                        Blogs
                       </Link>
                     </li>
                     <li onClick={showMenuHandler}>

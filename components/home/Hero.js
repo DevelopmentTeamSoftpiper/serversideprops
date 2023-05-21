@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import MainSwiper from "./MainSwiper";
 import Image from "next/image";
 
-const Hero = () => {
+const Hero = ({mainSlider}) => {
   const [categories, setCategories] = useState(null);
   useEffect(() => {
     fetchCategories();
@@ -75,7 +75,7 @@ const Hero = () => {
           </div>
 
           <div className="col-lg-9 col-md-9 col-12 mb-md-0 mb-2">
-             <MainSwiper />
+             <MainSwiper mainSlider={mainSlider} />
           </div>
         </div>
       </div>

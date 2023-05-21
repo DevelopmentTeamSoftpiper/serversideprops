@@ -17,24 +17,25 @@ const Search = () => {
       slug: p?.attributes?.slug,
       url: p?.attributes?.image?.data?.[0]?.attributes?.url,
     }));
-    console.log(data);
-    console.log("search", productData);
+    // console.log(data);
+    // console.log("search", productData);
     setProducts(productData);
   };
   const filterChangeHandler = (e) => {
     const searchedWord = e.target.value;
-    setQuery(searchedWord);
+    setQuery(e.target.value);
+
+    // console.log("seaarchedWord", filterData);
     const newFilter = products.filter((value) => {
       return value.title.toLowerCase().includes(searchedWord.toLowerCase());
     });
-    if (query === "") {
+    if (searchedWord === "") {
       setFilterData([]);
     } else {
       setFilterData(newFilter);
     }
   };
 
-  console.log("filter", filterData);
 
   const clearInputHandler = () => {
     setQuery("");

@@ -14,9 +14,12 @@ import TestCategory from "@/components/home/TestCategory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewsLetter from "@/components/home/NewsLetter";
+import Blog from "@/components/home/Blog";
 
-export default function Home({ products,categories, siteinfo ,catProducts}) {
-  
+export default function Home({ products,categories, siteinfo ,catProducts,blogs,mainSlider}) {
+  // console.log('blogs',blogs);
+  // console.log('mainSlider',mainSlider);
+
 const showToastMessage =(data)=>{
   toast.success(data.msg, {
     position: "top-right",
@@ -37,15 +40,16 @@ const showToastMessage =(data)=>{
 
         {/* <Header /> */}
         <main className="main" style={{ backgroundColor: "#fafafa" }}>
-          <Hero/>
+          <Hero mainSlider={mainSlider}/>
           <HomeService />
           <HomeCategory categories={categories} />
-          <MiniBanner />
+          <MiniBanner  />
           <TestCategory catProducts={catProducts} showToastMessage={showToastMessage}/>
           <LatestProduct showToastMessage={showToastMessage} />
           <Banner1/>
           <ProductCarousel title="Discount Sales" field='discountedsale' showToastMessage={showToastMessage} />
           <ProductCarousel title="Best Deals" field="bestdeal" showToastMessage={showToastMessage} />
+          <Blog blogs={blogs} />
           <NewsLetter/>
         </main>
         {/* <Footer /> */}
@@ -62,13 +66,18 @@ export async function getStaticProps(context) {
   const catProducts = await fetchDataFromApi(
     `/api/products?populate=*&[filters][category][slug][$eq]=grocery&pagination[page]=1&pagination[pageSize]=10`
   );
+  const blogs = await fetchDataFromApi("/api/blogs?populate=*");
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");
+  const mainSlider = await fetchDataFromApi("/api/home-sliders?populate=*");
+
   return {
     props: {
       products,
       categories,
       siteinfo,
-      catProducts
+      catProducts,
+      blogs,
+      mainSlider
     },
   };
 }
