@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 
 const Blog = ({blogs,blogCats}) => {
-  // console.log('blog page', blogs);
+  console.log('blog page', blogCats);
   return (
     <main className="main px-5">
     <div

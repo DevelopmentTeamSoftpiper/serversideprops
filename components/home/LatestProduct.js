@@ -9,18 +9,11 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
 import { fetchDataFromApi } from '@/utils/api';
 
-const LatestProduct = ({showToastMessage}) => {
+const LatestProduct = ({showToastMessage, products}) => {
 
-const [products, setProducts] = useState([])
+console.log('latestPro', products);
 
-const getProduct = async() => {
-  const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
-  setProducts(latestProduct)
-}
 
-useEffect(()=> {
-  getProduct();
-} , [])
 
 const showToastMsg = (data)=>{
   showToastMessage({

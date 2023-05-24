@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL } from "../../utils/urls";
 
 
 
@@ -45,17 +46,21 @@ const Login = () => {
     try {
       setIsLoading(true);
       setValues({ ...values, buttonText: "Singing in" });
-      const res = await axios.post("http://localhost:1337/api/auth/local", {
+      const res = await axios.post(`${API_URL}/api/auth/local`, {
         identifier,
         password,
       });
+      dispatch(loginSuccess(res.data.user));
+      dispatch(jwtSuccess(res.data.jwt));
+      dispatch(providerSuccess("strapi"));
 
       const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user][id][$eq]=${res?.data?.user?.id}`
+        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${res?.data?.user?.id}`
       );
+      console.log(userInfo);
 
       if(userInfo?.data?.length ===0){
-        setIsLoading(false);
+    
         const response = await postDataToApi("/api/profiles",
         {"data":{
           "user": res?.data?.user?.id,
@@ -65,9 +70,7 @@ const Login = () => {
         }} );
       }
 
-      dispatch(loginSuccess(res.data.user));
-      dispatch(jwtSuccess(res.data.jwt));
-      dispatch(providerSuccess("strapi"));
+   
       const redirectPath = router.query.redirect || "/account";
       router.push(redirectPath);
       setIsLoading(false);

@@ -1,4 +1,5 @@
 import AlertBox from "@/components/elements/AlertBox";
+import { API_URL } from "@/utils/urls";
 import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -12,7 +13,7 @@ const ForgetPassword = () => {
     }
     const forgetPassword = async () => {
         try {
-          const res = await axios.post("http://localhost:1337/api/auth/forgot-password", {
+          const res = await axios.post(`${API_URL}/api/auth/forgot-password`, {
             email,
      
           });

@@ -52,18 +52,19 @@ const HomeCategory = ({ categories }) => {
           >
             {categories?.data?.map((cat) => (
               <SwiperSlide key={cat?.id}>
-                <div className="category position-relative">
+                <div className="category position-relative d-flex flex-column" >
                   <div className="category-image">
                     <Link href={`/category/${cat?.attributes?.slug}`}>
                       <Image
                         src={cat?.attributes?.image?.data?.[0]?.attributes?.url}
-                        className="w-100"
+                        
                         alt="img"
-                        width={166}
-                        height={160}
+                        width={30}
+                        height={30}
                       />
                     </Link>
                   </div>
+
                   <div className="category-body letter-spacing-normal font-size-normal text-center position-absolute text-uppercase">
                     <Link
                       href="#"
@@ -72,6 +73,7 @@ const HomeCategory = ({ categories }) => {
                       {cat?.attributes?.name}
                     </Link>
                   </div>
+
                 </div>
               </SwiperSlide>
             ))}

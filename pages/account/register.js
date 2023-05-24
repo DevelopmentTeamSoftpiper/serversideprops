@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import Loader from "@/components/Loader";
+import { API_URL } from "@/utils/urls";
 
 const register = () => {
 
@@ -29,7 +30,7 @@ const register = () => {
     try {
       setValues({ ...values, buttonText: "Singing Up" });
       const response = await axios.post(
-        `http://localhost:1337/api/auth/local/register`,
+        `${API_URL}/api/auth/local/register`,
         { username, email, password }
       );
       setValues({
@@ -40,7 +41,7 @@ const register = () => {
         buttonText: "sign up",
       });
       console.log(response);
-      router.push("/account/email-verification");
+      router.push("/account/login");
       setIsLoading(false)
     } catch (error) {
       console.log(error.response);

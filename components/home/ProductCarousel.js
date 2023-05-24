@@ -21,7 +21,7 @@ const getProduct = async() => {
 
 useEffect(()=> {
   getProduct();
-} , [])
+} )
 
 
 const showToastMsg = (data)=>{

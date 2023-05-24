@@ -1,4 +1,5 @@
 import AlertBox from '@/components/elements/AlertBox';
+import { API_URL } from '@/utils/urls';
 import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
@@ -17,7 +18,7 @@ const ResetPassword = () => {
     console.log(code);
     const resetPassword = async () => {
         try {
-          const res = await axios.post("http://localhost:1337/api/auth/reset-password", {
+          const res = await axios.post(`${API_URL}/api/auth/reset-password`, {
             code: code,
             password: password,
             passwordConfirmation: passwordConfirmation
