@@ -45,3 +45,13 @@ body {
 #btn-add-to-cart:hover {
   color: white !important;
 }
+
+
+
+
+
+@media only screen and (max-width: 600px) {
+  .mobile-cart {
+    background-color: lightblue;
+  }
+}

@@ -7,11 +7,11 @@ const SuccessProduct = ({cartProduct}) => {
     <td>
       <Link href="#">{cartProduct?.title}</Link>
     </td>
-    <td>{cartProduct?.quantityPrice} BDT</td>
-    <td>{cartProduct?.quantity}</td>
+    <td></td>
+    <td></td>
 
 
-    <td>{cartProduct?.price} BDT</td>
+    <td>{cartProduct?.quantityPrice} * {cartProduct?.quantity} = {cartProduct?.price} BDT</td>
   </tr>
   )
 }

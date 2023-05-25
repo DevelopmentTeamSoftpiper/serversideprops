@@ -5,7 +5,7 @@ import React from "react";
 
 const BlogCategory = ({ blogCategories, blogCats, slug }) => {
   // console.log("blog cat", blogCategories);
-  // console.log("blogs", blogCats);
+  console.log("blogs", blogCats);
   // console.log('slug', slug);
   return (
     <main className="main px-5">
@@ -162,7 +162,7 @@ export async function getStaticProps({ params: { slug } }) {
     `/api/blog-cats?populate=*`
   );
   const blogCats = await fetchDataFromApi(
-    `/api/blogs?populate=*&[filters][blog_cats][slug][$eq]=${slug}`
+    `/api/blogs?populate=*&[filters][blog_cat][slug][$eq]=${slug}`
   );
 
   return {

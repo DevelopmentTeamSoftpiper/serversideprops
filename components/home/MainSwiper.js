@@ -13,8 +13,8 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import { fetchDataFromApi } from "@/utils/api";
 
 
-
 export default function MainSwiper({mainSlider}) {
+
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function MainSwiper({mainSlider}) {
       >
         {mainSlider?.data?.map((slider) => (
           <SwiperSlide key={slider?.id}>
-            <img style={{width:'100%'}} src={slider?.attributes?.slider?.data?.attributes?.url} alt="" />
+            <img style={{width:'100%'}} src={slider?.attributes?.slider?.data?.[0]?.attributes?.url} alt="" />
           </SwiperSlide>
         ))}
       </Swiper>

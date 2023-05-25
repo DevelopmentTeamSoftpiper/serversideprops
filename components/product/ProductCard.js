@@ -13,7 +13,7 @@ const ProductCard = ({data, showToastMsg}) => {
       <span className="product-label label-sale">SALE</span>
       <Link href={`/product/${p?.slug}`} className="w-100">
         <Image
-          src={p?.thumbnail?.data?.attributes?.url}
+          src={p?.image?.data?.[0]?.attributes?.url}
           alt="Product image"
           className="product-image"
           width={239}

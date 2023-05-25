@@ -63,7 +63,7 @@ const cart = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-9">
-                <table className="table table-cart table-mobile">
+                <table className="table table-cart table-mobile" >
                   <thead>
                     <tr>
                       <th>Product</th>

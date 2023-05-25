@@ -112,8 +112,8 @@ const Success = () => {
                       <thead>
                         <tr>
                           <th>Product</th>
-                          <th>Unit Price</th>
-                          <th>Quantity</th>
+                          <th></th>
+                          <th></th>
                           <th>Total</th>
                         </tr>
                       </thead>

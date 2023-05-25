@@ -22,7 +22,7 @@ const Footer = ({siteInfo}) => {
           <div className="col-12 col-lg-2-5cols">
             <div className="widget widget-about mb-4">
             <Image
-              src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
+              src={siteInfo?.data?.attributes?.logo?.data?.[0]?.attributes?.url}
               alt="safefood logo"
               width={105}
               height={25}

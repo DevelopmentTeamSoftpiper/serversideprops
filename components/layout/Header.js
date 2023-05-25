@@ -31,7 +31,7 @@ const Header = ({ siteInfo }) => {
 
   //menu tab
   const [tab, setTab] = useState("category");
-  console.log(tab);
+  // console.log(tab);
 
   // mobile menu
   const [closeMenu, setCloseMenu] = useState(false);
@@ -50,7 +50,7 @@ const Header = ({ siteInfo }) => {
 
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");
-
+  const [showAccount, setShowAccount] = useState(false);
   const [products, setProducts] = useState(null);
 
   const fetchProducts = async () => {
@@ -102,7 +102,7 @@ const Header = ({ siteInfo }) => {
               </button>
               <Link href="/" className="logo">
                 <Image
-                  src={siteInfo?.data?.attributes?.logo?.data?.attributes?.url}
+                  src={siteInfo?.data?.attributes?.logo?.data?.[0]?.attributes?.url}
                   alt="safefoods Logo"
                   width={105}
                   height={25}
@@ -128,6 +128,9 @@ const Header = ({ siteInfo }) => {
                           paddingRight: "17px",
                       
                         }}
+                        onClick={()=>{setShowAccount(true)}}
+                        onMouseOver={()=>{setShowAccount(true)}}
+                        onMouseLeave={()=>{setShowAccount(false)}}
                       >
                         {user ? (
                           <li style={{fontSize:"17px", backgroundColor:"#61AB00",padding:"5px", color:"white"}}>
@@ -154,7 +157,11 @@ const Header = ({ siteInfo }) => {
                       </Link>
 
                       {user && (
-                        <div className="header-menu">
+                        <div className="header-menu"
+                        style={showAccount? {visibility:"visible", opacity: 1} : {visibility: "hidden", opacity: 0} }
+                        onMouseOver={()=>{setShowAccount(true)}}
+                        onMouseLeave={()=>{setShowAccount(false)}}>
+                          
                           <ul>
                             <li>
                               <Link href="/account/details">
@@ -171,7 +178,7 @@ const Header = ({ siteInfo }) => {
                             </li>
                             <li>
                               <button
-                                style={{ paddingLeft: "15px" }}
+                                style={{ paddingLeft: "5px" }}
                                 onClick={() => {
                                   logOut();
                                 }}

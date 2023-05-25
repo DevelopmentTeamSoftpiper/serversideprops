@@ -23,7 +23,7 @@ export default function Home({ products,categories, siteinfo ,catProducts,blogs,
 const showToastMessage =(data)=>{
   toast.success(data.msg, {
     position: "top-right",
-    autoClose: 1500,
+    autoClose: 1000,
     hideProgressBar: false,
     closeOnClick: true,
  

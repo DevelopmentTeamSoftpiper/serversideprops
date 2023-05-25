@@ -5,7 +5,7 @@ import React from "react";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
-  console.log("related Blogs", relatedBlogs);
+  console.log(" Blog", blog);
   const bl = blog?.data?.[0]?.attributes;
   return (
     <main className="main px-5">
@@ -34,7 +34,7 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
               <article className="entry single-entry">
                 <figure className=" d-flex justify-content-center">
                   <Image
-                    src={bl?.image?.data?.attributes?.url}
+                    src={bl?.image?.data?.[0]?.attributes?.url}
                     alt={bl?.title}
                     width={400}
                     height={200}
@@ -118,7 +118,7 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                      <figure>
                        <Link href={`/blogs/${rb?.attributes?.slug}`}>
                          <Image
-                           src={rb?.attributes?.image?.data?.attributes?.url}
+                           src={rb?.attributes?.image?.data?.[0]?.attributes?.url}
                            alt="post"
                            width={100}
                            height={100}

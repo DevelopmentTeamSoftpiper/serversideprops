@@ -9,7 +9,7 @@ const Articles = ({blog}) => {
     <figure className="entry-media">
       <Link href={`/blogs/${blog?.attributes?.slug}`}>
         <Image
-          src={blog?.attributes?.image?.data?.attributes?.url}
+          src={blog?.attributes?.image?.data?.[0]?.attributes?.url}
           alt={blog?.attributes?.title}
           width={335}
           height={200}
