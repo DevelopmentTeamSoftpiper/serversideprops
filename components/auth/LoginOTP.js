@@ -13,6 +13,7 @@ import { loginSuccess, providerSuccess } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { fetchDataFromApi, postDataToApi } from "@/utils/api";
+import axios from "axios";
 
 const LoginOTP = () => {
 
@@ -74,7 +75,13 @@ const LoginOTP = () => {
             `/api/profiles?populate=*&[filters][user_id_no][$eq]=${uid}`
           );
     
-        
+          // const res = await axios.get("/api/", {
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Accept: "application/json",
+          //     token: `Bearer ${token}`,
+          //   },
+          // });
     
           if(userInfo?.data?.length ===0){
             const response = await postDataToApi("/api/profiles",

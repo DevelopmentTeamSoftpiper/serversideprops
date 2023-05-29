@@ -29,12 +29,12 @@ const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [values, setValues] = useState({
-    identifier: "",
+    emailId: "",
     password: "",
     response: "",
     buttonText: "sign in",
   });
-  const { identifier, password, response, buttonText } = values;
+  const { emailId, password, response, buttonText } = values;
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -46,29 +46,28 @@ const Login = () => {
     try {
       setIsLoading(true);
       setValues({ ...values, buttonText: "Singing in" });
-      const res = await axios.post(`${API_URL}/api/auth/local`, {
-        identifier,
+      const res = await axios.post("/api/auth/signin", {
+        emailId,
         password,
       });
+      console.log(res);
       dispatch(loginSuccess(res.data.user));
-      dispatch(jwtSuccess(res.data.jwt));
-      dispatch(providerSuccess("strapi"));
+      dispatch(jwtSuccess(res.data.token));
+      dispatch(providerSuccess("email-password"));
 
-      const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${res?.data?.user?.id}`
-      );
-      console.log(userInfo);
-
-      if(userInfo?.data?.length ===0){
-    
-        const response = await postDataToApi("/api/profiles",
-        {"data":{
-          "user": res?.data?.user?.id,
-          "username": res?.data?.user?.username,
-          "email": res?.data?.user?.email,
-          "user_id_no": res?.data?.user?.id.toString()
-        }} );
-      }
+     await axios.post("/api/profile/store",
+      {
+        email: res.data.user.email ,
+        user_id_no: res.data.user._id,
+      },
+       {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          token: `Bearer ${res.data.token}`,
+        },
+        
+      });
 
    
       const redirectPath = router.query.redirect || "/account";
@@ -157,10 +156,10 @@ const Login = () => {
                       type="email"
                       placeholder="email"
                       onChange={handleChange}
-                      name="identifier"
-                      value={identifier}
+                      name="emailId"
+                      value={emailId}
                       className="form-control"
-                      id="email"
+                      id="emailId"
                       required
                     />
                   </div>

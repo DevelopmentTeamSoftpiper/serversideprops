@@ -2,6 +2,7 @@
 import { logout } from "@/store/userSlice";
 import { fetchDataFromApi, postDataToApi,updateDataToApi } from "@/utils/api";
 import withAuth from "@/utils/restrict";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -12,21 +13,25 @@ const AccountDetails = () => {
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
   // console.log(user);
-
+  const jwt = useSelector((state) => state.user.jwt);
   const provider = useSelector((state)=>state.user.provider);
   const getUserInfo = async ()=>{
-    if(provider === "strapi"){
-      const userInformation = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.id}`
-      );
-      setUserInfo(userInformation);
-    }else{
-      const userInformation = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.uid}`
-      );
-      setUserInfo(userInformation);
-    }
 
+    const userInfo =  await axios.post("/api/profile/find",
+    {
+      user_id_no: user._id,
+    },
+     {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        token: `Bearer ${jwt}`,
+      },
+      
+    });
+    console.log('details',userInfo);
+      setUserInfo(userInfo);
+   
 
 
 
@@ -145,11 +150,11 @@ const AccountDetails = () => {
                         <h3 className="card-title">Billing Address</h3>
                         {/* End .card-title */}
                         <p>
-                          Name : {userInfo?.data?.[0]?.attributes?.username}
+                          Name : {userInfo?.data?.name}
                           <br />
-                          Email: {userInfo?.data?.[0]?.attributes?.email}
+                          Email: {userInfo?.data?.email}
                           <br />
-                          Phone: {userInfo?.data?.[0]?.attributes?.phone} 
+                          Phone: {userInfo?.data?.phone} 
                           <br />
                    
        
@@ -167,7 +172,7 @@ const AccountDetails = () => {
                         {/* End .card-title */}
                         <p>
                          
-                          {userInfo?.data?.[0]?.attributes?.address === null && 
+                          {userInfo?.data?.address === null && 
                           <div>
                           <p> You have not set up this type of address yet.</p> 
                           <Link href="/account/edit-profile" className="btn btn-sm btn-warning mt-2">Edit Profile Information</Link>
@@ -175,11 +180,11 @@ const AccountDetails = () => {
                           
                           }
                           <br />
-                          {userInfo?.data?.[0]?.attributes?.address !== null &&
+                          {userInfo?.data?.address !== null &&
                           <>
-                          <p>{userInfo?.data?.[0]?.attributes?.address}</p>
-                          <p>{userInfo?.data?.[0]?.attributes?.city}, {userInfo?.data?.[0]?.attributes?.post_code},</p>
-                          <p>{userInfo?.data?.[0]?.attributes?.country}</p>
+                          <p>{userInfo?.data?.address}</p>
+                          <p>{userInfo?.data?.city}, {userInfo?.data?.post_code},</p>
+                          <p>{userInfo?.data?.country}</p>
 
                           <Link href="/account/edit-profile" className="btn btn-sm btn-warning mt-2">Edit Profile Information</Link>
                           </>

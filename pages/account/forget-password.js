@@ -2,21 +2,24 @@ import AlertBox from "@/components/elements/AlertBox";
 import { API_URL } from "@/utils/urls";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const router = useRouter();
     const handleChange = (e)=>{
         setEmail(e.target.value);
     }
     const forgetPassword = async () => {
         try {
-          const res = await axios.post(`${API_URL}/api/auth/forgot-password`, {
+          const res = await axios.post("/api/auth/forgot-password", {
             email,
      
           });
+          router.push("/account/reset-password");
           setSuccess(true);
           setError(false);
           console.log(res.data);
@@ -31,14 +34,14 @@ const ForgetPassword = () => {
         e.preventDefault();
         forgetPassword();
       };
-      console.log(email);
+      // console.log(email);
   return (
     <main className="main">
       <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link href="index.html">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li className="breadcrumb-item">
               <Link href="/account">Account</Link>
@@ -97,7 +100,7 @@ const ForgetPassword = () => {
                     </div>
                     {/* End .form-footer */}
                   </form>
-                  {success && <AlertBox text="Password Reset Link is sent to your Email" type="success" /> }
+                  {/* {success && <AlertBox text="Password Reset Link is sent to your Email" type="success" /> } */}
                   {error && <AlertBox text="Something went wrong!. Try again" type="danger" /> }
 
                   {/* End .form-choice */}

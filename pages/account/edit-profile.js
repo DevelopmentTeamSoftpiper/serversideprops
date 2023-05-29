@@ -36,36 +36,30 @@ const EditProfile = () => {
   
   console.log(jwt);
 
-  console.log(currentPassword);
-  console.log(password);
-  console.log(passwordConfirmation);
+  console.log(user);
+
 
   const getUserInfo = async () => {
-    if (provider === "strapi") {
-      const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.id}`
-      );
-      setName(userInfo?.data?.[0]?.attributes?.username);
-      setEmail(userInfo?.data?.[0]?.attributes?.email);
-      setPhone(userInfo?.data?.[0]?.attributes?.phone);
-      setAddress(userInfo?.data?.[0]?.attributes?.address);
-      setPostalCode(userInfo?.data?.[0]?.attributes?.post_code);
-      setCity(userInfo?.data?.[0]?.attributes?.city);
-      setCountry(userInfo?.data?.[0]?.attributes?.country);
-      setProfileId(userInfo?.data?.[0]?.id);
-    } else {
-      const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.uid}`
-      );
-      setName(userInfo?.data?.[0]?.attributes?.username);
-      setEmail(userInfo?.data?.[0]?.attributes?.email);
-      setPhone(userInfo?.data?.[0]?.attributes?.phone);
-      setAddress(userInfo?.data?.[0]?.attributes?.address);
-      setPostalCode(userInfo?.data?.[0]?.attributes?.post_code);
-      setCity(userInfo?.data?.[0]?.attributes?.city);
-      setCountry(userInfo?.data?.[0]?.attributes?.country);
-      setProfileId(userInfo?.data?.[0]?.id);
-    }
+   const userInfo =  await axios.post("/api/profile/find",
+    {
+      user_id_no: user._id,
+    },
+     {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        token: `Bearer ${jwt}`,
+      },
+      
+    });
+    console.log(userInfo);
+      setName(userInfo?.data?.name);
+      setEmail(userInfo?.data?.email);
+      setPhone(userInfo?.data?.phone);
+      setAddress(userInfo?.data?.address);
+      setPostalCode(userInfo?.data?.post_code);
+      setCity(userInfo?.data?.city);
+      setCountry(userInfo?.data?.country);
   };
   useEffect(() => {
     getUserInfo();
@@ -73,16 +67,25 @@ const EditProfile = () => {
 
   const profile = async () => {
     try {
-      const response = await updateDataToApi(`/api/profiles/${profileId}`, {
-        data: {
-          username: name,
-          email: email,
-          phone: phone,
-          address: address,
-          post_code: postalCode,
-          city: city,
-          country: country,
+
+      const updatedProfileData = await axios.post("/api/profile/update",
+      {
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        post_code: postalCode,
+        city: city,
+        country: country,
+        user_id_no: user._id,
+      },
+       {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          token: `Bearer ${jwt}`,
         },
+        
       });
       toast.success("Profile Edited Successfully", {
         position: "top-right",
@@ -94,7 +97,7 @@ const EditProfile = () => {
         progress: undefined,
         theme: "dark",
       });
-      console.log(response);
+      console.log(updatedProfileData);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

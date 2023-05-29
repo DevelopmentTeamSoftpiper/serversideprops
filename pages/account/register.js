@@ -6,10 +6,12 @@ import axios from "axios";
 import Link from "next/link";
 import Loader from "@/components/Loader";
 import { API_URL } from "@/utils/urls";
+import { useDispatch } from "react-redux";
+import { signupSuccess } from "@/store/userSlice";
 
 const register = () => {
 
-  
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] =useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
@@ -30,9 +32,10 @@ const register = () => {
     try {
       setValues({ ...values, buttonText: "Singing Up" });
       const response = await axios.post(
-        `${API_URL}/api/auth/local/register`,
+        "/api/auth/signup",
         { username, email, password }
       );
+      dispatch(signupSuccess(response.data.token));
       setValues({
         ...values,
         username: "",
@@ -41,7 +44,7 @@ const register = () => {
         buttonText: "sign up",
       });
       console.log(response);
-      router.push("/account/login");
+      router.push("/account/verify-account");
       setIsLoading(false)
     } catch (error) {
       console.log(error.response);
