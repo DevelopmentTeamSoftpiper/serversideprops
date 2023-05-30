@@ -8,7 +8,8 @@ import Loader from "@/components/Loader";
 import { API_URL } from "@/utils/urls";
 import { useDispatch } from "react-redux";
 import { signupSuccess } from "@/store/userSlice";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const register = () => {
 
   const dispatch = useDispatch();
@@ -48,6 +49,16 @@ const register = () => {
       setIsLoading(false)
     } catch (error) {
       console.log(error.response);
+      toast.error(error.response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setValues({
         ...values,
         response: error.response,

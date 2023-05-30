@@ -84,7 +84,7 @@ const Login = () => {
       dispatch(loginFailure());
       toast.error(error.response.data.error, {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
 
