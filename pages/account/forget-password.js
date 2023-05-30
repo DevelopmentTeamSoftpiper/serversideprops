@@ -1,15 +1,18 @@
 import AlertBox from "@/components/elements/AlertBox";
+import { forgotPasswordSuccess } from "@/store/userSlice";
 import { API_URL } from "@/utils/urls";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
+
     const router = useRouter();
+    const dispatch = useDispatch();
     const handleChange = (e)=>{
         setEmail(e.target.value);
     }
@@ -19,14 +22,22 @@ const ForgetPassword = () => {
             email,
      
           });
+          dispatch(forgotPasswordSuccess(res.data.token))
           router.push("/account/reset-password");
-          setSuccess(true);
-          setError(false);
-          console.log(res.data);
+
+          console.log(res);
         } catch (error) {
-            setSuccess(false);
-            setError(true);
-          console.log(error);
+          console.log(error.response.data.error);
+          toast.success(error.response.data.error, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+         
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
          
         }
       };
@@ -100,8 +111,7 @@ const ForgetPassword = () => {
                     </div>
                     {/* End .form-footer */}
                   </form>
-                  {/* {success && <AlertBox text="Password Reset Link is sent to your Email" type="success" /> } */}
-                  {error && <AlertBox text="Something went wrong!. Try again" type="danger" /> }
+               
 
                   {/* End .form-choice */}
                 </div>

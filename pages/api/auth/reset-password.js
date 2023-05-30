@@ -3,7 +3,7 @@ import db from "../../../utils/db";
 import jwt from "jsonwebtoken";
 import User from '@/models/User';
 import { sendEmailWithNodemailer } from '@/helpers/emails';
-const _ = require('lodash');
+import _ from "lodash";
 
 const router = createRouter();
 
@@ -23,15 +23,28 @@ router.post(async (req, res) => {
             }
             if (decoded) {
                 const {email, randomNumber} = jwt.decode(token);
+                console.log(email, randomNumber);
               
               if (number == randomNumber) {
-                  const filter = {email:email};
-                  const update = { 
-                     password:password
-                  };
-                  db.connectDb();
-                  let doc = await User.findOneAndUpdate(filter, update , {new:true});
-                  res.status(200).json(doc);
+                const findUser = await User.findOne({'email':email});
+                if(!findUser){
+                  return res.status(400).json({
+                    error: 'User with this email does not exist.'
+                  })
+                }
+                 
+                  const updatedFields = {password: password};
+                  const user =_.extend(findUser, updatedFields);
+                  const updatedUser = await user.save();
+                  if(!updatedUser){
+                    return res.status(400).json({
+                      error: "Error resetting password",
+                    });
+                  }
+                  return res.status(200).json({
+                    message: "Success!",
+                  });
+                
 
               } else {
                 return res.status(401).json({

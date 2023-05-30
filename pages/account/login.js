@@ -75,16 +75,16 @@ const Login = () => {
       setIsLoading(false);
 
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       setValues({
         ...values,
         response: "Invalid Email or Password",
         buttonText: "Sign In Again",
       });
       dispatch(loginFailure());
-      toast.error(error.response.data.error.message, {
+      toast.error(error.response.data.error, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
 

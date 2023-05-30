@@ -4,28 +4,29 @@ import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = () => {
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  
+    const [number, setNumber] = useState('');
+    const forgotPassToken = useSelector((state) => state.user.forgotPassToken);
+    // console.log(forgotPassToken);
 
     console.log(passwordConfirmation);
     const router = useRouter();
-    const {code}= router.query;
-    console.log(code);
     const resetPassword = async () => {
         try {
-          const res = await axios.post(`${API_URL}/api/auth/reset-password`, {
-            code: code,
+          const res = await axios.post("/api/auth/reset-password", {
+            token: forgotPassToken,
             password: password,
-            passwordConfirmation: passwordConfirmation
+            number: number
      
           });
 
-          console.log(res.data);
+          // console.log(res.data);
       router.push("/account/login");
 
         } catch (error) {
@@ -90,6 +91,7 @@ const ResetPassword = () => {
                 aria-labelledby="register-tab-2"
               >
                 <form onSubmit={submitHandler} >
+               
                 <div className="form-group">
                       <label htmlFor="password">Password</label>
                       <input
@@ -113,6 +115,23 @@ const ResetPassword = () => {
                         onChange={(e)=>{setPasswordConfirmation(e.target.value)}}
                         className="form-control"
                         id="passwordConfirmation"
+                        required
+                      />
+                    </div>
+                    {(passwordConfirmation.length > password.length ||
+                     ( password !== passwordConfirmation && passwordConfirmation.length === password.length )) &&
+                    <p style={{color:"brown", fontWeight:600}}>Password do not match</p>
+                    }
+                    <div className="form-group">
+                      <label htmlFor="number">Verification Number</label>
+                      <input
+                        type="text"
+                        placeholder="Verification Number"
+                        name="number"
+                        value={number}
+                        onChange={(e)=>{setNumber(e.target.value)}}
+                        className="form-control"
+                        id="number"
                         required
                       />
                     </div>
