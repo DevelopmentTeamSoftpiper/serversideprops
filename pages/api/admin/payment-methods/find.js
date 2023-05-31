@@ -2,19 +2,21 @@ import { createRouter } from 'next-connect';
 import { verifyTokenAndAdmin } from '@/helpers/verityToken';
 import db from '@/utils/db';
 import Product from '@/models/Products';
+import PaymentMethods from '@/models/PaymentMethods';
 
 
-const router = createRouter().use(verifyTokenAndAdmin);
+const router = createRouter();
 
-router.post(async(req, res)=>{
+router.get(async(req, res)=>{
     try {
         const { id } = req.body;
         db.connectDb();
-        const deleted = await Product.findByIdAndRemove(id);
+        const found = await PaymentMethods.findOne(id);
         db.disconnectDb();
-        if(deleted){
+        if(found){
           return res.json({
-            message: "Product has been deleted successfully",
+            message: "Product has been found successfully",
+            product: found
           });
         }else{
           return res.json({

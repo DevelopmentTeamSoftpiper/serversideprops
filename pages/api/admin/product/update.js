@@ -13,13 +13,19 @@ router.post(async(req, res)=>{
         const { id, title, price,image,originalPrice,shortDescription,
             description,brand,category,subCategory,bestDeal,discountedSale} = req.body;
         db.connectDb();
-        await Product.findByIdAndUpdate(id, { title, slug: slugify(title),price,image,originalPrice,shortDescription,description,brand,
+        const updated = await Product.findByIdAndUpdate(id, { title, slug: slugify(title),price,image,originalPrice,shortDescription,description,brand,
             category,subCategory,bestDeal,discountedSale });
-        db.disconnectDb();
-        return res.json({
-          message: "Product has been updated successfully",
-          categories: await Product.find({}).sort({ createdAt: -1 }),
-        });
+            db.disconnectDb();
+        if(updated){
+          return res.json({
+            message: "Product has been updated successfully",
+          });
+        }else{
+          return res.json({
+            message: "Product not found with this id",
+          });
+        }
+       
       } catch (error) {
         res.status(500).json({ message: error.message });
       }

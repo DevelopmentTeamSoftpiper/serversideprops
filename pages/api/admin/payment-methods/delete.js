@@ -1,27 +1,23 @@
 import { createRouter } from "next-connect";
 import { verifyTokenAndAdmin } from "@/helpers/verityToken";
 import db from "@/utils/db";
-import Category from "@/models/Category";
-import slugify from "slugify";
+import PaymentMethods from "@/models/PaymentMethods";
 
 const router = createRouter().use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { id } = req.body;
     db.connectDb();
-    const updated = await Category.findByIdAndUpdate(id, {
-      name,
-      slug: slugify(name),
-    });
+    const deleted = await PaymentMethods.findByIdAndRemove(id);
     db.disconnectDb();
-    if (updated) {
+    if (deleted) {
       return res.json({
-        message: "Category has been updated successfully",
+        message: "Payment Method has been deleted successfully",
       });
     } else {
       return res.json({
-        message: "Category not found with this id",
+        message: "Payment Method not found with this id",
       });
     }
   } catch (error) {

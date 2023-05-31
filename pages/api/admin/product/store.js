@@ -27,7 +27,7 @@ router.post(async(req, res)=>{
         db.disconnectDb();
         res.json({
           message: `Product ${title} has been created successfully.`,
-          categories: await Product.find({}).sort({ updatedAt: -1 }),
+     
         });
       } catch (error) {
         db.disconnectDb();
