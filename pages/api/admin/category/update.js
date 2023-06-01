@@ -5,8 +5,7 @@ import Category from "@/models/Category";
 import slugify from "slugify";
 import applyCors from "@/middleware/cors";
 
-const router = createRouter()
-// use(verifyTokenAndAdmin);
+const router = createRouter().use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {

@@ -6,7 +6,7 @@ import slugify from "slugify";
 import Product from "@/models/Products";
 import applyCors from "@/middleware/cors";
 
-const router = createRouter();
+const router = createRouter().use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {

@@ -9,8 +9,8 @@ const Hero = ({mainSlider}) => {
   const [categories, setCategories] = useState(null);
 
   const fetchCategories = async () => {
-    const data = await axios.get("http://localhost:3000/api/admin/category/getAll");
-    setCategories(data);
+    const {data} = await axios.get("http://localhost:3000/api/admin/category/getAll");
+    setCategories(data.categories);
   };
   useEffect(() => {
     fetchCategories();
