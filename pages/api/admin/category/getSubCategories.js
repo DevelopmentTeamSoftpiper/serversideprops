@@ -10,13 +10,16 @@ router.get(async (req, res) => {
   try {
     const { categoryId } = req.query;
     db.connectDb();
-    const subcategories = await SubCategory.find({ parent: categoryId });
-    db.disconnectDb();
-    return res.json({
-      subcategories: subcategories,
-    });
+
+    if (categoryId) {
+      const subcategories = await SubCategory.find({ parent: categoryId });
+      return res.json({
+        subcategories: subcategories,
+      });
+    }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    db.disconnectDb();
+    res.json({ message: error.message });
   }
 });
 
