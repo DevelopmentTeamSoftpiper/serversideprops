@@ -1,8 +1,9 @@
-import { createRouter } from "next-connect";
-import db from "@/utils/db";
-import User from "@/models/User";
-import applyCors from "@/middleware/cors";
-import { verifyTokenAndAdmin } from "@/helpers/verityToken";
+import { createRouter } from 'next-connect';
+import bcrypt from 'bcrypt';
+import { verifyTokenAndAdmin } from '@/helpers/verityToken';
+import db from '@/utils/db';
+import User from '@/models/User';
+import applyCors from '@/middleware/cors';
 
 const router = createRouter().use(verifyTokenAndAdmin);
 
@@ -25,5 +26,8 @@ router.get(async (req, res) => {
     });
   }
 });
+
+
+
 
 export default applyCors(router.handler());

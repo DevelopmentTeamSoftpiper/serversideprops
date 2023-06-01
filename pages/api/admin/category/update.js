@@ -3,8 +3,10 @@ import { verifyTokenAndAdmin } from "@/helpers/verityToken";
 import db from "@/utils/db";
 import Category from "@/models/Category";
 import slugify from "slugify";
+import applyCors from "@/middleware/cors";
 
-const router = createRouter().use(verifyTokenAndAdmin);
+const router = createRouter()
+// use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
@@ -17,10 +19,12 @@ router.post(async (req, res) => {
     db.disconnectDb();
     if (updated) {
       return res.json({
+        status: true,
         message: "Category has been updated successfully",
       });
     } else {
       return res.json({
+        status: false,
         message: "Category not found with this id",
       });
     }
@@ -29,4 +33,4 @@ router.post(async (req, res) => {
   }
 });
 
-export default router.handler();
+export default applyCors(router.handler());
