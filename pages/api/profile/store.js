@@ -16,8 +16,7 @@ router.post(async(req, res)=>{
         }else{
              const profile = new Profile(data);
         const response = await profile.save();
-        res.status(200).json(response);
-
+        res.status(200).json(response)
 
         }
 

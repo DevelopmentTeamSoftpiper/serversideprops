@@ -6,8 +6,8 @@ import SubCategory from "@/models/SubCategory";
 import applyCors from "@/middleware/cors";
 import Category from "@/models/Category";
 
-const router = createRouter();
-// use(verifyTokenAndAdmin);
+const router = createRouter().use(verifyTokenAndAdmin);
+
 
 router.post(async (req, res) => {
   try {
