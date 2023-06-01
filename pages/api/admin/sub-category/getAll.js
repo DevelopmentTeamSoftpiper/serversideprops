@@ -1,6 +1,7 @@
 import { createRouter } from 'next-connect';
 import db from '@/utils/db';
 import SubCategory from '@/models/SubCategory';
+import applyCors from '@/middleware/cors';
 
 
 const router = createRouter();
@@ -21,4 +22,4 @@ router.get(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());dler();

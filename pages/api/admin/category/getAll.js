@@ -3,6 +3,7 @@ import { verifyTokenAndAdmin } from '@/helpers/verityToken';
 import db from '@/utils/db';
 import Category from '@/models/Category';
 import slugify from 'slugify';
+import applyCors from '@/middleware/cors';
 
 
 const router = createRouter();
@@ -23,4 +24,4 @@ router.get(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());

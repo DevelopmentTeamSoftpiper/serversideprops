@@ -1,7 +1,6 @@
 import { createRouter } from 'next-connect';
 import bcrypt from 'bcrypt';
 import db from "../../../utils/db";
-
 import jwt from "jsonwebtoken";
 import slugify from "slugify";
 import Category from '@/models/Category';

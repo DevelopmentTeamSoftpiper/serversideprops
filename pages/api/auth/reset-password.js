@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from '@/models/User';
 import { sendEmailWithNodemailer } from '@/helpers/emails';
 import _ from "lodash";
+import applyCors from '@/middleware/cors';
 
 const router = createRouter();
 
@@ -65,4 +66,4 @@ router.post(async (req, res) => {
 
 
 
-export default router.handler();
+  export default applyCors(router.handler());

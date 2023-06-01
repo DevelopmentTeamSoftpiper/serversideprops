@@ -4,6 +4,7 @@ import db from '@/utils/db';
 
 import slugify from 'slugify';
 import Product from '@/models/Products';
+import applyCors from '@/middleware/cors';
 
 
 const router = createRouter().use(verifyTokenAndAdmin);
@@ -34,4 +35,4 @@ router.post(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());

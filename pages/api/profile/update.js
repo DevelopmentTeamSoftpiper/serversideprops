@@ -1,4 +1,5 @@
 import { verifyToken ,verifyTokenAndAuthorization} from '@/helpers/verityToken';
+import applyCors from '@/middleware/cors';
 import Profile from '@/models/Profile';
 import db from '@/utils/db';
 import { createRouter } from 'next-connect';
@@ -33,4 +34,4 @@ router.post(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());

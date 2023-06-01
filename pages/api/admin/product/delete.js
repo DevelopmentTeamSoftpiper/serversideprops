@@ -2,6 +2,7 @@ import { createRouter } from 'next-connect';
 import { verifyTokenAndAdmin } from '@/helpers/verityToken';
 import db from '@/utils/db';
 import Product from '@/models/Products';
+import applyCors from '@/middleware/cors';
 
 
 const router = createRouter().use(verifyTokenAndAdmin);
@@ -30,4 +31,4 @@ router.post(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());

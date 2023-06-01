@@ -7,6 +7,7 @@ import slugify from "slugify";
 import Category from "@/models/Category";
 import User from "@/models/User";
 import { sendEmailWithNodemailer } from "@/helpers/emails";
+import applyCors from "@/middleware/cors";
 
 const router = createRouter();
 
@@ -58,4 +59,4 @@ router.post(async (req, res) => {
   }
 });
 
-export default router.handler();
+export default applyCors(router.handler());

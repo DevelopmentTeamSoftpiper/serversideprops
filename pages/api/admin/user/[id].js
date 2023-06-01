@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { verifyTokenAndAdmin } from '@/helpers/verityToken';
 import db from '@/utils/db';
 import User from '@/models/User';
+import applyCors from '@/middleware/cors';
 
 
 const router = createRouter();
@@ -31,4 +32,4 @@ router.get(async(req, res)=>{
 
 
 
-export default router.handler();
+export default applyCors(router.handler());
