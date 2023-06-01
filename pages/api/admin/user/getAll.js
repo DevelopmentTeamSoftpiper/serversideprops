@@ -1,24 +1,19 @@
 import { createRouter } from "next-connect";
-import db from "@/utils/db";
+import bcrypt from "bcrypt";
+
 import User from "@/models/User";
-import applyCors from "@/middleware/cors";
 import { verifyTokenAndAdmin } from "@/helpers/verityToken";
+import db from "@/utils/db";
+import applyCors from "@/middleware/cors";
 
 const router = createRouter().use(verifyTokenAndAdmin);
 
 router.get(async (req, res) => {
-  const { id } = req.query;
   try {
-    await db.connectDb();
-
-    console.log(req.params.id);
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    db.connectDb();
+    const users = await User.find();
     db.disconnectDb();
-    const { password, ...others } = user._doc;
-    res.status(200).json(others);
+    res.status(200).json(users);
   } catch (error) {
     return res.json({
       message: "something went wrong",

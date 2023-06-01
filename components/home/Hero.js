@@ -1,19 +1,21 @@
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import MainSwiper from "./MainSwiper";
 import Image from "next/image";
+import axios from "axios";
 
 const Hero = ({mainSlider}) => {
   const [categories, setCategories] = useState(null);
+
+  const fetchCategories = async () => {
+    const data = await axios.get("http://localhost:3000/api/admin/category/getAll");
+    setCategories(data);
+  };
   useEffect(() => {
     fetchCategories();
   }, []);
-  const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi("/api/categories?populate=*");
-    setCategories(data);
-  };
-
+console.log('categories', categories);
   return (
     <div className="intro-section">
       <div className="container mt-2">

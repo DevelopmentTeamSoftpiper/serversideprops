@@ -1,3 +1,4 @@
+import axios from "axios";
 import { API_URL, STRAPI_API_TOKEN } from "./urls";
 
 
@@ -41,6 +42,18 @@ export const updateDataToApi = async (endpoint, payload) => {
         
     });
     const data = await res.json();
+
+    return data;
+};
+
+
+export const getData = async (endpoint) => {
+    const options = {
+        method: "GET",
+    };
+
+    const res = await fetch(`http://localhost:3000${endpoint}`, options);
+    const data = await res?.json();
 
     return data;
 };

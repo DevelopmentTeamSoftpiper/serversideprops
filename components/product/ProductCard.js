@@ -5,15 +5,15 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 
 const ProductCard = ({data, showToastMsg}) => {
-    const p = data?.attributes;
+  //  console.log('data', data);
     const dispatch = useDispatch();
   return (
     <div className="product d-flex flex-column overflow-hidden">
     <figure className="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
       <span className="product-label label-sale">SALE</span>
-      <Link href={`/product/${p?.slug}`} className="w-100">
+      <Link href={`/product/${data?.slug}`} className="w-100">
         <Image
-          src={p?.image?.data?.[0]?.attributes?.url}
+          src={data?.image}
           alt="Product image"
           className="product-image"
           width={239}
@@ -27,23 +27,23 @@ const ProductCard = ({data, showToastMsg}) => {
 
     <div className="product-body pb-3">
       <div className="text-left product-cat font-weight-normal text-light mb-0">
-        <Link href="#">  {p?.category?.data?.attributes?.name}</Link>
+        <Link href="#">  {data.title}</Link>
       </div>
       {/* End .product-cat  */}
       <h3 className="product-title letter-spacing-normal font-size-normal text-left mb-0">
-      <Link href={`/product/${p.slug}`}>
+      <Link href={`/product/${data.slug}`}>
         {
-           p.title.length > 20 ? <span> {p?.title?.substring(0,20)}... </span>
-            : <span> {p?.title} </span>
+           data?.title?.length > 20 ? <span> {data?.title?.substring(0,20)}... </span>
+            : <span> {data?.title} </span>
             }
       </Link>
 
       </h3>
       {/* End .product-title letter-spacing-normal font-size-normal */}
       <div className="product-price mb-1">
-        <div className="new-price">${p.price}</div>
+        <div className="new-price">${data.price}</div>
         <div className="old-price font-size-normal font-weight-normal">
-          ${p.original_price}
+          ${data.original_price}
         </div>
       </div>
       {/* End .product-price */}

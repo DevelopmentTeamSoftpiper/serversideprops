@@ -8,7 +8,7 @@ import Search from "./Search";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import { toast, ToastContainer } from "react-toastify";
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import { useRouter } from "next/router";
 import { FiUserPlus } from "react-icons/fi";
 import { FiUserCheck } from "react-icons/fi";
@@ -44,9 +44,10 @@ const Header = ({ siteInfo }) => {
     fetchCategories();
   }, []);
   const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    const { data } = await getData("/api/category/getAll");
     setCategories(data);
   };
+  console.log('categories', categories);
 
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");

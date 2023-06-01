@@ -54,7 +54,7 @@ const showToastMsg = (data)=>{
             >
 
                 {
-                    products?.data?.map((product)=><SwiperSlide key={product?.id}> 
+                    products?.products?.map((product)=><SwiperSlide key={product?.id}> 
                                                           <ProductCard key={product?.id} data = {product} showToastMsg={showToastMsg}/>
                                               </SwiperSlide>
                     )

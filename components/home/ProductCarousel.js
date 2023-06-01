@@ -9,21 +9,8 @@ import { Keyboard, Mousewheel, Navigation, } from "swiper";
 import ProductCard from '../product/ProductCard';
 import { fetchDataFromApi } from '@/utils/api';
 
-const ProductCarousel = ({title,field,showToastMessage}) => {
-
-  const [products, setProducts] = useState([])
-
-const getProduct = async() => {
-  const filterProduct = await fetchDataFromApi(`/api/products?populate=*&filters[${field}][$eq]=true`);
-  // console.log("siteinfo", filterProduct)
-  setProducts(filterProduct)
-}
-
-useEffect(()=> {
-  getProduct();
-} )
-
-
+const ProductCarousel = ({title,products,showToastMessage}) => {
+// console.log(products);
 const showToastMsg = (data)=>{
   // console.log(data.msg);
   showToastMessage({
@@ -62,8 +49,8 @@ const showToastMsg = (data)=>{
                 className="mySwiper"
             >
 
-                {
-                    products?.data?.map((product)=><SwiperSlide key={product?.id}> 
+{
+                    products?.products?.map((product)=><SwiperSlide key={product?.id}> 
                                                           <ProductCard key={product?.id} data = {product} showToastMsg={showToastMsg}/>
                                               </SwiperSlide>
                     )

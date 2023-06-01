@@ -1,4 +1,4 @@
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileMenuOverlay from "@/components/layout/MobileMenuOverlay";
@@ -16,9 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import NewsLetter from "@/components/home/NewsLetter";
 import Blog from "@/components/home/Blog";
 
-export default function Home({ products,categories, siteinfo ,catProducts,blogs,mainSlider,latestProduct}) {
-  console.log('siteinfo',siteinfo);
-  // console.log('mainSlider',mainSlider);
+export default function Home({ products,categories, siteinfo ,catProducts,blogs,mainSlider,latestProducts,discountedProducts}) {
+
 
 const showToastMessage =(data)=>{
   toast.success(data.msg, {
@@ -45,9 +44,9 @@ const showToastMessage =(data)=>{
           {/* <HomeCategory categories={categories} /> */}
           <MiniBanner  />
           <TestCategory catProducts={catProducts} showToastMessage={showToastMessage}/>
-          <LatestProduct  products={latestProduct} showToastMessage={showToastMessage} />
+          <LatestProduct  products={latestProducts} showToastMessage={showToastMessage} />
           <Banner1/>
-          <ProductCarousel title="Discount Sales" field='discountedsale' showToastMessage={showToastMessage} />
+          <ProductCarousel title="Discount Sales" products={discountedProducts} showToastMessage={showToastMessage} />
           <ProductCarousel title="Best Deals" field="bestdeal" showToastMessage={showToastMessage} />
           <Blog blogs={blogs} />
           <NewsLetter/>
@@ -69,7 +68,9 @@ export async function getStaticProps(context) {
   const blogs = await fetchDataFromApi("/api/blogs?populate=*");
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");
   const mainSlider = await fetchDataFromApi("/api/home-sliders?populate=*");
-  const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
+  // const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
+  const latestProducts = await getData("/api/admin/product/getAll");
+  const discountedProducts = await getData("/api/admin/product/discounted");
 
   return {
     props: {
@@ -79,7 +80,9 @@ export async function getStaticProps(context) {
       catProducts,
       blogs,
       mainSlider,
-      latestProduct
+      latestProducts,
+      discountedProducts
+
       
     },
   };
