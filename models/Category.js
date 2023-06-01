@@ -16,6 +16,17 @@ const categorySchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
+    subCategories: [
+      {
+        type: ObjectId,
+        ref: "SubCategory",
+   
+      }
+    ],
   },
   {
     timestamps: true,

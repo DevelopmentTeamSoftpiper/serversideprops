@@ -8,7 +8,7 @@ const router = createRouter();
 router.get(async (req, res) => {
   try {
     db.connectDb();
-    const products = await Product.find({}).populate("category").sort({ updatedAt: -1 }).lean();
+    const products = await Product.find({}).populate("category").populate("subCategory").sort({ updatedAt: -1 }).lean();
     db.disconnectDb();
     return res.json({
       products: products,

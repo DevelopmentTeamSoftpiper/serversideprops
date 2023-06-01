@@ -4,14 +4,16 @@ import db from "@/utils/db";
 import slugify from "slugify";
 import SubCategory from "@/models/SubCategory";
 import applyCors from "@/middleware/cors";
+import Category from "@/models/Category";
 
 const router = createRouter();
 // use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
-    const { name, parent } = req.body;
+    const { name, category, image } = req.body;
     db.connectDb();
+    const parentCategory = await Category.findById(category);
     const test = await SubCategory.findOne({ name });
     if (test) {
       return res.json({
@@ -19,8 +21,9 @@ router.post(async (req, res) => {
         message: "SubCategory already exist, Try a different name",
       });
     }
-    await new SubCategory({ name, parent, slug: slugify(name) }).save();
-
+    const subCategory = await new SubCategory({ name, category, slug: slugify(name),image }).save();
+    parentCategory.subCategories.push(subCategory._id);
+    await parentCategory.save()
     db.disconnectDb();
     res.json({
       status: true,

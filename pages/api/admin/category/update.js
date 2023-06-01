@@ -10,11 +10,12 @@ const router = createRouter()
 
 router.post(async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { id, name,image } = req.body;
     db.connectDb();
     const updated = await Category.findByIdAndUpdate(id, {
       name,
       slug: slugify(name),
+      image
     });
     db.disconnectDb();
     if (updated) {

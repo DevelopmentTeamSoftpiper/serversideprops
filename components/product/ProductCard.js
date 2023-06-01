@@ -27,7 +27,7 @@ const ProductCard = ({data, showToastMsg}) => {
 
     <div className="product-body pb-3">
       <div className="text-left product-cat font-weight-normal text-light mb-0">
-        <Link href="#">  {data.title}</Link>
+        <Link href={`/subcategory/${data.subCategory.slug}`}>  {data.subCategory.name}</Link>
       </div>
       {/* End .product-cat  */}
       <h3 className="product-title letter-spacing-normal font-size-normal text-left mb-0">

@@ -9,7 +9,7 @@ const Hero = ({mainSlider}) => {
   const [categories, setCategories] = useState(null);
 
   const fetchCategories = async () => {
-    const data = await axios.get("http://localhost:3000/api/admin/category/getAll");
+    const {data} = await axios.get("http://localhost:3000/api/admin/category/getAll");
     setCategories(data);
   };
   useEffect(() => {
@@ -31,36 +31,36 @@ console.log('categories', categories);
                 className="menu-vertical sf-arrows sf-js-enabled"
                 style={{ touchAction: "pan-y", height:"350px" }}
               >
-                {categories?.map((c) => (
-                  <li key={c.id} className="megamenu-container">
+                {categories?.categories?.map((c) => (
+                  <li key={c._id} className="megamenu-container">
                     <Link
                       className={
-                        c?.attributes?.sub_categories?.data?.length > 0
+                        c?.subCategories?.length > 0
                           ? "sf-with-ul text-dark d-flex"
                           : "text-dark d-flex"
                       }
-                      href={`/category/${c?.attributes?.slug}`}
+                      href={`/category/${c?.slug}`}
                     >
                       <Image
                         height={20}
                         width={20}
-                        src={c?.attributes?.image?.data?.[0]?.attributes?.url}
-                        alt={c?.attributes?.name}
+                        src={c?.image}
+                        alt={c?.name}
                       />
-                      {c?.attributes?.name}
+                      {c?.name}
                     </Link>
-                    {c?.attributes?.sub_categories?.data?.length > 0 && (
+                    {c?.subCategories?.length > 0 && (
                       <div className="megamenu">
                         <div className="row ">
                                 <div className="col-md-12">
                                   <ul>
-                                    {c?.attributes?.sub_categories?.data?.map(
+                                    {c?.subCategories?.map(
                                       (sub) => (
-                                        <li key={sub?.id}>
+                                        <li key={sub?._id}>
                                           <Link
-                                            href={`/subcategory/${sub?.attributes?.slug}`}
+                                            href={`/subcategory/${sub?.slug}`}
                                           >
-                                            {sub?.attributes?.name}
+                                            {sub?.name}
                                           </Link>
                                         </li>
                                       )

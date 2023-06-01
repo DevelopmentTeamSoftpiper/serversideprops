@@ -10,12 +10,13 @@ const router = createRouter();
 
 router.post(async (req, res) => {
   try {
-    const { id, name, parent } = req.body;
+    const { id, name, category,image } = req.body;
     db.connectDb();
     const updated = await SubCategory.findByIdAndUpdate(id, {
       name,
-      parent,
+      category,
       slug: slugify(name),
+      image
     });
     db.disconnectDb();
     if (updated) {

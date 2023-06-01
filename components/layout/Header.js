@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { FiUserPlus } from "react-icons/fi";
 import { FiUserCheck } from "react-icons/fi";
 import { BiUserPin } from "react-icons/bi";
+import axios from "axios";
 
 const Header = ({ siteInfo }) => {
   const router = useRouter();
@@ -44,10 +45,10 @@ const Header = ({ siteInfo }) => {
     fetchCategories();
   }, []);
   const fetchCategories = async () => {
-    const { data } = await getData("/api/category/getAll");
+    const {data} = await axios.get("http://localhost:3000/api/admin/sub-category/getAll");
     setCategories(data);
   };
-  console.log('categories', categories);
+  console.log('sub-categories', categories);
 
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");
@@ -491,7 +492,7 @@ const Header = ({ siteInfo }) => {
               >
                 <nav className="mobile-nav">
                   <ul className="mobile-menu">
-                    {categories?.map((c) => (
+                    {categories?.categories?.map((c) => (
                       <li
                         key={c?.id}
                         className="active"

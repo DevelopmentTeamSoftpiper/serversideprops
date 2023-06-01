@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema;
 
-const subSchema = new mongoose.Schema({
+const subCategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -15,7 +15,11 @@ const subSchema = new mongoose.Schema({
     lowercase: true,
     index: true,
   },
-  parent: {
+  image: {
+    type: String,
+    required: true,
+  },
+  category : {
     type: ObjectId,
     ref: "Category",
     required: true,
@@ -23,6 +27,6 @@ const subSchema = new mongoose.Schema({
 });
 
 const SubCategory =
-  mongoose.models.SubCategory || mongoose.model("SubCategory", subSchema);
+  mongoose.models.SubCategory || mongoose.model("SubCategory", subCategorySchema);
 
 export default SubCategory;

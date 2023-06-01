@@ -10,7 +10,8 @@ const router = createRouter();
 
 router.post(async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name,image } = req.body;
+    console.log(name, image);
     db.connectDb();
     const test = await Category.findOne({ name });
     if (test) {
@@ -19,7 +20,7 @@ router.post(async (req, res) => {
         message: "Category already exist, Try a different name",
       });
     }
-    await new Category({ name, slug: slugify(name) }).save();
+    await new Category({ name, slug: slugify(name),image}).save();
 
     db.disconnectDb();
     res.json({

@@ -60,11 +60,9 @@ const showToastMessage =(data)=>{
 }
 
 export async function getStaticProps(context) {
-  const products = await fetchDataFromApi("/api/products?populate=*");
-  const categories = await fetchDataFromApi("/api/categories?populate=*");
-  const catProducts = await fetchDataFromApi(
-    `/api/products?populate=*&[filters][category][slug][$eq]=grocery&pagination[page]=1&pagination[pageSize]=10`
-  );
+  const products =await getData("/api/admin/product/getAll");
+  const categories = await getData("/api/admin/category/getAll");
+  const catProducts = await await getData("/api/admin/category/getProducts?categoryId=64788ad6dce8e2b6ba2c9d85");
   const blogs = await fetchDataFromApi("/api/blogs?populate=*");
   const siteinfo = await fetchDataFromApi("/api/siteinfo?populate=*");
   const mainSlider = await fetchDataFromApi("/api/home-sliders?populate=*");
