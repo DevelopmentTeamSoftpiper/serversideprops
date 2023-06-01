@@ -4,21 +4,27 @@ import db from "@/utils/db";
 import SubCategory from "@/models/SubCategory";
 import applyCors from "@/middleware/cors";
 
-const router = createRouter().use(verifyTokenAndAdmin);
+const router = createRouter();
+// use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
     const { id } = req.body;
-    db.connectDb();
-    const deleted = await SubCategory.findByIdAndRemove(id);
-    db.disconnectDb();
-    if (deleted) {
+    const exist = await SubCategory.findOne({ _id: id });
+    if (exist) {
+      db.connectDb();
+      await SubCategory.findByIdAndRemove(id);
+      db.disconnectDb();
       return res.json({
-        message: "SubCategory has been deleted successfully",
+        message: "SubCategory has been deleted Successfully",
+        status: true,
+        SubCategory: await SubCategory.find({}).sort({ updatedAt: -1 }),
       });
     } else {
+      db.disconnectDb();
       return res.json({
-        message: "SubCategory not found with this idF",
+        status: false,
+        message: "SubCategory Not Exist Please try to delete exist category",
       });
     }
   } catch (error) {

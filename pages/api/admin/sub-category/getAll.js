@@ -3,13 +3,12 @@ import db from '@/utils/db';
 import SubCategory from '@/models/SubCategory';
 import applyCors from '@/middleware/cors';
 
-
 const router = createRouter();
 
 router.get(async(req, res)=>{
     try {
         db.connectDb();
-        const subcategories =await SubCategory.find({}).sort({ updatedAt: -1 });
+        const subcategories =await SubCategory.find({}).populate('parent').sort({ updatedAt: -1 });
         db.disconnectDb();
         return res.json({
           subcategories: subcategories,
@@ -20,6 +19,4 @@ router.get(async(req, res)=>{
 })
 
 
-
-
-export default applyCors(router.handler());dler();
+export default applyCors(router.handler())
