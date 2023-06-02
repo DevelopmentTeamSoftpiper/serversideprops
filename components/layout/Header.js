@@ -41,14 +41,15 @@ const Header = ({ siteInfo }) => {
   };
 
   const [categories, setCategories] = useState(null);
+  const fetchCategories = async () => {
+    const {data} = await axios.get("http://localhost:3000/api/admin/category/getAll");
+    setCategories(data);
+  };
   useEffect(() => {
     fetchCategories();
   }, []);
-  const fetchCategories = async () => {
-    const {data} = await axios.get("http://localhost:3000/api/admin/sub-category/getAll");
-    setCategories(data);
-  };
-  console.log('sub-categories', categories);
+
+  // console.log('sub-categories', categories);
 
   const [filterData, setFilterData] = useState([]);
   const [query, setQuery] = useState("");
@@ -499,20 +500,20 @@ const Header = ({ siteInfo }) => {
                         onClick={showMenuHandler}
                       >
                         <Link
-                          href={`/category/${c?.attributes?.slug}`}
+                          href={`/category/${c?.slug}`}
                           onClick={showMenuHandler}
                         >
-                          {c?.attributes?.name}
+                          {c?.name}
                         </Link>
-                        {c?.attributes?.sub_categories?.data?.length > 0 && (
+                        {c?.subCategories?.length > 0 && (
                           <ul style={{ display: "block" }}>
-                            {c?.attributes?.sub_categories?.data?.map((sub) => (
+                            {c?.subCategories?.map((sub) => (
                               <li key={sub?.id}>
                                 <Link
-                                  href={`/subcategory/${sub?.attributes?.slug}`}
+                                  href={`/subcategory/${sub?.slug}`}
                                   onClick={showMenuHandler}
                                 >
-                                  {sub?.attributes?.name}
+                                  {sub?.name}
                                 </Link>
                               </li>
                             ))}

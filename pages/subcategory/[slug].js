@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import ProductCard from "@/components/product/ProductCard";
@@ -8,9 +8,11 @@ import Link from "next/link";
 import BestDeal from "@/components/home/ProductCarousel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import Image from "next/image";
 const maxResult = 3;
 
-const SubCategoryProduct = ({ category, products, slug }) => {
+const SubCategoryProduct = ({ subCategory, products, slug }) => {
     console.log(products);
     const [pageIndex, setPageIndex] = useState(1);
     const { query } = useRouter();
@@ -28,13 +30,14 @@ const SubCategoryProduct = ({ category, products, slug }) => {
     );
 
     const [categories, setCategories] = useState(null);
+    const fetchCategories = async () => {
+      const {data} = await axios.get("http://localhost:3000/api/admin/category/getAll");
+      setCategories(data);
+    };
     useEffect(() => {
       fetchCategories();
     }, []);
-    const fetchCategories = async () => {
-      const { data } = await fetchDataFromApi("/api/categories?populate=*");
-      setCategories(data);
-    };
+
 
     const showToastMsg =(data)=>{
       toast.success(data.msg, {
@@ -56,7 +59,7 @@ const SubCategoryProduct = ({ category, products, slug }) => {
     >
       <div className="container">
         <h1 className="page-title">
-        {category?.data?.[0]?.attributes?.name}<span>Shop</span>
+        {subCategory?.subCategory.name}<span>Shop</span>
         </h1>
       </div>
       {/* End .container */}
@@ -69,10 +72,10 @@ const SubCategoryProduct = ({ category, products, slug }) => {
             <Link href="index.html">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link href={`/category/${category?.data?.[0]?.attributes?.category?.data?.attributes?.slug}`}>{category?.data?.[0]?.attributes?.category?.data?.attributes?.name}</Link>
+            {/* <Link href={`/category/${subCategory?.slug}`}>{category?.data?.[0]?.attributes?.category?.data?.attributes?.name}</Link> */}
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-          {category?.data?.[0]?.attributes?.name}
+          {subCategory?.subCategory?.name}
           </li>
         </ol>
       </div>
@@ -87,7 +90,7 @@ const SubCategoryProduct = ({ category, products, slug }) => {
             {/* End .toolbox */}
             <div className="products mb-3">
               <div className="row justify-content-center">
-              {products?.data?.map((product) => (
+              {products?.products?.map((product) => (
           <div key={product?.id} className="col-6 col-md-4 col-lg-4 col-xl-3">
             <ProductCard key={product?.id} data={product} showToastMsg={showToastMsg} />
           </div>
@@ -112,42 +115,45 @@ const SubCategoryProduct = ({ category, products, slug }) => {
               {/* End .sidenav-title   font-size-normal */}
               <ul
                 className="menu-vertical sf-arrows sf-js-enabled"
-                style={{ touchAction: "pan-y" }}
+                style={{ touchAction: "pan-y", height:"350px" }}
               >
-                {categories?.map((c) => (
-                  <li key={c.id} className="megamenu-container">
+                {categories?.categories?.map((c) => (
+                  <li key={c._id} className="megamenu-container">
                     <Link
                       className={
-                        c?.attributes?.sub_categories?.data?.length > 0
-                          ? "sf-with-ul text-dark"
-                          : "text-dark"
+                        c?.subCategories?.length > 0
+                          ? "sf-with-ul text-dark d-flex"
+                          : "text-dark d-flex"
                       }
-                      href={`/category/${c?.attributes?.slug}`}
+                      href={`/category/${c?.slug}`}
                     >
-                      <i className="icon-couch" />
-                      {c?.attributes?.name}
+                      <Image
+                        height={20}
+                        width={20}
+                        src={c?.image}
+                        alt={c?.name}
+                      />
+                      {c?.name}
                     </Link>
-                    {c?.attributes?.sub_categories?.data?.length > 0 && (
+                    {c?.subCategories?.length > 0 && (
                       <div className="megamenu">
-                       
-                            <div className="menu-col">
-                              
+                        <div className="row ">
+                                <div className="col-md-12">
                                   <ul>
-                                    {c?.attributes?.sub_categories?.data?.map(
+                                    {c?.subCategories?.map(
                                       (sub) => (
-                                        <li key={sub?.id}>
+                                        <li key={sub?._id}>
                                           <Link
-                                            href={`/subcategory/${sub?.attributes?.slug}`}
+                                            href={`/subcategory/${sub?.slug}`}
                                           >
-                                            {sub?.attributes?.name}
+                                            {sub?.name}
                                           </Link>
                                         </li>
                                       )
                                     )}
                                   </ul>
-                           
-                            </div>
-                
+                                </div>
+                        </div>
                       </div>
                     )}
                   </li>
@@ -175,10 +181,10 @@ const SubCategoryProduct = ({ category, products, slug }) => {
 export default SubCategoryProduct
 
 export async function getStaticPaths() {
-    const category = await fetchDataFromApi("/api/sub-categories?populate=*");
-    const paths = category?.data?.map((c) => ({
+    const subcategories = await getData("/api/admin/sub-category/getAll");
+    const paths = subcategories?.subcategories?.map((c) => ({
       params: {
-        slug: c.attributes.slug,
+        slug: c.slug,
       },
     }));
   
@@ -190,16 +196,16 @@ export async function getStaticPaths() {
   
   // `getStaticPaths` requires using `getStaticProps`
   export async function getStaticProps({ params: { slug } }) {
-    const category = await fetchDataFromApi(
-      `/api/sub-categories?populate=*&[filters][slug][$eq]=${slug}`
+    const subCategory = await getData(
+      `/api/admin/sub-category/find?slug=${slug}`
     );
-    const products = await fetchDataFromApi(
-      `/api/products?populate=*&[filters][sub_category][slug][$eq]=${slug}&pagination[page]=1&pagination[pageSize]=${maxResult}`
+    const products = await getData(
+      `/api/admin/sub-category/getProducts?slug=${slug}`
     );
   
     return {
       props: {
-        category,
+        subCategory,
         products,
         slug,
       },

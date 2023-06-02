@@ -14,14 +14,10 @@ router.get(async (req, res) => {
   try {
     const { slug } = req.query;
     db.connectDb();
-    const category = await Category.findOne({slug:slug});
-    console.log(category);
-    console.log(category._id);
-
-    const products = await Product.find({ category: category._id });
+    const subCategory = await SubCategory.findOne({ slug: slug });
     db.disconnectDb();
     return res.json({
-      products: products,
+        subCategory: subCategory,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
