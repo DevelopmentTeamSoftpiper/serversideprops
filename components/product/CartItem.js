@@ -5,12 +5,13 @@ import { removeFromCart } from '@/store/cartSlice';
 import { updateCart } from '@/store/cartSlice';
 import Link from 'next/link';
 const CartItem = ({cartProduct}) => {
+  console.log('cartItem', cartProduct);
   const dispatch = useDispatch();
   const updateCartItem = (e, key)=>{
     let payload = {
       key,
       val: key === "quantity" ? parseInt(e.target.value) : e.target.value,
-      id: cartProduct?.id    
+      slug: cartProduct?.slug 
     }
     dispatch(updateCart(payload));
   }
@@ -20,11 +21,10 @@ const CartItem = ({cartProduct}) => {
     <td className="product-col">
       <div className="product">
         <figure className="product-media">
-          <Link href="#">
+          <Link href={`/product/${cartProduct.slug}`}>
             <Image
               src={
-                cartProduct?.attributes?.image?.data?.[0]
-                  ?.attributes?.url
+                cartProduct?.image
               }
               alt="product"
               width={200}
@@ -33,7 +33,7 @@ const CartItem = ({cartProduct}) => {
           </Link>
         </figure>
         <h3 className="product-title">
-          <Link href="#">{cartProduct?.attributes?.title}</Link>
+          <Link href={`/product/${cartProduct.slug}`}>{cartProduct?.title}</Link>
         </h3>
         {/* End .product-title */}
       </div>
@@ -58,7 +58,7 @@ const CartItem = ({cartProduct}) => {
       </div>
       {/* End .cart-product-quantity */}
     </td>
-    <td className="total-col">${cartProduct?.attributes?.price}</td>
+    <td className="total-col">${cartProduct?.price}</td>
     <td className="remove-col">
       <button className="btn-remove" onClick={()=>{dispatch(removeFromCart({...cartProduct}))}}>
         <i className="icon-close" />

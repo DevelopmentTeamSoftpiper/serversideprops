@@ -9,9 +9,10 @@ const router = createRouter();
 
 router.get(async(req, res)=>{
     try {
-        const { id } = req.body;
+      const { slug } = req.query;
         db.connectDb();
-        const found = await Product.findOne(id);
+
+        const found = await Product.findOne({slug:slug}).populate("category").populate("subCategory");
         db.disconnectDb();
         if(found){
           return res.json({

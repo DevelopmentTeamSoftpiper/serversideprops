@@ -11,7 +11,7 @@ const CartProduct = ({cartProduct}) => {
     <div className="product-cart-details">
       <h4 className="product-title letter-spacing-normal font-size-normal">
         <Link href="product.html">
-          {cartProduct?.attributes?.title}
+          {cartProduct?.title}
         </Link>
       </h4>
       <span className="cart-product-info">
@@ -23,7 +23,7 @@ const CartProduct = ({cartProduct}) => {
     <figure className="product-image-container">
       <Link href="product.html" className="product-image">
         <Image
-          src={cartProduct?.attributes?.image?.data?.[0]?.attributes?.url}
+          src={cartProduct?.image}
           alt="product"
           width={200}
           height={300}

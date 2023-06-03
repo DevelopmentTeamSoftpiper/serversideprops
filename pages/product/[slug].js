@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
@@ -10,8 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import LatestProduct from "@/components/home/LatestProduct";
 import RelatedProducts from "@/components/product/RelatedProduct";
 
-const ProductDetails = ({ product, products }) => {
-  const p = product?.data?.[0]?.attributes;
+const ProductDetails = ({ product }) => {
+  console.log(product);
+  const p = product?.product;
   const dispatch = useDispatch();
   const showToastMessage =(data)=>{
     toast.success(data.msg, {
@@ -40,7 +41,7 @@ const ProductDetails = ({ product, products }) => {
               <Link href="#">Products</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Default
+              {p?.title}
             </li>
           </ol>
         </div>
@@ -57,8 +58,8 @@ const ProductDetails = ({ product, products }) => {
                     <figure className="product-main-image">
                       <Image
                         id="product-zoom"
-                        src={p?.thumbnail?.data?.attributes?.url}
-                        data-zoom-image={p?.thumbnail?.data?.attributes?.url}
+                        src={p?.image}
+                        data-zoom-image={p?.image}
                         width={300}
                         height={300}
                         alt={p?.title}
@@ -81,7 +82,7 @@ const ProductDetails = ({ product, products }) => {
 
                   <div className="product-price">{p?.price}BDT</div>
                   <div className="product-content">
-                    <p>{p?.short_description}</p>
+                    <p>{p?.shortDescription}</p>
                   </div>
                   {/* 
               <div className="details-filter-row details-row-size">
@@ -122,13 +123,13 @@ const ProductDetails = ({ product, products }) => {
 
                     <button className="btn-product btn-cart" onClick={()=>{
                             dispatch(addToCart({
-                              ...product?.data?.[0],
+                              ...p,
                               oneQuantityPrice: p?.price,
                               quantity:quantity
                             }));
                             toast.success("Product Added to Cart", {
                               position: "top-right",
-                              autoClose: 5000,
+                              autoClose: 1000,
                               hideProgressBar: false,
                               closeOnClick: true,
                               draggable: true,
@@ -145,13 +146,26 @@ const ProductDetails = ({ product, products }) => {
                       <span>Category:</span>
 
                       <Link
-                        href={`/category/${p?.category?.data?.attributes?.slug}`}
+                        href={`/category/${p?.category?.slug}`}
+                        style={{color: "#61AB00",fontWeight:600}}
                       >
                         {" "}
-                        {p?.category?.data?.attributes?.name}
+                        {p?.category?.name}
+                      </Link>
+                    </div>
+                    <div className="product-cat ml-2">
+                      <span>Sub-Category:</span>
+
+                      <Link
+                        href={`/subcategory/${p?.subCategory?.slug}`}
+                        style={{color: "#61AB00",fontWeight:600}}
+                      >
+                        {" "}
+                        {p?.subCategory?.name}
                       </Link>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -189,7 +203,7 @@ const ProductDetails = ({ product, products }) => {
             </div>
           </div>
         </div>
-      < RelatedProducts products={products} showToastMessage={showToastMessage} />
+      {/* < RelatedProducts products={products} showToastMessage={showToastMessage} /> */}
       </div>
 
 
@@ -201,10 +215,10 @@ const ProductDetails = ({ product, products }) => {
 export default ProductDetails;
 
 export async function getStaticPaths() {
-  const products = await fetchDataFromApi("/api/products?populate=*");
-  const paths = products?.data?.map((p) => ({
+  const products = await getData("/api/admin/product/getAll");
+  const paths = products?.products?.map((p) => ({
     params: {
-      slug: p.attributes.slug,
+      slug: p?.slug,
     },
   }));
 
@@ -216,17 +230,17 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({ params: { slug } }) {
-  const product = await fetchDataFromApi(
-    `/api/products?populate=*&[filters][slug][$eq]=${slug}`
+  const product = await getData(
+    `/api/admin/product/find?slug=${slug}`
   );
-  const products = await fetchDataFromApi(
-    `/api/products?populate=*&[filters][slug][$ne]=${slug}`
-  );
+  // const products = await fetchDataFromApi(
+  //   `/api/products?populate=*&[filters][slug][$ne]=${slug}`
+  // );
 
   return {
     props: {
       product,
-      products,
+      // products,
       slug,
     },
   };

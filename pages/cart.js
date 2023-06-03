@@ -13,7 +13,7 @@ const cart = () => {
 
 
   const subTotal = useMemo(() => {
-    return cartProducts.reduce((total, val) => total + val.attributes.price, 0);
+    return cartProducts.reduce((total, val) => total + val.price, 0);
   }, [cartProducts]);
   const getShippings = async () => {
     const ships = await fetchDataFromApi("/api/shippings?populate=*");

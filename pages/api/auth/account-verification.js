@@ -33,16 +33,15 @@ router.post(async (req, res) => {
               db.connectDb();
               const user = new User({ name, email, password });
 
-              user.save((err, result)=>{
-                if(err){
-                  return res.status(400).json({
-                    error: "Error resetting password",
-                  });
-                }
-                return res.status(200).json({
-                  message: "Success!",
-                });
-              })
+             const savedUser = await user.save();
+             if(!savedUser){
+              return res.status(400).json({
+                error: "Something went wrong",
+              });
+            }
+            return res.status(200).json({
+              message: "Success!",
+            });
             } else {
               return res.status(401).json({
                 error: "Verification Number is incorrect",

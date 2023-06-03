@@ -7,9 +7,9 @@ const Cart = () => {
     const [showCart, setShowCart] = useState(false);
     const cartProducts = useSelector((state)=>state.cart.cartItems);
     const subTotal = useMemo(()=>{
-      return cartProducts.reduce((total, val)=>total+val.attributes.price,0)
+      return cartProducts.reduce((total, val)=>total+val.price,0)
     },[cartProducts])
-    
+    console.log(cartProducts);
   return (
     <div className="dropdown cart-dropdown">
     <Link

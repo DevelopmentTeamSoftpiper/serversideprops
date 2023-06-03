@@ -4,59 +4,53 @@ const { ObjectId } = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema(
   {
-    user: {
-      type: ObjectId,
-      ref: "User",
-      required: true,
-    },
-    products: [
-      {
-        product: {
-          type: ObjectId,
-          ref: "Product",
-        },
-        name: {
-          type: String,
-        },
-        image: {
-          type: String,
-        },
-        size: {
-          type: String,
-        },
-        qty: {
-          type: Number,
-        },
-        color: {
-          color: String,
-          image: String,
-        },
-        price: {
-          type: Number,
-        },
-      },
-    ],
+    name: {
+      type: String,
+      trim: true,
+      max: 32
+  },
+  email: {
+      type: String,
+      trim: true,
+      lowercase: true
+  },
+  address: {
+      type: String,
+      trim: true,
+      
+  },
+  city: {
+      type: String,
+      trim: true,
+  
+  },
+  country: {
+      type: String,
+      trim: true,
+  
+  },
+  post_code: {
+      type: String,
+      trim: true,
+  },
+  phone: {
+      type: String,
+      trim: true,
+  },
+  user_id_no: {
+      type: String,
+      trim: true,
+  },
+    products: [ ],
   
     paymentMethod: {
       type: String,
+      required:true
     },
-    paymentResult: {
-      id: String,
-      status: String,
-      email: String,
-    },
-    total: {
-      type: Number,
-      required: true,
-    },
-    totalBeforeDiscount: {
-      type: Number,
-    },
-    couponApplied: {
-      type: String,
-    },
-    shippingPrice: {
-      type: Number,
+
+
+    shipping_cost: {
+      type: string,
       required: true,
       default: 0,
     },
@@ -76,12 +70,7 @@ const orderSchema = new mongoose.Schema(
         "Completed",
       ],
     },
-    paidAt: {
-      type: Date,
-    },
-    deliveredAt: {
-      type: Date,
-    },
+
   },
   {
     timestamps: true,

@@ -31,40 +31,52 @@ const checkout = () => {
   const router = useRouter();
 
   const user = useSelector((state) => state.user.currentUser);
+
+  const jwt = useSelector((state) => state.user.jwt);
+
   const provider = useSelector((state)=>state.user.provider);
 
 
   const getUserInfo = async () => {
-    if(provider === "strapi"){
-      const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.id}`
-        );
-        console.log('checkout',userInfo)
-      setName(userInfo?.data?.[0]?.attributes?.username);
-      setEmail(userInfo?.data?.[0]?.attributes?.email);
-      setPhone(userInfo?.data?.[0]?.attributes?.phone);
-      setAddress(userInfo?.data?.[0]?.attributes?.address);
-      setPostalCode(userInfo?.data?.[0]?.attributes?.post_code);
-    setCity(userInfo?.data?.[0]?.attributes?.city);
-    setCountry(userInfo?.data?.[0]?.attributes?.country);
+    if(provider === "email-password"){
+      const userInfo =  await axios.post("/api/profile/find",
+    {
+      user_id_no: user._id,
+    },
+     {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        token: `Bearer ${jwt}`,
+      },
+    });
+    console.log('userInfoCheckout', userInfo)
+      setName(userInfo?.data?.name);
+      setEmail(userInfo?.data?.email);
+      setPhone(userInfo?.data?.phone);
+      setAddress(userInfo?.data?.address);
+      setPostalCode(userInfo?.data?.post_code);
+    setCity(userInfo?.data?.city);
+    setCountry(userInfo?.data?.country);
     setProfileId(userInfo?.data?.[0]?.id);
    
-    }else{
-      const userInfo = await fetchDataFromApi(
-        `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.uid}`
-      );
-      console.log('checkout',userInfo)
-
-      setName(userInfo?.data?.[0]?.attributes?.username);
-    setEmail(userInfo?.data?.[0]?.attributes?.email);
-    setPhone(userInfo?.data?.[0]?.attributes?.phone);
-    setAddress(userInfo?.data?.[0]?.attributes?.address);
-    setPostalCode(userInfo?.data?.[0]?.attributes?.post_code);
-    setCity(userInfo?.data?.[0]?.attributes?.city);
-    setCountry(userInfo?.data?.[0]?.attributes?.country);
-    setProfileId(userInfo?.data?.[0]?.id);
-
     }
+    // else{
+    //   const userInfo = await fetchDataFromApi(
+    //     `/api/profiles?populate=*&[filters][user_id_no][$eq]=${user?.uid}`
+    //   );
+    //   console.log('checkout',userInfo)
+
+    //   setName(userInfo?.data?.[0]?.attributes?.username);
+    // setEmail(userInfo?.data?.[0]?.attributes?.email);
+    // setPhone(userInfo?.data?.[0]?.attributes?.phone);
+    // setAddress(userInfo?.data?.[0]?.attributes?.address);
+    // setPostalCode(userInfo?.data?.[0]?.attributes?.post_code);
+    // setCity(userInfo?.data?.[0]?.attributes?.city);
+    // setCountry(userInfo?.data?.[0]?.attributes?.country);
+    // setProfileId(userInfo?.data?.[0]?.id);
+
+    // }
    
 
   };
@@ -72,17 +84,19 @@ const checkout = () => {
 
   const cartProducts = useSelector((state) => state.cart.cartItems);
   const subTotal = useMemo(() => {
-    return cartProducts.reduce((total, val) => total + val.attributes.price, 0);
+    return cartProducts.reduce((total, val) => total + val.price, 0);
   }, [cartProducts]);
+  console.log(cartProducts);
   const productData = cartProducts.map((p) => ({
-    id: p?.id,
-    title: p?.attributes?.title,
+    id: p?._id,
+    title: p?.title,
     quantityPrice: p?.oneQuantityPrice,
     quantity: p?.quantity,
-    price: p?.attributes?.price,
-    category: p?.attributes?.category?.data?.attributes?.name,
-    subcategory: p?.attributes?.sub_category?.data?.attributes?.name,
+    price: p?.price,
+    category: p?.category?.name,
+    subcategory: p?.subcategory?.name,
   }));
+  console.log(productData);
 
   const [shippings, setShippings] = useState(null);
   const [shippingCost, setShippingCost] = useState("70");
@@ -92,8 +106,8 @@ const checkout = () => {
   };
 
   const getShippings = async () => {
-    const ships = await fetchDataFromApi("/api/shippings?populate=*");
-    // console.log(ships);
+    const ships = await axios.get("/api/admin/shipping/getAll");
+    console.log(ships);
     setShippings(ships);
   };
 
@@ -101,7 +115,7 @@ const checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
 
   const getPaymentMethods = async () => {
-    const pMethods = await fetchDataFromApi("/api/payment-methods?populate=*");
+    const pMethods =  await axios.get("/api/admin/payment-methods/getAll");
     console.log(pMethods);
     setPaymentMethods(pMethods);
   };
@@ -127,10 +141,10 @@ const checkout = () => {
   const order = async () => {
     try {
 
-      const response = await postDataToApi("/api/orders", {
+      const response = await axios.post("/api/admin/order/store", {
         data: {
           products: productData,
-          user: user?.id,
+          user_id_no: user?._id,
           name: name,
           email: email,
           phone: phone,
@@ -394,8 +408,8 @@ const checkout = () => {
                         <td>&nbsp;</td>
                       </tr>
                       {/* End .summary-subtotal */}
-                      {shippings?.data?.map((ship) => (
-                        <tr key={ship?.id} className="summary-shipping-row">
+                      {shippings?.data?.shippings?.map((ship) => (
+                        <tr key={ship?._id} className="summary-shipping-row">
                           <td>
                             <div className="form-check ">
                               <label className="form-check-label">
@@ -403,22 +417,22 @@ const checkout = () => {
                                   type="radio"
                                   className="form-check-input"
                                   name="shippingMethod"
-                                  value={ship?.attributes?.cost}
+                                  value={ship?.cost}
                                   style={{
                                     marginTop: ".6rem",
                                     marginLeft: "-2rem",
                                   }}
                                   onChange={shippingCostChangeHandler}
                                   checked={
-                                    ship?.attributes?.cost == shippingCost
+                                    ship?.cost == shippingCost
                                   }
                                 />
-                                {ship?.attributes?.title}
+                                {ship?.name}
                               </label>
                             </div>
                             {/* End .custom-control */}
                           </td>
-                          <td>BDT {ship?.attributes?.cost}</td>
+                          <td>BDT {ship?.cost}</td>
                         </tr>
                       ))}
                       <tr className="summary-total">
@@ -437,8 +451,8 @@ const checkout = () => {
                     </td>
                     <td>&nbsp;</td>
                   </tr>
-                  {paymentMethods?.data?.map((method) => (
-                    <tr key={method?.id} className="summary-shipping-row">
+                  {paymentMethods?.data?.paymentMethods?.map((method) => (
+                    <tr key={method?._id} className="summary-shipping-row">
                       <td>
                         <div className="form-check ">
                           <label className="form-check-label">
@@ -446,7 +460,7 @@ const checkout = () => {
                               type="radio"
                               className="form-check-input"
                               name="paymentMethod"
-                              value={method?.attributes?.title}
+                              value={method?.name}
                               style={{
                                 marginTop: ".6rem",
                                 marginLeft: "-2rem",
@@ -455,11 +469,11 @@ const checkout = () => {
                                 setPaymentMethod(e.target.value);
                               }}
                               checked={
-                                method?.attributes?.title == paymentMethod
+                                method?.name == paymentMethod
                               }
                             />
-                            <p>{method?.attributes?.title} </p>
-                            <small>{method?.attributes?.description}</small>
+                            <p>{method?.name} </p>
+                            <small>{method?.description}</small>
                           </label>
                         </div>
                         {/* End .custom-control */}

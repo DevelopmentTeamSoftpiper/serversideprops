@@ -18,7 +18,6 @@ router.post(async (req, res) => {
       originalPrice,
       shortDescription,
       description,
-      quantity,
       brand,
       category,
       subCategory,
@@ -45,7 +44,6 @@ router.post(async (req, res) => {
       brand,
       category,
       subCategory,
-      quantity,
       bestDeal,
       discountedSale,
     }).save();

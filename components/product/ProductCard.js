@@ -5,7 +5,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 
 const ProductCard = ({data, showToastMsg}) => {
-  //  console.log('data', data);
+   console.log('data', data);
     const dispatch = useDispatch();
   return (
     <div className="product d-flex flex-column overflow-hidden">
@@ -55,10 +55,11 @@ const ProductCard = ({data, showToastMsg}) => {
         onClick={()=>{
           dispatch(addToCart({
             ...data,
-            oneQuantityPrice: p?.price
+            oneQuantityPrice:parseInt( data?.price),
+            quantity:1
           }));
           showToastMsg({
-            msg: `${p?.title} is added to the cart`
+            msg: `${data?.title} is added to the cart`
           })
 
         }}

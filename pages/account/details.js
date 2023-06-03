@@ -27,14 +27,10 @@ const AccountDetails = () => {
         Accept: "application/json",
         token: `Bearer ${jwt}`,
       },
-      
     });
     console.log('details',userInfo);
       setUserInfo(userInfo);
-   
-
-
-
+  
   }
   useEffect(()=>{
     getUserInfo();

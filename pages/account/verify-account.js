@@ -48,7 +48,7 @@ const VerifyAccount = () => {
     e.preventDefault();
     setButtonText("Wait...");
     axios
-      .post("/api/auth/account-verification", {
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/account-verification`, {
         token,
         number,
       })
