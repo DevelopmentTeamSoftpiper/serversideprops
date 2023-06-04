@@ -16,6 +16,7 @@ import { BiUserPin } from "react-icons/bi";
 import axios from "axios";
 
 const Header = ({ siteInfo }) => {
+  // console.log(siteInfo);
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
   const provider = useSelector((state) => state.user.provider);
@@ -107,7 +108,7 @@ const Header = ({ siteInfo }) => {
               </button>
               <Link href="/" className="logo">
                 <Image
-                  src={siteInfo?.data?.attributes?.logo?.data?.[0]?.attributes?.url}
+                  src={siteInfo?.data?.siteinfo?.logo}
                   alt="safefoods Logo"
                   width={105}
                   height={25}

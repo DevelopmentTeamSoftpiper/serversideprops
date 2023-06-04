@@ -22,7 +22,7 @@ const Footer = ({siteInfo}) => {
           <div className="col-12 col-lg-2-5cols">
             <div className="widget widget-about mb-4">
             <Image
-              src={siteInfo?.data?.attributes?.logo?.data?.[0]?.attributes?.url}
+              src={siteInfo?.data?.siteinfo?.logo}
               alt="safefood logo"
               width={105}
               height={25}
@@ -34,7 +34,7 @@ const Footer = ({siteInfo}) => {
                     <span> 
                       <FaMapMarkerAlt className='text-3xl mr-3' />
                     </span>
-                    <span> Shop #33, Road #5, Block-B, Banasree, Dhaka </span>
+                    <span> {siteInfo?.data?.siteinfo?.address}</span>
                   </div>
                 </li>
                 <li>
@@ -42,7 +42,7 @@ const Footer = ({siteInfo}) => {
                     <span> 
                     <MdCall className='text-3xl mr-3' />
                     </span> 
-                    <span> +8801730593754 </span>
+                    <span> {siteInfo?.data?.siteinfo?.phone}</span>
                   </div>
                 </li>
                 <li>
@@ -50,7 +50,7 @@ const Footer = ({siteInfo}) => {
                     <span> 
                       <AiOutlineMail className='text-3xl mr-3' />
                     </span> 
-                    <span> safefoods.info@gmail.com </span>
+                    <span> {siteInfo?.data?.siteinfo?.email} </span>
                   </div>
                 </li>
                 

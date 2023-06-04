@@ -14,14 +14,16 @@ import { fetchDataFromApi } from '@/utils/api'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function App({ Component, pageProps }) {
   const [siteInfo, setSiteInfo] = useState(null);
   const getSiteInfo = async()=>{
-    const siteinfo = await fetchDataFromApi(
-      `/api/siteinfo?populate=*`
+    const siteinfo = await axios.get(
+      `/api/admin/siteinfo/find`
     );
     setSiteInfo(siteinfo);
+    // console.log(siteinfo);
     
   }
   useEffect(()=>{
