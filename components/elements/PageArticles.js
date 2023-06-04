@@ -9,10 +9,10 @@ const PageArticles = ({blog}) => {
     <div className="row align-items-center">
       <div className="col-md-5">
         <figure className="entry-media">
-          <Link href={`/blogs/${blog?.attributes?.slug}`}>
+          <Link href={`/blogs/${blog?.slug}`}>
           <Image
-          src={blog?.attributes?.image?.data?.[0]?.attributes?.url}
-          alt={blog?.attributes?.title}
+          src={blog?.image}
+          alt={blog?.title}
           width={335}
           height={200}
         />
@@ -25,22 +25,22 @@ const PageArticles = ({blog}) => {
         <div className="entry-body">
           <div className="entry-meta">
             <span className="entry-author">
-              by <span>{blog?.attributes?.author}</span>
+              by <span>{blog?.author}</span>
             </span>
             <span className="meta-separator">|</span>
-            <span>{new Date(blog?.attributes?.updatedAt).toLocaleDateString()}</span>
+            <span>{new Date(blog?.createdAt).toLocaleDateString()}</span>
           
           </div>
 
           <h2 className="entry-title">
-            <Link href={`/blogs/${blog?.attributes?.slug}`}>{blog?.attributes?.title}</Link>
+            <Link href={`/blogs/${blog?.slug}`}>{blog?.title}</Link>
           </h2>
           {/* End .entry-title */}
           <div className="entry-cats">
             in 
-            {blog?.attributes?.blog_cats?.data.map((cat)=>(
-              <Link key={cat?.id} href={`/blogs/category/${cat?.attributes?.slug}`} style={{color:'black'}}> | {cat?.attributes?.title} </Link>
-            ))}
+        
+              <Link key={blog?._id} href={`/blogs/category/${blog?.subBlog?.slug}`} style={{color:'black'}}> | {blog?.subBlog?.title} </Link>
+       
             
           </div>
           {/* End .entry-cats */}
@@ -48,7 +48,7 @@ const PageArticles = ({blog}) => {
             <p>
             {blog?.attributes?.content.substring(0,150)}
             </p>
-            <Link href={`/blogs/${blog?.attributes?.slug}`} className="read-more">
+            <Link href={`/blogs/${blog?.slug}`} className="read-more">
               Continue Reading
             </Link>
           </div>

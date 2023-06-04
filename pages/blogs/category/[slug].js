@@ -1,12 +1,12 @@
 import PageArticles from "@/components/elements/PageArticles";
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import Link from "next/link";
 import React from "react";
 
 const BlogCategory = ({ blogCategories, blogCats, slug }) => {
-  // console.log("blog cat", blogCategories);
+  console.log("blog cat", blogCategories);
   console.log("blogs", blogCats);
-  // console.log('slug', slug);
+  // console.log('slug', slug);blogCats
   return (
     <main className="main px-5">
       <div
@@ -42,8 +42,8 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
         <div className="container">
           <div className="row">
             <div className="col-lg-9">
-              {blogCats?.data?.map((blog) => (
-                <PageArticles key={blog?.id} blog={blog} />
+              {blogCats?.blogs?.map((blog) => (
+                <PageArticles key={blog?._id} blog={blog} />
               ))}
 
               {/* <nav aria-label="Page navigation">
@@ -116,10 +116,10 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
                   <h3 className="widget-title">Categories</h3>
                   {/* End .widget-title */}
                   <ul>
-                  {blogCategories?.data?.map((cat)=>(
+                  {blogCategories?.subBlogs?.map((cat)=>(
                       <li key={cat?.id}>
-                      <a href={`/blogs/category/${cat?.attributes?.slug}`}>
-                        {cat?.attributes?.title}<span>{cat?.attributes?.blogs?.data?.length}</span>
+                      <a href={`/blogs/category/${cat?.slug}`}>
+                        {cat?.title}
                       </a>
                     </li>
                   ))}
@@ -143,10 +143,10 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
 export default BlogCategory;
 
 export async function getStaticPaths() {
-  const blogCats = await fetchDataFromApi("/api/blog-cats?populate=*");
-  const paths = blogCats?.data?.map((p) => ({
+  const blogCats = await getData("/api/admin/sub-blog/getAll");
+  const paths = blogCats?.subBlogs?.map((p) => ({
     params: {
-      slug: p.attributes.slug,
+      slug: p.slug,
     },
   }));
 
@@ -158,11 +158,9 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({ params: { slug } }) {
-  const blogCategories = await fetchDataFromApi(
-    `/api/blog-cats?populate=*`
-  );
-  const blogCats = await fetchDataFromApi(
-    `/api/blogs?populate=*&[filters][blog_cat][slug][$eq]=${slug}`
+  const blogCategories =await getData("/api/admin/sub-blog/getAll");
+  const blogCats = await getData(
+    `/api/admin/sub-blog/getBlogs?slug=${slug}`
   );
 
   return {
