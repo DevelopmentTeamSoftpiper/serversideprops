@@ -5,54 +5,69 @@ const { ObjectId } = mongoose.Schema;
 const orderSchema = new mongoose.Schema(
   {
     name: {
+      type:String
+
+    },
+    email: {
       type: String,
       trim: true,
-      max: 32
-  },
-  email: {
+      lowercase: true,
+    },
+    address: {
       type: String,
       trim: true,
-      lowercase: true
-  },
-  address: {
+    },
+    city: {
       type: String,
       trim: true,
-      
-  },
-  city: {
+    },
+    country: {
       type: String,
       trim: true,
-  
-  },
-  country: {
+    },
+    post_code: {
       type: String,
       trim: true,
-  
-  },
-  post_code: {
+    },
+    phone: {
       type: String,
       trim: true,
-  },
-  phone: {
+    },
+    transaction_phone_no: {
       type: String,
       trim: true,
-  },
-  user_id_no: {
+    },
+    transaction_id: {
       type: String,
       trim: true,
-  },
-    products: [ ],
-  
-    paymentMethod: {
+    },
+    user_id_no: {
       type: String,
-      required:true
+      trim: true,
+    },
+    subtotal: {
+      type: String,
+      trim: true,
+    },
+    total: {
+      type: String,
+      trim: true,
+    },
+    products: [],
+
+    payment_method: {
+      type: String,
+      required: true,
     },
 
-
     shipping_cost: {
-      type: string,
+      type: String,
       required: true,
-      default: 0,
+   
+    },
+    order_notes: {
+      type: String,
+      required: false,
     },
     isPaid: {
       type: Boolean,
@@ -65,13 +80,30 @@ const orderSchema = new mongoose.Schema(
       enum: [
         "Not Processed",
         "Processing",
-        "Dispatched",
-        "Cancelled",
         "Completed",
+        "Cancelled",
       ],
     },
-
+    payment_status: {
+      type: String,
+      default: "Not Verified",
+      enum: [
+        "Not Verified",
+        "Verified",
+      
+      ],
+    },
+    delivery_status: {
+      type: String,
+      default: "Pending",
+      enum: [
+        "Pending",
+        "Delivered",
+      
+      ],
+    },
   },
+  
   {
     timestamps: true,
   }
