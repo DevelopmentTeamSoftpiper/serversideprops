@@ -4,6 +4,7 @@ import db from "@/utils/db";
 import applyCors from "@/middleware/cors";
 import Blog from "@/models/Blog";
 
+
 const router = createRouter();
 
 router.get(async (req, res) => {

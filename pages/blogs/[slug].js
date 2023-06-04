@@ -1,12 +1,12 @@
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
-  console.log(" Blog", blog);
-  const bl = blog?.data?.[0]?.attributes;
+  console.log(" BlogCats", relatedBlogs);
+  const bl = blog?.blog;
   return (
     <main className="main px-5">
 
@@ -34,7 +34,7 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
               <article className="entry single-entry">
                 <figure className=" d-flex justify-content-center">
                   <Image
-                    src={bl?.image?.data?.[0]?.attributes?.url}
+                    src={bl?.image}
                     alt={bl?.title}
                     width={400}
                     height={200}
@@ -55,9 +55,9 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                   <h2 className="entry-title">{bl?.title}</h2>
                   {/* End .entry-title */}
                   <div className="entry-cats">
-                    in   {bl?.blog_cats?.data.map((cat)=>(
-              <Link key={cat?.id} href={`/blogs/category/${cat?.attributes?.slug}`} style={{color:'black'}}> | {cat?.attributes?.title} </Link>
-            ))}
+                    in   
+              <Link key={bl?.subBlog?.id} href={`/blogs/category/${bl?.subBlog?.slug}`} style={{color:'black'}}> | {bl?.subBlog?.title} </Link>
+       
                   </div>
                   {/* End .entry-cats */}
                   <div className="entry-content editor-content">
@@ -98,10 +98,10 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                   <h3 className="widget-title">Categories</h3>
                   {/* End .widget-title */}
                   <ul>
-                  {blogCats?.data?.map((cat)=>(
+                  {blogCats?.subBlogs?.map((cat)=>(
                       <li key={cat?.id}>
-                      <a href={`/blogs/category/${cat?.attributes?.slug}`}>
-                        {cat?.attributes?.title}<span>{cat?.attributes?.blogs?.data?.length}</span>
+                      <a href={`/blogs/category/${cat?.slug}`}>
+                        {cat?.title}
                       </a>
                     </li>
                   ))}
@@ -113,12 +113,12 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                   <h3 className="widget-title">Popular Posts</h3>
                   {/* End .widget-title */}
                   <ul className="posts-list">
-                   {relatedBlogs?.data?.map((rb)=>(
-                     <li key={rb?.id}>
+                   {relatedBlogs?.blogs?.map((rb)=>(
+                     <li key={rb?._id}>
                      <figure>
-                       <Link href={`/blogs/${rb?.attributes?.slug}`}>
+                       <Link href={`/blogs/${rb?.slug}`}>
                          <Image
-                           src={rb?.attributes?.image?.data?.[0]?.attributes?.url}
+                           src={rb?.image}
                            alt="post"
                            width={100}
                            height={100}
@@ -126,9 +126,9 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                        </Link>
                      </figure>
                      <div>
-                       <span>{new Date(rb?.attributes?.updatedAt).toLocaleDateString()}</span>
+                       <span>{new Date(rb?.createdAt).toLocaleDateString()}</span>
                        <h4>
-                         <Link href={`/blogs/${rb?.attributes?.slug}`}>{rb?.attributes?.title}</Link>
+                         <Link href={`/blogs/${rb?.slug}`}>{rb?.title}</Link>
                        </h4>
                      </div>
                    </li>
@@ -155,10 +155,10 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
 export default SingleBlog;
 
 export async function getStaticPaths() {
-  const blogs = await fetchDataFromApi("/api/blogs?populate=*");
-  const paths = blogs?.data?.map((p) => ({
+  const blogs = await getData("/api/admin/blog/getAll");
+  const paths = blogs?.blogs?.map((p) => ({
     params: {
-      slug: p.attributes.slug,
+      slug: p.slug,
     },
   }));
 
@@ -170,15 +170,13 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({ params: { slug } }) {
-  const blog = await fetchDataFromApi(
-    `/api/blogs?populate=*&[filters][slug][$eq]=${slug}`
+  const blog = await getData(
+    `/api/admin/blog/find?slug=${slug}`
   );
-  const blogCats=  await fetchDataFromApi(
-    `/api/blog-cats?populate=*`
+  const blogCats=  await getData(
+    `/api/admin/sub-blog/getAll`
   );
-  const relatedBlogs = await fetchDataFromApi(
-    `/api/blogs?populate=*&[filters][slug][$ne]=${slug}&pagination[page]=1&pagination[pageSize]=5`
-  );
+  const relatedBlogs = await getData("/api/admin/blog/getAll");
 
   return {
     props: {
