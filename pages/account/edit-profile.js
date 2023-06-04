@@ -30,6 +30,7 @@ const EditProfile = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
+  // console.log(user._id);
   
   const provider = useSelector((state) => state.user.provider);
   const jwt = useSelector((state) => state.user.jwt);
@@ -112,15 +113,17 @@ const EditProfile = () => {
   const updatePassword = async () => {
     try {
       const res =await axios.post(
-        `${API_URL}/api/auth/change-password`,
+        "/api/auth/change-password",
         {
-          currentPassword: currentPassword,
-          password: password,
-          passwordConfirmation: passwordConfirmation,
+          id: user?._id,
+          password: currentPassword,
+          updatedPassword: password,
         },
         {
           headers: {
-            Authorization: `Bearer ${jwt}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            token: `Bearer ${jwt}`,
           },
         }
       );
@@ -139,7 +142,7 @@ const EditProfile = () => {
       setPasswordConfirmation("");
       console.log("res", res);
     } catch (error) {
-      toast.error(error?.response?.data?.error?.message, {
+      toast.error(error?.response?.data?.error, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -149,7 +152,7 @@ const EditProfile = () => {
         progress: undefined,
         theme: "dark",
       });
-      console.log(error?.response?.data?.error?.message);
+      console.log(error);
     }
   };
 

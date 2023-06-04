@@ -10,7 +10,7 @@ const router = createRouter().use(verifyToken);
 
 router.post(async (req, res) => {
   try {
-    const { id , password} = req.body;
+    const { id , updatedPassword,password} = req.body;
     db.connectDb();
     const findUser = await User.findOne({_id:id});
     
@@ -18,7 +18,12 @@ router.post(async (req, res) => {
 
     db.disconnectDb();
     if (findUser) {
-     const updatedFields = {password:password};
+      if(!findUser.authenticate(password)){
+        return res.status(400).json({
+          error: 'Current Password is incorrect. Try forgot password'
+        })
+      }
+     const updatedFields = {password:updatedPassword};
      const user =_.extend(findUser, updatedFields);
      const updatedUser = await user.save();
      if(!updatedUser){
