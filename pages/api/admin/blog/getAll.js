@@ -1,18 +1,19 @@
 import { createRouter } from "next-connect";
+import { verifyTokenAndAdmin } from "@/helpers/verityToken";
 import db from "@/utils/db";
-import SubCategory from "@/models/SubCategory";
 import applyCors from "@/middleware/cors";
+import Blog from "@/models/Blog";
 
 const router = createRouter();
 
 router.get(async (req, res) => {
   try {
     db.connectDb();
-    const subcategories = await SubCategory.find({}).populate("category")
-      .sort({ updatedAt: -1 }).lean();
+    const blogs = await Blog.find({}).populate('subBlog')
+      .sort({ updatedAt: -1 });
     db.disconnectDb();
     return res.json({
-      subcategories: subcategories,
+      blogs: blogs,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
