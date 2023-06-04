@@ -366,7 +366,7 @@ const EditProfile = () => {
                 </form>
 
               {
-                provider === "strapi" && 
+                provider === "email-password" && 
                 
             (
               <>

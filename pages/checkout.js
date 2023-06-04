@@ -24,8 +24,6 @@ const checkout = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
-  const [profileId, setProfileId] = useState(null);
-  const [userId, setUserId] = useState(null);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -59,7 +57,6 @@ const checkout = () => {
       setPostalCode(userInfo?.data?.post_code);
     setCity(userInfo?.data?.city);
     setCountry(userInfo?.data?.country);
-    setProfileId(userInfo?.data?.[0]?.id);
    
     }
     // else{
@@ -127,14 +124,10 @@ const checkout = () => {
     getUserInfo();
     getShippings();
     getPaymentMethods();
-    if(provider === 'strapi'){
-      setUserId(user?.id);
-    }else{
-      setUserId(user?.uid);
-    }
+   
   }, []);
 
-  
+
 
   const [phoneNo, setPhoneNo] = useState("");
   const [transactionId, setTransactionId] = useState("");
@@ -143,9 +136,9 @@ const checkout = () => {
     try {
 
       const response = await axios.post("/api/admin/order/store", {
-        data: {
+
           products: productData,
-          user_id_no: user?._id,
+          user_id_no: user._id,
           name: name,
           email: email,
           phone: phone,
@@ -155,43 +148,47 @@ const checkout = () => {
           country: country ? country : "Bangladesh",
           shipping_cost: shippingCost,
           payment_method: paymentMethod,
-          phone_no: phoneNo,
+          transaction_phone_no: phoneNo,
           transaction_id: transactionId,
           subtotal: subTotal,
           total: total,
-          sale_status: "pending",
-          payment_status: "pending",
-          delivery_status: "pending",
+          status: "Not Processed",
+          payment_status: "Not Verified",
+          delivery_status: "Pending",
           order_notes: orderNotes,
-          profile: profileId,
-          user_id_no: userId.toString()
-          
+     
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          token: `Bearer ${jwt}`,
         },
-      });
-
-    //   console.log(response);
-    //   dispatch(emptyCart());
+        
+      }
       
-    //   router.push("/success");
-    //   setIsLoading(false);
+      );
 
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error(error.error.message, {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
+      console.log(response);
+      dispatch(emptyCart());
+      
+      router.push("/success");
+      setIsLoading(false);
 
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "dark",
-    //   });
-    //   setIsLoading(false);
-    // }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
 
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setIsLoading(false);
+    }
   };
-
   const orderSubmitHandler = (e) => {
     setIsLoading(true);
     e.preventDefault();

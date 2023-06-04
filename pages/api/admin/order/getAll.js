@@ -8,7 +8,7 @@ import Order from '@/models/Order';
 
 const router = createRouter().use(verifyToken).use(verifyTokenAndAdmin);
 
-router.post(async(req, res)=>{
+router.get(async(req, res)=>{
     try {
     
         db.connectDb();
