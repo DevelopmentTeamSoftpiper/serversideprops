@@ -1,8 +1,6 @@
 import { createRouter } from 'next-connect';
 import { verifyTokenAndAdmin } from '@/helpers/verityToken';
 import db from '@/utils/db';
-import Category from '@/models/Category';
-import slugify from 'slugify';
 import Product from '@/models/Products';
 import applyCors from '@/middleware/cors';
 import SubCategory from '@/models/SubCategory';
