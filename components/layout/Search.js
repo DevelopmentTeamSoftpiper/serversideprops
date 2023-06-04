@@ -1,4 +1,5 @@
 import { fetchDataFromApi } from "@/utils/api";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -10,12 +11,13 @@ const Search = () => {
   const [products, setProducts] = useState(null);
 
   const fetchProducts = async () => {
-    const { data } = await fetchDataFromApi("/api/products?populate=*");
-    const productData = data.map((p) => ({
-      title: p?.attributes?.title,
-      price: p?.attributes?.price,
-      slug: p?.attributes?.slug,
-      url: p?.attributes?.image?.data?.[0]?.attributes?.url,
+    const { data } = await axios.get("/api/admin/product/getAll");
+    console.log(data);
+    const productData = data.products.map((p) => ({
+      title: p?.title,
+      price: p?.price,
+      slug: p?.slug,
+      url: p?.image,
     }));
     // console.log(data);
     // console.log("search", productData);

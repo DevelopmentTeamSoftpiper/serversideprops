@@ -5,22 +5,30 @@ import Category from "@/models/Category";
 import slugify from "slugify";
 import applyCors from "@/middleware/cors";
 import User from "@/models/User";
-
-const router = createRouter().use(verifyToken).use(verifyTokenAndAuthorization);
+import _ from "lodash";
+const router = createRouter().use(verifyToken);
 
 router.post(async (req, res) => {
   try {
     const { id , password} = req.body;
     db.connectDb();
-    const updated = await User.findByIdAndUpdate(id, {
-        password :password
-    });
+    const findUser = await User.findOne({_id:id});
+    
+    console.log(findUser);
+
     db.disconnectDb();
-    if (updated) {
-      return res.json({
-        status: true,
-        message: "Password updated successfully",
+    if (findUser) {
+     const updatedFields = {password:password};
+     const user =_.extend(findUser, updatedFields);
+     const updatedUser = await user.save();
+     if(!updatedUser){
+      return res.status(400).json({
+        error: "Error resetting password",
       });
+    }
+    return res.status(200).json({
+      message: "Success!",
+    });
     } else {
       return res.json({
         status: false,

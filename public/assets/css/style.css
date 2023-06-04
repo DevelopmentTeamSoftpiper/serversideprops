@@ -11303,7 +11303,7 @@ button:focus {
   flex-flow: row wrap;
   margin-bottom: 3rem; }
   .product-details-action .btn-cart {
-    padding: 1rem 1.5rem;
+    padding: 2rem 1.5rem;
     max-width: 198px;
     color: #c96;
     border: 0.1rem solid #c96; }

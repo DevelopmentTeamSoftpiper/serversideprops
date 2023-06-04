@@ -142,7 +142,7 @@ const ProductDetails = ({ product }) => {
 
                   </div>
                   <div className="product-details-footer">
-                    <div className="product-cat">
+                    <div className="product-cat ml-2">
                       <span>Category:</span>
 
                       <Link
