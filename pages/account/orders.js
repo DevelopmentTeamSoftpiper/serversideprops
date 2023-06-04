@@ -2,6 +2,7 @@
 import { logout } from "@/store/userSlice";
 import { fetchDataFromApi, postDataToApi, updateDataToApi } from "@/utils/api";
 import withAuth from "@/utils/restrict";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -11,21 +12,32 @@ const Orders = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const provider = useSelector((state) => state.user.provider);
+  const jwt = useSelector((state) => state.user.jwt);
 
   const [orders, setOrders] = useState(null);
 
   const getOrders = async () => {
-    if (provider === "strapi") {
-      const orderList = await fetchDataFromApi(
-        `/api/orders?populate=*&[filters][user_id_no][$eq]=${user?.id}&sort=id:desc`
-      );
-      setOrders(orderList);
-    } else {
-      const orderList = await fetchDataFromApi(
-        `/api/orders?populate=*&[filters][user_id_no][$eq]=${user?.uid}&sort=id:desc`
-      );
-      setOrders(orderList);
-    }
+    if (provider === "email-password") {
+      const order = await axios.post("/api/admin/order/find",
+      {
+        'user_id_no':user?._id
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          token: `Bearer ${jwt}`,
+        }, 
+      });
+      console.log(order);
+      setOrders(order);
+    } 
+    // else {
+    //   const orderList = await fetchDataFromApi(
+    //     `/api/orders?populate=*&[filters][user_id_no][$eq]=${user?.uid}&sort=id:desc`
+    //   );
+    //   setOrders(orderList);
+    // }
   };
   useEffect(() => {
     getOrders();
@@ -138,7 +150,7 @@ const Orders = () => {
                 aria-labelledby="tab-1-tab"
               >
                 <div className="row p-2 ">
-                  {orders?.data?.map((order, index) => (
+                  {orders?.data?.order?.map((order, index) => (
                     <div className="col-md-6">
                       <div
                         className="card p-2 m-2"
@@ -146,31 +158,31 @@ const Orders = () => {
                       >
                         <div className="card-body">
                           <div className="d-flex flex-column">
-                            <h6 className=""> Order Id: {order?.id}</h6>
+                            <h6 className=""> Order Id: {order?._id}</h6>
                             <h6 className=" mb-2">
                               <span>Order Status:</span>
                               <span
                                 style={{
                                   color:
-                                    order?.attributes?.delivery_status ===
-                                    "pending"
+                                    order?.delivery_status ===
+                                    "Pending"
                                       ? "red"
                                       : "green",
                                 }}
                               >
                                 {" "}
-                                {order?.attributes?.delivery_status}
+                                {order?.delivery_status}
                               </span>
                             </h6>
                           </div>
                           <p>
                             Order Date:{" "}
                             {new Date(
-                              order?.attributes?.updatedAt
+                              order?.createdAt
                             ).toLocaleDateString()}
                           </p>
                           <div className="d-flex justify-between">
-                            <h6> BDT {order?.attributes?.total}</h6>
+                            <h6> BDT {order?.total}</h6>
                           </div>
                           <div className="d-flex justify-between">
                             <button
@@ -183,13 +195,13 @@ const Orders = () => {
                                 borderRadius: "5px",
                               }}
                               data-toggle="modal"
-                              data-target={`#exampleModal-${order?.id}`}
+                              data-target={`#exampleModal-${order?._id}`}
                             >
                               Details
                             </button>
                             <div
                               className="modal fade"
-                              id={`exampleModal-${order?.id}`}
+                              id={`exampleModal-${order?._id}`}
                               tabIndex={-1}
                               role="dialog"
                               aria-labelledby="exampleModalLabel"
@@ -202,7 +214,7 @@ const Orders = () => {
                                       className="modal-title"
                                       id="exampleModalLabel"
                                     >
-                                      Order Id: {order?.id}
+                                      Order Id: {order?._id}
                                     </h5>
                                     <button
                                       type="button"
@@ -224,7 +236,7 @@ const Orders = () => {
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {order?.attributes?.products?.map(
+                                        {order?.products?.map(
                                           (product) => (
                                             <tr className="summary-subtotal">
                                               <td>{product?.title}</td>
@@ -241,7 +253,7 @@ const Orders = () => {
                                           <td></td>
                                           <td>
                                             {" "}
-                                            BDT {order?.attributes?.subtotal}
+                                            BDT {order?.subtotal}
                                           </td>
                                         </tr>
                                         {/* End .summary-subtotal */}
@@ -250,7 +262,7 @@ const Orders = () => {
                                           <td></td>
                                           <td></td>
                                           <td>
-                                            {order?.attributes?.shipping_cost}{" "}
+                                            {order?.shipping_cost}{" "}
                                             BDT
                                           </td>
                                         </tr>
@@ -260,7 +272,7 @@ const Orders = () => {
                                           <td></td>
                                           <td>
                                             {" "}
-                                            BDT {order?.attributes?.total}
+                                            BDT {order?.total}
                                           </td>
                                         </tr>
                                         {/* End .summary-total */}

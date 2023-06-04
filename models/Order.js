@@ -4,51 +4,59 @@ const { ObjectId } = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema(
   {
-    name: { //ok
+    name: {
       type: String,
       trim: true,
-      max: 32,
-    },
-    email: {  //ok
+      max: 32
+  },
+  email: {
       type: String,
       trim: true,
-      lowercase: true,
-    },
-    address: { //ok
+      lowercase: true
+  },
+  address: {
       type: String,
       trim: true,
-    },
-    city: { //ok
+      
+  },
+  city: {
       type: String,
       trim: true,
-    },
-    country: { //ok
+  
+  },
+  country: {
       type: String,
       trim: true,
-    },
-    post_code: { //ok
+  
+  },
+  post_code: {
       type: String,
       trim: true,
-    },
-    phone: { //ok
+  },
+  phone: {
       type: String,
       trim: true,
-    },
-    user_id_no: { //ok
+  },
+  user_id_no: {
       type: String,
       trim: true,
-    },
-    products: [], //ok
-
-    payment_method: { //ok
+  },
+    products: [ ],
+  
+    paymentMethod: {
       type: String,
       required: true,
     },
 
-    shipping_cost: { //ok
-      type: String,
+
+    shipping_cost: {
+      type: string,
       required: true,
-      default: 0,
+   
+    },
+    order_notes: {
+      type: String,
+      required: false,
     },
     
     isPaid: {
@@ -62,12 +70,22 @@ const orderSchema = new mongoose.Schema(
       enum: [
         "Not Processed",
         "Processing",
-        "Dispatched",
-        "Cancelled",
         "Completed",
+        "Cancelled",
       ],
     },
+    payment_status: {
+      type: String,
+      default: "Not Verified",
+      enum: [
+        "Not Verified",
+        "Verified",
+      
+      ],
+    },
+
   },
+  
   {
     timestamps: true,
   }
