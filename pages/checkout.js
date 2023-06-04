@@ -134,7 +134,7 @@ const checkout = () => {
     }
   }, []);
 
-
+  
 
   const [phoneNo, setPhoneNo] = useState("");
   const [transactionId, setTransactionId] = useState("");
@@ -143,9 +143,9 @@ const checkout = () => {
     try {
 
       const response = await axios.post("/api/admin/order/store", {
-
+        data: {
           products: productData,
-          user_id_no: user._id,
+          user_id_no: user?._id,
           name: name,
           email: email,
           phone: phone,
@@ -155,47 +155,43 @@ const checkout = () => {
           country: country ? country : "Bangladesh",
           shipping_cost: shippingCost,
           payment_method: paymentMethod,
-          transaction_phone_no: phoneNo,
+          phone_no: phoneNo,
           transaction_id: transactionId,
           subtotal: subTotal,
           total: total,
-          status: "Not Processed",
-          payment_status: "Not Verified",
-          delivery_status: "Pending",
+          sale_status: "pending",
+          payment_status: "pending",
+          delivery_status: "pending",
           order_notes: orderNotes,
-     
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          token: `Bearer ${jwt}`,
+          profile: profileId,
+          user_id_no: userId.toString()
+          
         },
-        
-      }
-      
-      );
-
-      console.log(response);
-      dispatch(emptyCart());
-      
-      router.push("/success");
-      setIsLoading(false);
-
-    } catch (error) {
-      console.log(error);
-      toast.error(error.error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
       });
-      setIsLoading(false);
-    }
+
+    //   console.log(response);
+    //   dispatch(emptyCart());
+      
+    //   router.push("/success");
+    //   setIsLoading(false);
+
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.error.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //   });
+    //   setIsLoading(false);
+    // }
+
   };
+
   const orderSubmitHandler = (e) => {
     setIsLoading(true);
     e.preventDefault();

@@ -1,18 +1,17 @@
 import { createRouter } from "next-connect";
 import db from "@/utils/db";
-import SubCategory from "@/models/SubCategory";
 import applyCors from "@/middleware/cors";
+import SubBlog from "@/models/SubBlog";
 
 const router = createRouter();
 
 router.get(async (req, res) => {
   try {
     db.connectDb();
-    const subcategories = await SubCategory.find({}).populate("category")
-      .sort({ updatedAt: -1 }).lean();
+    const subBlog = await SubBlog.find({}).sort({ updatedAt: -1 });
     db.disconnectDb();
     return res.json({
-      subcategories: subcategories,
+      subBlogs: subBlog,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

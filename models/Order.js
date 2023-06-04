@@ -5,63 +5,52 @@ const { ObjectId } = mongoose.Schema;
 const orderSchema = new mongoose.Schema(
   {
     name: {
-      type:String
-
-    },
-    email: {
       type: String,
       trim: true,
-      lowercase: true,
-    },
-    address: {
+      max: 32
+  },
+  email: {
       type: String,
       trim: true,
-    },
-    city: {
+      lowercase: true
+  },
+  address: {
       type: String,
       trim: true,
-    },
-    country: {
+      
+  },
+  city: {
       type: String,
       trim: true,
-    },
-    post_code: {
+  
+  },
+  country: {
       type: String,
       trim: true,
-    },
-    phone: {
+  
+  },
+  post_code: {
       type: String,
       trim: true,
-    },
-    transaction_phone_no: {
+  },
+  phone: {
       type: String,
       trim: true,
-    },
-    transaction_id: {
+  },
+  user_id_no: {
       type: String,
       trim: true,
-    },
-    user_id_no: {
-      type: String,
-      trim: true,
-    },
-    subtotal: {
-      type: String,
-      trim: true,
-    },
-    total: {
-      type: String,
-      trim: true,
-    },
-    products: [],
-
-    payment_method: {
+  },
+    products: [ ],
+  
+    paymentMethod: {
       type: String,
       required: true,
     },
 
+
     shipping_cost: {
-      type: String,
+      type: string,
       required: true,
    
     },
@@ -69,6 +58,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    
     isPaid: {
       type: Boolean,
       required: true,
@@ -93,15 +83,7 @@ const orderSchema = new mongoose.Schema(
       
       ],
     },
-    delivery_status: {
-      type: String,
-      default: "Pending",
-      enum: [
-        "Pending",
-        "Delivered",
-      
-      ],
-    },
+
   },
   
   {

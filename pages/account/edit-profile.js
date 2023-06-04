@@ -34,9 +34,7 @@ const EditProfile = () => {
   const provider = useSelector((state) => state.user.provider);
   const jwt = useSelector((state) => state.user.jwt);
   
-  console.log(jwt);
 
-  console.log(user);
 
 
   const getUserInfo = async () => {
@@ -52,7 +50,7 @@ const EditProfile = () => {
       },
       
     });
-    console.log(userInfo);
+    console.log("userInfo", userInfo);
       setName(userInfo?.data?.name);
       setEmail(userInfo?.data?.email);
       setPhone(userInfo?.data?.phone);
