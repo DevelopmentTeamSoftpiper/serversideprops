@@ -109,7 +109,7 @@ const Login = () => {
         <div className="container">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link href="index.html">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li className="breadcrumb-item">
               <Link href="#">Pages</Link>
@@ -123,7 +123,7 @@ const Login = () => {
       </nav>
       {/* End .breadcrumb-nav */}
       <div
-        className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+        className="login-page bg-image pt-8 pb-8 pt-md-3 pb-md-3 pt-lg-4 pb-lg-4"
         style={{
           backgroundImage: 'url("assets/images/backgrounds/login-bg.jpg")',
         }}
@@ -147,7 +147,7 @@ const Login = () => {
 
             {
 
-              toggleProvider 
+              !toggleProvider 
               ?
                 <form onSubmit={submitHandler}>
                   <div className="form-group">
@@ -202,7 +202,7 @@ const Login = () => {
             }
 
 
-              <div style={{textAlign:'center'}} className="d-flex justify-center">
+              {/* <div style={{textAlign:'center'}} className="d-flex justify-center">
                 {
                   
                   !toggleProvider 
@@ -229,7 +229,7 @@ const Login = () => {
                       </div>
                 }
 
-              </div>
+              </div> */}
 
                   {/* End .form-choice */}
                 </div>

@@ -66,7 +66,7 @@ const ForgetPassword = () => {
       </nav>
       {/* End .breadcrumb-nav */}
       <div
-        className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+        className="login-page bg-image pt-8 pb-8 pt-md-3 pb-md-3 pt-lg-4 pb-lg-4"
         style={{
           backgroundImage: 'url("assets/images/backgrounds/login-bg.jpg")',
         }}

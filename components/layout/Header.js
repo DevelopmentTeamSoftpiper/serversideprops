@@ -59,7 +59,7 @@ const Header = ({ siteInfo }) => {
 
   const fetchProducts = async () => {
     const { data } = await axios.get("/api/admin/product/getAll");
-    console.log(data);
+    // console.log(data);
     const productData = data.products.map((p) => ({
       title: p?.title,
       price: p?.price,
