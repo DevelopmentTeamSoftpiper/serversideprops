@@ -9,7 +9,7 @@ const router = createRouter().use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
-    const { title, image, author, content, subBlog } = req.body;
+    const { title, image, author, content, subBlog, slug } = req.body;
     db.connectDb();
     const test = await Blog.findOne({ title });
     if (test) {
@@ -20,7 +20,7 @@ router.post(async (req, res) => {
     }
     await new Blog({
       title,
-      slug: slugify(title.toString()),
+      slug,
       image,
       author,
       content,

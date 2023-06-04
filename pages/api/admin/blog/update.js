@@ -9,11 +9,11 @@ const router = createRouter().use(verifyTokenAndAdmin);
 
 router.post(async (req, res) => {
   try {
-    const { title, image, author, content, subBlog, id } = req.body;
+    const { title, image, author, content, subBlog, id, slug } = req.body;
     db.connectDb();
     const updated = await Blog.findByIdAndUpdate(id, {
       title,
-      slug: slugify(title.toString()),
+      slug,
       image,
       author,
       content,
