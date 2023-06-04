@@ -134,61 +134,91 @@ const checkout = () => {
   }, []);
 
 
+  
 
   const [phoneNo, setPhoneNo] = useState("");
   const [transactionId, setTransactionId] = useState("");
 
   const order = async () => {
-    try {
-
-      const response = await axios.post("/api/admin/order/store", {
-        data: {
-          products: productData,
-          user_id_no: user?._id,
-          name: name,
-          email: email,
-          phone: phone,
-          address: address,
-          city: city,
-          post_code: postalCode,
-          country: country ? country : "Bangladesh",
-          shipping_cost: shippingCost,
-          payment_method: paymentMethod,
-          phone_no: phoneNo,
-          transaction_id: transactionId,
-          subtotal: subTotal,
-          total: total,
-          sale_status: "pending",
-          payment_status: "pending",
-          delivery_status: "pending",
-          order_notes: orderNotes,
-          profile: profileId,
-          user_id_no: userId.toString()
-          
-        },
-      });
-
-      console.log(response);
-      dispatch(emptyCart());
-      
-      router.push("/success");
-      setIsLoading(false);
-
-    } catch (error) {
-      console.log(error);
-      toast.error(error.error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setIsLoading(false);
+    const final1 = {
+      products: productData,
+      user_id_no: user?._id,
+      name: name,
+      email: email,
+      phone: phone,
+      address: address,
+      city: city,
+      post_code: postalCode,
+      country: country ? country : "Bangladesh",
+      shipping_cost: shippingCost,
+      payment_method: paymentMethod,
+      phone_no: phoneNo,
+      transaction_id: transactionId,
+      subtotal: subTotal,
+      total: total,
+      sale_status: "pending",
+      payment_status: "pending",
+      delivery_status: "pending",
+      order_notes: orderNotes,
+      profile: profileId,
+      user_id_no: userId?.toString()
     }
+
+
+    console.log("final1", final1);
+
+    // try {
+
+    //   const response = await axios.post("/api/admin/order/store", {
+    //     data: {
+    //       products: productData,
+    //       user_id_no: user?._id,
+    //       name: name,
+    //       email: email,
+    //       phone: phone,
+    //       address: address,
+    //       city: city,
+    //       post_code: postalCode,
+    //       country: country ? country : "Bangladesh",
+    //       shipping_cost: shippingCost,
+    //       payment_method: paymentMethod,
+    //       phone_no: phoneNo,
+    //       transaction_id: transactionId,
+    //       subtotal: subTotal,
+    //       total: total,
+    //       sale_status: "pending",
+    //       payment_status: "pending",
+    //       delivery_status: "pending",
+    //       order_notes: orderNotes,
+    //       profile: profileId,
+    //       user_id_no: userId.toString()
+          
+    //     },
+    //   });
+
+    //   console.log(response);
+    //   dispatch(emptyCart());
+      
+    //   router.push("/success");
+    //   setIsLoading(false);
+
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.error.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //   });
+    //   setIsLoading(false);
+    // }
+
   };
+
   const orderSubmitHandler = (e) => {
     setIsLoading(true);
     e.preventDefault();
