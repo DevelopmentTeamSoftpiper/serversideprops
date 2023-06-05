@@ -7609,6 +7609,11 @@ a:focus {
   max-height:180px;
 min-height:178px;
 }
+.product-image-cart {
+  display: block;
+  width: 100%;
+  height:auto;
+}
 
 .product-image-hover {
   position: absolute;
@@ -11805,7 +11810,8 @@ button:focus {
     display: block;
     max-width: none;
     width: 100%;
-    height: auto; }
+    max-height:200px;
+  min-height: 195px; }
 
 .entry-video a:after {
   content: '\ec2c';
@@ -12198,7 +12204,7 @@ button:focus {
     margin-top: -.3rem; }
 
   .entry {
-    margin-bottom: 6rem; }
+    margin-bottom: 1rem; }
 
   .entry-grid {
     margin-bottom: 4rem; }

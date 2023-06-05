@@ -10,7 +10,7 @@ const CartProduct = ({cartProduct}) => {
     <div className="product">
     <div className="product-cart-details">
       <h4 className="product-title letter-spacing-normal font-size-normal">
-        <Link href="product.html">
+        <Link href={`/product/${cartProduct.slug}`}>
           {cartProduct?.title}
         </Link>
       </h4>
@@ -21,7 +21,7 @@ const CartProduct = ({cartProduct}) => {
     </div>
     {/* End .product-cart-details */}
     <figure className="product-image-container">
-      <Link href="product.html" className="product-image">
+      <Link href={`/product/${cartProduct.slug}`} className="product-image-cart">
         <Image
           src={cartProduct?.image}
           alt="product"
