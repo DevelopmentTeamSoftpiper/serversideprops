@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { fetchDataFromApi } from "@/utils/api";
+import { fetchDataFromApi, getData } from "@/utils/api";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import ProductCard from "@/components/product/ProductCard";
@@ -9,10 +9,12 @@ import BestDeal from "@/components/home/ProductCarousel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductCarousel from "@/components/home/ProductCarousel";
+import axios from "axios";
+import Image from "next/image";
 const maxResult = 25;
 
 const Shop = ({products }) => {
-
+console.log(products);
   const [pageIndex, setPageIndex] = useState(1);
   const { query } = useRouter();
 
@@ -21,8 +23,8 @@ const Shop = ({products }) => {
   }, [query]);
 
   const { data, error, isLoading } = useSWR(
-    `/api/products?populate=*&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
-    fetchDataFromApi,
+    "/api/admin/product/getAll",
+    getData,
     {
       fallbackData: products,
     }
@@ -33,7 +35,8 @@ const Shop = ({products }) => {
     fetchCategories();
   }, []);
   const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi("/api/categories?populate=*");
+    const {data} = await axios.get("/api/admin/category/getAll");
+    console.log(data);
     setCategories(data);
   };
 
@@ -86,7 +89,7 @@ const Shop = ({products }) => {
             {/* End .toolbox */}
             <div className="products mb-3">
               <div className="row justify-content-center">
-              {products?.data?.map((product) => (
+              {products?.products?.map((product) => (
           <div key={product?.id} className="col-6 col-md-4 col-lg-4 col-xl-3">
             <ProductCard key={product?.id} data={product} showToastMsg={showToastMsg} />
           </div>
@@ -114,40 +117,43 @@ const Shop = ({products }) => {
                 className="menu-vertical sf-arrows sf-js-enabled"
                 style={{ touchAction: "pan-y" }}
               >
-                {categories?.map((c) => (
-                  <li key={c.id} className="megamenu-container">
+              {categories?.categories?.map((c) => (
+                  <li key={c._id} className="megamenu-container">
                     <Link
                       className={
-                        c?.attributes?.sub_categories?.data?.length > 0
-                          ? "sf-with-ul text-dark"
-                          : "text-dark"
+                        c?.subCategories?.length > 0
+                          ? "sf-with-ul text-dark d-flex"
+                          : "text-dark d-flex"
                       }
-                      href={`/category/${c?.attributes?.slug}`}
+                      href={`/category/${c?.slug}`}
                     >
-                      <i className="icon-couch" />
-                      {c?.attributes?.name}
+                      <Image
+                        height={20}
+                        width={20}
+                        src={c?.image}
+                        alt={c?.name}
+                      />
+                      {c?.name}
                     </Link>
-                    {c?.attributes?.sub_categories?.data?.length > 0 && (
+                    {c?.subCategories?.length > 0 && (
                       <div className="megamenu">
-                       
-                            <div className="menu-col">
-                              
+                        <div className="row ">
+                                <div className="col-md-12">
                                   <ul>
-                                    {c?.attributes?.sub_categories?.data?.map(
+                                    {c?.subCategories?.map(
                                       (sub) => (
-                                        <li key={sub?.id}>
+                                        <li key={sub?._id}>
                                           <Link
-                                            href={`/subcategory/${sub?.attributes?.slug}`}
+                                            href={`/subcategory/${sub?.slug}`}
                                           >
-                                            {sub?.attributes?.name}
+                                            {sub?.name}
                                           </Link>
                                         </li>
                                       )
                                     )}
                                   </ul>
-                           
-                            </div>
-                
+                                </div>
+                        </div>
                       </div>
                     )}
                   </li>
@@ -177,8 +183,8 @@ export default Shop
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps() {
-  const products = await fetchDataFromApi(
-    `/api/products?populate=*&pagination[page]=1&pagination[pageSize]=${maxResult}`
+  const products = await getData(
+  "/api/admin/product/getAll"
   );
 
   return {

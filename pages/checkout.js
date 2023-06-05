@@ -199,12 +199,18 @@ const checkout = () => {
     router.push("/account/login");
     return null;
   }
+  useEffect(()=>{
+    if(cartProducts.length == 0){
+      router.push("/emptyCart");
+      return null;
+    }
+  },[])
+
 
   return (
     <div className="page-wrapper p-5">
       <ToastContainer />
 
-   {cartProducts.length > 0 && 
       <main className="main">
       <div
         className="page-header text-center"
@@ -537,31 +543,8 @@ const checkout = () => {
         {/* End .checkout */}
       </div>
       {/* End .page-content */}
-    </main>}
+    </main>
 
-    {cartProducts.length === 0 && 
-     <main className="main">
-     <ToastContainer/>
-
-
-{/* End .breadcrumb-nav */}
-<div
-className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
-
->
-<div className="container">
-
-      <div className="row d-flex flex-column justify-content-center align-items-center ">
-          <BsFillCartXFill style={{fontSize: "5rem", color:"brown", marginBottom:"3rem" }} />
-          <h5>Cart is Empty.</h5>
-          <h5 className="d-flex justify-center"> Do some shopping first.</h5>
-      </div>
-</div>
-{/* End .container */}
-</div>
-{/* End .login-page section-bg */}
-</main>
-    }
     </div>
   );
 };

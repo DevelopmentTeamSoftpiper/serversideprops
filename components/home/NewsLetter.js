@@ -4,15 +4,14 @@ import { useState } from 'react'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from '../Loader';
+import axios from 'axios';
 const NewsLetter = () => {
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false)
     const newsletter = async()=>{
         try{
-            const response = await postDataToApi("/api/newsletters",{
-                data: {
+            const response = await axios.post("/api/admin/newsletter/store",{
                     email: email
-                }
             });
             toast.success("You've Subscribed Successfully", {
                 position: "top-right",
@@ -58,7 +57,7 @@ const NewsLetter = () => {
               </h3>
               {/* End .cta-title */}
               <p className="cta-desc font-size-normal second-primary-color font-weight-normal">
-                Subcribe to get information about products and coupons
+                Subscribe to get information about products and coupons
               </p>
               {/* End .cta-desc font-size-normal */}
             </div>

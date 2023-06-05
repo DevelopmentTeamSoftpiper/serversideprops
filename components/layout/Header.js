@@ -97,7 +97,7 @@ const Header = ({ siteInfo }) => {
   return (
     <>
       <ToastContainer />
-      <header className="header header-intro-clearance header-26">
+      <header className="header header-intro-clearance header-26" style={{position:"sticky", top:0}}>
         {/* End .header-top */}
         <div className="header-middle">
           <div className="container">
@@ -110,7 +110,7 @@ const Header = ({ siteInfo }) => {
                 <Image
                   src={siteInfo?.data?.siteinfo?.logo}
                   alt="safefoods Logo"
-                  width={105}
+                  width={150}
                   height={25}
                 />
               </Link>
@@ -184,7 +184,7 @@ const Header = ({ siteInfo }) => {
                             </li>
                             <li>
                               <button
-                                style={{ paddingLeft: "5px" }}
+                                style={{ paddingLeft: "15px" }}
                                 onClick={() => {
                                   logOut();
                                 }}

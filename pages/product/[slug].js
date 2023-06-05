@@ -28,7 +28,7 @@ const ProductDetails = ({ product }) => {
   }
 
   const [quantity, setQuantity] = useState(1);
-  console.log(quantity);
+  // console.log(quantity);
   return (
     <main className="main">
       <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">

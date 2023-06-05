@@ -12,7 +12,7 @@ const Search = () => {
 
   const fetchProducts = async () => {
     const { data } = await axios.get("/api/admin/product/getAll");
-    console.log(data);
+    // console.log(data);
     const productData = data.products.map((p) => ({
       title: p?.title,
       price: p?.price,
@@ -59,7 +59,7 @@ const Search = () => {
           </Link>
 
           <div className="header-search-wrapper search-wrapper-wide">
-            <div className="select-custom">
+            {/* <div className="select-custom">
               <select id="cat" name="cat">
                 <option value="">All Departments</option>
                 <option value={1}>Fashion</option>
@@ -77,7 +77,7 @@ const Search = () => {
                 <option value={15}>- Boats</option>
                 <option value={16}>- Auto Tools &amp; Supplies</option>
               </select>
-            </div>
+            </div> */}
             {/* End .select-custom */}
             <label htmlFor="q" className="sr-only">
               Search

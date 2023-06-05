@@ -9,7 +9,7 @@ import Articles from '../elements/Articles';
 const Blog = ({blogs}) => {
   console.log("blogPart", blogs);
   return (
-    <div className="blog-section bg-white py-2 pb-4">
+    <div className="blog-section bg-white pt-2">
     <div className="container">
       <div className="heading heading-flex">
         <div className="heading-left">

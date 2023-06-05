@@ -51,7 +51,7 @@ const EditProfile = () => {
       },
       
     });
-    console.log("userInfo", userInfo);
+    // console.log("userInfo", userInfo);
       setName(userInfo?.data?.name);
       setEmail(userInfo?.data?.email);
       setPhone(userInfo?.data?.phone);
@@ -238,20 +238,14 @@ const EditProfile = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
+              <button
                   className="nav-link"
-                  id="tab-5-tab"
-                  data-toggle="tab"
-                  href="#tab-5"
-                  role="tab"
-                  aria-controls="tab-5"
-                  aria-selected="false"
                   onClick={() => {
                     dispatch(logout());
                   }}
                 >
                   Logout
-                </Link>
+                </button>
               </li>
             </ul>
             <div className="tab-content tab-content-border" id="tab-content-1">

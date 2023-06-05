@@ -1,10 +1,10 @@
 import PageArticles from '@/components/elements/PageArticles';
-import { fetchDataFromApi } from '@/utils/api';
+import { fetchDataFromApi, getData } from '@/utils/api';
 import Link from 'next/link';
 import React from 'react'
 
 const Blog = ({blogs,blogCats}) => {
-  console.log('blog page', blogCats);
+  console.log('blog page', blogs);
   return (
     <main className="main px-5">
     <div
@@ -40,7 +40,7 @@ const Blog = ({blogs,blogCats}) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-9">
-            {blogs?.data?.map((blog)=>(
+            {blogs?.blogs?.map((blog)=>(
          <PageArticles key={blog?.id} blog={blog}/>
 
             ))}
@@ -115,10 +115,10 @@ const Blog = ({blogs,blogCats}) => {
                 <h3 className="widget-title">Categories</h3>
                 {/* End .widget-title */}
                 <ul>
-                {blogCats?.data?.map((cat)=>(
+                {blogCats?.subBlogs?.map((cat)=>(
                       <li key={cat?.id}>
-                      <a href={`/blogs/category/${cat?.attributes?.slug}`}>
-                        {cat?.attributes?.title}<span>{cat?.attributes?.blogs?.data?.length}</span>
+                      <a href={`/blogs/category/${cat?.slug}`}>
+                        {cat?.title}
                       </a>
                     </li>
                   ))}
@@ -144,9 +144,9 @@ export default Blog
 
 
 export async function getStaticProps(context) {
-  const blogs = await fetchDataFromApi("/api/blogs?populate=*");
-  const blogCats=  await fetchDataFromApi(
-    `/api/blog-cats?populate=*`
+  const blogs = await getData("/api/admin/blog/getAll");
+  const blogCats=  await getData(
+    `/api/admin/sub-blog/getAll`
   );
   return {
     props: {

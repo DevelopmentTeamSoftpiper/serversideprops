@@ -12,7 +12,7 @@ router.get(async (req, res) => {
     db.connectDb();
 
     if (categoryId) {
-      const subcategories = await SubCategory.find({ parent: categoryId });
+      const subcategories = await SubCategory.find({ category: categoryId });
       return res.json({
         subcategories: subcategories,
       });

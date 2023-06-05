@@ -29,7 +29,7 @@ const Orders = () => {
           token: `Bearer ${jwt}`,
         }, 
       });
-      console.log(order);
+      console.log(order.data.order.length);
       setOrders(order);
     } 
     // else {
@@ -126,20 +126,14 @@ const Orders = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
+              <button
                   className="nav-link"
-                  id="tab-5-tab"
-                  data-toggle="tab"
-                  href="#tab-5"
-                  role="tab"
-                  aria-controls="tab-5"
-                  aria-selected="false"
                   onClick={() => {
-                    logout();
+                    dispatch(logout());
                   }}
                 >
                   Logout
-                </Link>
+                </button>
               </li>
             </ul>
             <div className="tab-content tab-content-border" id="tab-content-1">
@@ -149,7 +143,9 @@ const Orders = () => {
                 role="tabpanel"
                 aria-labelledby="tab-1-tab"
               >
+                
                 <div className="row p-2 ">
+                  {orders?.data?.order?.length == 0 && <h4>No Orders yet</h4>}
                   {orders?.data?.order?.map((order, index) => (
                     <div className="col-md-6">
                       <div
