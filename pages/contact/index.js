@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Contact = () => {
+  const [siteInfo, setSiteInfo] = useState(null);
+  const getSiteInfo = async()=>{
+    const siteinfo = await axios.get(
+      `/api/admin/siteinfo/find`
+    );
+    setSiteInfo(siteinfo);
+    console.log(siteinfo);
+    
+  }
+  useEffect(()=>{
+    getSiteInfo();
+  },[])
   return (
     <main className="main">
       <div
@@ -29,23 +42,16 @@ const Contact = () => {
                     <ul className="contact-list">
                       <li>
                         <i className="icon-map-marker" />
-                        70 Washington Square South New York, NY 10012, United
-                        States
+                      {siteInfo?.data?.siteinfo?.address}
                       </li>
                       <li>
                         <i className="icon-phone" />
-                        <a href="tel:#">+92 423 567</a>
+                        <span>{siteInfo?.data?.siteinfo?.phone}</span>
                       </li>
                       <li>
                         <i className="icon-envelope" />
-                        <a href="https://portotheme.com/cdn-cgi/l/email-protection#b497">
-                          <span
-                            className="__cf_email__"
-                            data-cfemail="dcb5b2bab39c91b3b0b0bdf2bfb3b1"
-                          >
-                            [email&nbsp;protected]
-                          </span>
-                        </a>
+                        <span>{siteInfo?.data?.siteinfo?.email}</span>
+                       
                       </li>
                     </ul>
                     {/* End .contact-list */}
@@ -59,14 +65,14 @@ const Contact = () => {
                     <ul className="contact-list">
                       <li>
                         <i className="icon-clock-o" />
-                        <span className="text-dark">Monday-Saturday</span>{" "}
+                        <span className="text-dark">Saturday-Thursday</span>{" "}
                         <br />
                         11am-7pm ET
                       </li>
                       <li>
                         <i className="icon-calendar" />
-                        <span className="text-dark">Sunday</span> <br />
-                        11am-6pm ET
+                        <span className="text-dark">Friday</span> <br />
+                        Holiday
                       </li>
                     </ul>
                     {/* End .contact-list */}
