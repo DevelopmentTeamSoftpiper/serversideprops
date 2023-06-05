@@ -23,6 +23,7 @@ router.post(async (req, res) => {
       subCategory,
       bestDeal,
       discountedSale,
+      stock
     } = req.body;
 
     db.connectDb();
@@ -46,6 +47,7 @@ router.post(async (req, res) => {
       subCategory,
       bestDeal,
       discountedSale,
+      stock
     }).save();
 
     db.disconnectDb();

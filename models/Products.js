@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema(
     brand: {
       type: String,
     },
+    stock:{
+      type:String,
+      required: true,
+    },
     slug: {
       type: String,
       required: true,
