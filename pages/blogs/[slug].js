@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
   console.log(" BlogCats", relatedBlogs);
   const bl = blog?.blog;
+  const htmlContent = bl?.content;
   return (
     <main className="main px-5">
 
@@ -61,9 +62,10 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
                   </div>
                   {/* End .entry-cats */}
                   <div className="entry-content editor-content">
-                    <p>
+                    {/* <p>
                       <ReactMarkdown>{bl?.content}</ReactMarkdown>
-                    </p>
+                    </p> */}
+                     <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
                   </div>
                 </div>
                 {/* End .entry-body */}
