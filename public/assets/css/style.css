@@ -7606,7 +7606,9 @@ a:focus {
 .product-image {
   display: block;
   width: 100%;
-  height: auto; }
+  max-height:180px;
+min-height:178px;
+}
 
 .product-image-hover {
   position: absolute;

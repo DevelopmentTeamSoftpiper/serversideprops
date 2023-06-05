@@ -25,11 +25,13 @@ const ProductCard = ({data, showToastMsg}) => {
     </figure>
     
 
-    <div className="product-body pb-3">
+    <div className="product-body pb-1">
       <div className="text-left product-cat font-weight-normal text-light mb-0">
         <Link href={`/subcategory/${data.subCategory.slug}`}>  {data.subCategory.name}</Link>
       </div>
       {/* End .product-cat  */}
+
+      <div style={{minHeight:"45px"}}>
       <h3 className="product-title letter-spacing-normal font-size-normal text-left mb-0">
       <Link href={`/product/${data.slug}`}>
         {
@@ -39,6 +41,7 @@ const ProductCard = ({data, showToastMsg}) => {
       </Link>
 
       </h3>
+      </div>
       {/* End .product-title letter-spacing-normal font-size-normal */}
       <div className="product-price mb-1">
         <div className="new-price">${data.price}</div>
