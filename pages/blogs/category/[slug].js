@@ -14,9 +14,7 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
         style={{ backgroundImage: 'url("assets/images/page-header-bg.jpg")' }}
       >
         <div className="container">
-          <h1 className="page-title">
-            {slug.toUpperCase()} Blogs
-          </h1>
+          <h1 className="page-title">{slug.toUpperCase()} Blogs</h1>
         </div>
         {/* End .container */}
       </div>
@@ -31,7 +29,7 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
               <Link href="/blogs">Blog</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-            {slug.toUpperCase()}
+              {slug.toUpperCase()}
             </li>
           </ol>
         </div>
@@ -116,14 +114,13 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
                   <h3 className="widget-title">Categories</h3>
                   {/* End .widget-title */}
                   <ul>
-                  {blogCategories?.subBlogs?.map((cat)=>(
+                    {blogCategories?.subBlogs?.map((cat) => (
                       <li key={cat?.id}>
-                      <a href={`/blogs/category/${cat?.slug}`}>
-                        {cat?.title}
-                      </a>
-                    </li>
-                  ))}
-       
+                        <a href={`/blogs/category/${cat?.slug}`}>
+                          {cat?.title}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -142,31 +139,42 @@ const BlogCategory = ({ blogCategories, blogCats, slug }) => {
 
 export default BlogCategory;
 
-export async function getStaticPaths() {
-  const blogCats = await getData("/api/admin/sub-blog/getAll");
-  const paths = blogCats?.subBlogs?.map((p) => ({
-    params: {
-      slug: p.slug,
-    },
-  }));
+// export async function getStaticPaths() {
+//   const blogCats = await getData("/api/admin/sub-blog/getAll");
+//   const paths = blogCats?.subBlogs?.map((p) => ({
+//     params: {
+//       slug: p.slug,
+//     },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
 
 // `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params: { slug } }) {
-  const blogCategories =await getData("/api/admin/sub-blog/getAll");
-  const blogCats = await getData(
-    `/api/admin/sub-blog/getBlogs?slug=${slug}`
-  );
+// export async function getStaticProps({ params: { slug } }) {
+//   const blogCategories = await getData("/api/admin/sub-blog/getAll");
+//   const blogCats = await getData(`/api/admin/sub-blog/getBlogs?slug=${slug}`);
 
+//   return {
+//     props: {
+//       blogCategories,
+
+//       slug,
+//       blogCats,
+//     },
+//   };
+// }
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  const blogCategories = await getData("/api/admin/sub-blog/getAll");
+  const blogCats = await getData(`/api/admin/sub-blog/getBlogs?slug=${slug}`);
   return {
     props: {
       blogCategories,
-
       slug,
       blogCats,
     },

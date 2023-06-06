@@ -12,7 +12,7 @@ router.post(async(req, res)=>{
     try {
       const { user_id_no } = req.body;
         db.connectDb();
-
+        await Product.find({});
         const found = await Order.findOne({user_id_no:user_id_no}).populate("products").sort({ createdAt: -1 });
         db.disconnectDb();
         if(found){

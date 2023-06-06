@@ -4,6 +4,7 @@ import db from '@/utils/db';
 import Product from '@/models/Products';
 import applyCors from '@/middleware/cors';
 import Blog from '@/models/Blog';
+import SubBlog from '@/models/SubBlog';
 
 
 const router = createRouter();
@@ -12,7 +13,7 @@ router.get(async(req, res)=>{
     try {
       const { slug } = req.query;
         db.connectDb();
-
+        await SubBlog.find({});
         const found = await Blog.findOne({slug:slug}).populate("subBlog");
         db.disconnectDb();
         if(found){

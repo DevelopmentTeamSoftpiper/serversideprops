@@ -205,42 +205,55 @@ const ProductDetails = ({ product }) => {
         </div>
       {/* < RelatedProducts products={products} showToastMessage={showToastMessage} /> */}
       </div>
-
-
-
     </main>
   );
 };
 
 export default ProductDetails;
 
-export async function getStaticPaths() {
-  const products = await getData("/api/admin/product/getAll");
-  const paths = products?.products?.map((p) => ({
-    params: {
-      slug: p?.slug,
-    },
-  }));
+// export async function getStaticPaths() {
+//   const products = await getData("/api/admin/product/getAll");
+//   const paths = products?.products?.map((p) => ({
+//     params: {
+//       slug: p?.slug,
+//     },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
 
 // `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params: { slug } }) {
+// export async function getStaticProps({ params: { slug } }) {
+
+//   const product = await getData(
+//     `/api/admin/product/find?slug=${slug}`
+//   );
+//   // const products = await fetchDataFromApi(
+//   //   `/api/products?populate=*&[filters][slug][$ne]=${slug}`
+//   // );
+
+//   return {
+//     props: {
+//       product,
+//       // products,
+//       slug,
+//     },
+//   };
+// }
+
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
   const product = await getData(
     `/api/admin/product/find?slug=${slug}`
   );
-  // const products = await fetchDataFromApi(
-  //   `/api/products?populate=*&[filters][slug][$ne]=${slug}`
-  // );
-
+ 
   return {
     props: {
       product,
-      // products,
       slug,
     },
   };

@@ -12,7 +12,7 @@ router.get(async(req, res)=>{
     try {
     
         db.connectDb();
-
+        await Product.find({});
         const found = await Order.find({}).populate("products");
         db.disconnectDb();
         if(found){

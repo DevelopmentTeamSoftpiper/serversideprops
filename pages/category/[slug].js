@@ -180,29 +180,46 @@ const CategoryProduct = ({ category, products, slug }) => {
 
 export default CategoryProduct
 
-export async function getStaticPaths() {
-  const categories = await getData("/api/admin/category/getAll");
-  const paths = categories?.categories?.map((c) => ({
-    params: {
-      slug: c?.slug,
-    },
-  }));
+// export async function getStaticPaths() {
+//   const categories = await getData("/api/admin/category/getAll");
+//   const paths = categories?.categories?.map((c) => ({
+//     params: {
+//       slug: c?.slug,
+//     },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
 
 // `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params: { slug } }) {
+// export async function getStaticProps({ params: { slug } }) {
+//   const category =  await getData(
+//     `/api/admin/category/find?slug=${slug}`
+//   );
+//   const products = await getData(
+//     `/api/admin/category/getProducts?slug=${slug}`
+//   );
+
+//   return {
+//     props: {
+//       category,
+//       products,
+//       slug,
+//     },
+//   };
+// }
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
   const category =  await getData(
     `/api/admin/category/find?slug=${slug}`
   );
   const products = await getData(
     `/api/admin/category/getProducts?slug=${slug}`
   );
-
   return {
     props: {
       category,
@@ -211,3 +228,4 @@ export async function getStaticProps({ params: { slug } }) {
     },
   };
 }
+

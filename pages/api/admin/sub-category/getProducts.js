@@ -13,9 +13,7 @@ router.get(async (req, res) => {
     const { slug } = req.query;
     db.connectDb();
     const subCategory = await SubCategory.findOne({slug:slug});
-    console.log(subCategory);
-    console.log(subCategory._id);
-
+  
     const products = await Product.find({ subCategory: subCategory._id });
     db.disconnectDb();
     return res.json({

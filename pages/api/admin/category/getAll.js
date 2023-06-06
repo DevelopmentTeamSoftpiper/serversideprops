@@ -4,6 +4,7 @@ import db from '@/utils/db';
 
 import applyCors from '@/middleware/cors';
 import Category from '@/models/Category';
+import SubCategory from '@/models/SubCategory';
 
 
 const router = createRouter();
@@ -11,6 +12,7 @@ const router = createRouter();
 router.get(async(req, res)=>{
     try {
         db.connectDb();
+        await SubCategory.find({});
         const categories =await Category.find({}).populate('subCategories').sort({ updatedAt: -1 });
         db.disconnectDb();
         return res.json({

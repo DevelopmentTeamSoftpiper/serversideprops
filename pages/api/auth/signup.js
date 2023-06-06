@@ -40,7 +40,7 @@ router.post(async (req, res) => {
                   <hr />
               `,
       };
-      // sendEmailWithNodemailer(req, res, emailData);
+      sendEmailWithNodemailer(req, res, emailData);
       db.disconnectDb();
       return res.json({
         message: "Waiting for Verification.",

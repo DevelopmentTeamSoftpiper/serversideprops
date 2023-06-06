@@ -1,10 +1,14 @@
 import { fetchDataFromApi, getData } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
+const SingleBlog = ({ blog, relatedBlogs ,blogCats}) => {
+  const router = useRouter();
+  const { slug } = router.query;
+  console.log('slug', slug);
   console.log(" BlogCats", relatedBlogs);
   const bl = blog?.blog;
   const htmlContent = bl?.content;
@@ -156,22 +160,44 @@ const SingleBlog = ({ blog, relatedBlogs, slug ,blogCats}) => {
 
 export default SingleBlog;
 
-export async function getStaticPaths() {
-  const blogs = await getData("/api/admin/blog/getAll");
-  const paths = blogs?.blogs?.map((p) => ({
-    params: {
-      slug: p.slug,
-    },
-  }));
+// export async function getStaticPaths() {
+//   const blogs = await getData("/api/admin/blog/getAll");
+//   const paths = blogs?.blogs?.map((p) => ({
+//     params: {
+//       slug: p.slug,
+//     },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
 
 // `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps({ params: { slug } }) {
+// export async function getStaticProps({ params: { slug } }) {
+//   const blog = await getData(
+//     `/api/admin/blog/find?slug=${slug}`
+//   );
+//   const blogCats=  await getData(
+//     `/api/admin/sub-blog/getAll`
+//   );
+//   const relatedBlogs = await getData("/api/admin/blog/getAll");
+
+//   return {
+//     props: {
+//       blog,
+//       relatedBlogs,
+//       slug,
+//       blogCats
+//     },
+//   };
+// }
+
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  console.log("slug",slug);
   const blog = await getData(
     `/api/admin/blog/find?slug=${slug}`
   );
@@ -179,7 +205,6 @@ export async function getStaticProps({ params: { slug } }) {
     `/api/admin/sub-blog/getAll`
   );
   const relatedBlogs = await getData("/api/admin/blog/getAll");
-
   return {
     props: {
       blog,
@@ -189,3 +214,5 @@ export async function getStaticProps({ params: { slug } }) {
     },
   };
 }
+
+

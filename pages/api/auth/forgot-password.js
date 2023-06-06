@@ -36,7 +36,7 @@ router.post(async(req, res)=>{
       };
    
    
-    //   sendEmailWithNodemailer(req, res, emailData);
+      sendEmailWithNodemailer(req, res, emailData);
       return res.json({
         message: "Check your Email to get the verification code",
         token: token,

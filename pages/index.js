@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NewsLetter from "@/components/home/NewsLetter";
 import Blog from "@/components/home/Blog";
 
-export default function Home({ products,categories ,catProducts,blogs,mainSlider,latestProducts,discountedProducts,bestDealProducts}) {
+export default function Home({ products,categories ,blogs,mainSlider,latestProducts,discountedProducts,bestDealProducts}) {
 
 console.log(bestDealProducts);
 const showToastMessage =(data)=>{
@@ -43,7 +43,7 @@ const showToastMessage =(data)=>{
           <HomeService />
           {/* <HomeCategory categories={categories} /> */}
           <MiniBanner  />
-          <TestCategory catProducts={catProducts} showToastMessage={showToastMessage}/>
+         
           <LatestProduct  products={latestProducts} showToastMessage={showToastMessage} />
           <Banner1/>
           <ProductCarousel title="Discount Sales" products={discountedProducts} showToastMessage={showToastMessage} />
@@ -59,10 +59,9 @@ const showToastMessage =(data)=>{
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const products =await getData("/api/admin/product/getAll");
   const categories = await getData("/api/admin/category/getAll");
-  const catProducts = await await getData("/api/admin/category/getProducts?categoryId=64788ad6dce8e2b6ba2c9d85");
   const blogs = await getData("/api/admin/blog/getAll");
   const mainSlider = await getData("/api/admin/slider/getAll");
   // const latestProduct = await fetchDataFromApi(`/api/products?populate=*&sort=id:desc&?pagination[page]=1&pagination[pageSize]=10`);
@@ -74,7 +73,6 @@ export async function getStaticProps(context) {
     props: {
       products,
       categories,
-      catProducts,
       blogs,
       mainSlider,
       latestProducts,

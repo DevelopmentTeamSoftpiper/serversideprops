@@ -17,8 +17,6 @@ router.get(async (req, res) => {
     const { slug } = req.query;
     db.connectDb();
     const subBlog = await SubBlog.findOne({slug:slug});
-    console.log(subBlog);
-    console.log(subBlog._id);
 
     const blogs = await Blog.find({ subBlog: subBlog._id }).populate("subBlog");
     db.disconnectDb();

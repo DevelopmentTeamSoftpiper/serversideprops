@@ -12,7 +12,7 @@ router.post(async(req, res)=>{
     try {
       const { user_id_no } = req.body;
         db.connectDb();
-
+      await Product.find({});
         const found = await Order.find({user_id_no:user_id_no}).populate("products");
         db.disconnectDb();
         if(found){
